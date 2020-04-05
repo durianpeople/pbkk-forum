@@ -1,0 +1,6 @@
+*
+!/apps
+!/apps/modules
+!/apps/modules/forum
+!/apps/modules/forum/**
+!.gitignore
