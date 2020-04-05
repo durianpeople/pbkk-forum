@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Forum\Core\Domain\Model\Value;
+namespace Module\Forum\Core\Domain\Interfaces;
 
 interface IIdentity
 {

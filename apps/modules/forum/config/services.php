@@ -1,5 +1,6 @@
 <?php
 
+use Module\Forum\Core\Domain\Repository\UserRepository;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Mvc\View;
 
@@ -24,3 +25,9 @@ $di['db'] = function () {
         'dbname'   => 'pbkk_test',
     ]);
 };
+
+#region Repositories
+$di['userRepository'] = function() {
+    return new UserRepository();
+};
+#endregion

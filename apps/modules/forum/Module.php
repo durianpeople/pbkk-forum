@@ -14,17 +14,17 @@ class Module implements ModuleDefinitionInterface
 
         $loader->registerNamespaces([
 
+            'Module\Forum\Core\Domain\Interfaces' => __DIR__ . '/Core/Domain/Interfaces',
             'Module\Forum\Core\Domain\Event' => __DIR__ . '/Core/Domain/Event',
-
             'Module\Forum\Core\Domain\Model\Entity' => __DIR__ . '/Core/Domain/Model/Entity',
             'Module\Forum\Core\Domain\Model\Value' => __DIR__ . '/Core/Domain/Model/Value',
-
             'Module\Forum\Core\Domain\Repository' => __DIR__ . '/Core/Domain/Repository',
-
+            'Module\Forum\Core\Domain\Record' => __DIR__ . '/Core/Domain/Record',
             'Module\Forum\Core\Domain\Service' => __DIR__ . '/Core/Domain/Service',
 
+            'Module\Forum\Core\Application\Request' => __DIR__ . '/Core/Application/Request',
+            'Module\Forum\Core\Application\Interfaces' => __DIR__ . '/Core/Application/Interfaces',
             'Module\Forum\Core\Application\Service' => __DIR__ . '/Core/Application/Service',
-
             'Module\Forum\Core\Application\EventSubscriber' => __DIR__ . '/Core/Application/EventSubscriber',
 
             'Module\Forum\Infrastructure\Persistence' => __DIR__ . '/Core/Infrastructure/Persistence',

@@ -2,20 +2,40 @@
 
 namespace Module\Forum\Core\Domain\Model\Entity;
 
+use Module\Forum\Core\Domain\Interfaces\IEntity;
 use Module\Forum\Core\Domain\Model\Value\Password;
-use Module\Forum\Core\Domain\Model\Value\Username;
+use Module\Forum\Core\Domain\Model\Value\ID;
 
+/**
+ * @property-read ID $id
+ * @property-read string $username
+ * @property-read Password $password
+ */
 class User implements IEntity
 {
-    protected $username;
-    protected $password;
+    protected ?ID $id;
+    protected string $username;
+    protected Password $password;
 
     protected $__is_authenticated = false;
 
-    public function __construct(Username $username, Password $password)
+    public function __construct(ID $id = null, string $username, Password $password)
     {
+        $this->id = $id;
         $this->username = $username;
         $this->password = $password;
+    }
+
+    public function __get($name)
+    {
+        switch ($name) {
+            case 'id':
+                return $this->id;
+            case 'username':
+                return $this->username;
+            case 'password':
+                return $this->password;
+        }
     }
 
     public function changePassword(Password $old_password, Password $new_password)
