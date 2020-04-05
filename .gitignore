@@ -4,3 +4,4 @@
 !/apps/modules/forum
 !/apps/modules/forum/**
 !.gitignore
+!readme.md
