@@ -2,27 +2,25 @@
 
 namespace Module\Forum\Core\Domain\Model\Entity;
 
-use Module\Dashboard\Core\Domain\Model\Value\Credential;
-use Module\Dashboard\Core\Domain\Model\Value\Username;
+use Module\Forum\Core\Domain\Model\Value\Password;
+use Module\Forum\Core\Domain\Model\Value\Username;
 
-class User
+class User implements IEntity
 {
     protected $username;
-    protected $name;
-    protected $credential;
+    protected $password;
 
     protected $__is_authenticated = false;
 
-    public function __construct(Username $username, string $name, Credential $credential)
+    public function __construct(Username $username, Password $password)
     {
         $this->username = $username;
-        $this->name = $name;
-        $this->credential = $credential;
+        $this->password = $password;
     }
 
-    public function changeCredential(Credential $old_credential, Credential $new_credential)
+    public function changePassword(Password $old_password, Password $new_password)
     {
-        if ($this->credential != $old_credential) throw new \Exception("Invalid credential");
-        $this->credential = $new_credential;
+        if ($this->password != $old_password) throw new \Exception("Invalid password");
+        $this->password = $new_password;
     }
 }

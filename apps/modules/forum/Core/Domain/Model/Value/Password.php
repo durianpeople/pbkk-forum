@@ -2,11 +2,11 @@
 
 namespace Module\Forum\Core\Domain\Model\Value;
 
-class Credential
+class Password
 {
     protected $hashed_credential;
 
-    public static function createFromPassword(string $password) {
+    public static function createFromString(string $password) {
         return new self(password_hash($password, PASSWORD_DEFAULT));
     }
 

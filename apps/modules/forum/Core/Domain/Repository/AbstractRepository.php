@@ -2,12 +2,12 @@
 
 namespace Module\Forum\Core\Domain\Repository;
 
-use Module\Dashboard\Core\Domain\Model\Entity\Entity;
-use Module\Dashboard\Core\Domain\Model\Value\Identity;
+use Module\Forum\Core\Domain\Model\Entity\IEntity;
+use Module\Forum\Core\Domain\Model\Value\IIdentity;
 use Phalcon\Di\Injectable;
 
 abstract class AbstractRepository extends Injectable
 {
-    abstract public function find(Identity $identity): Entity;
-    abstract public function persist(Entity $entity);
+    abstract public function find(IIdentity $identity): IEntity;
+    abstract public function persist(IEntity $entity);
 }

@@ -2,7 +2,7 @@
 
 namespace Module\Forum\Core\Domain\Model\Value;
 
-class Username implements Identity
+class Username implements IIdentity
 {
     protected $username;
 
