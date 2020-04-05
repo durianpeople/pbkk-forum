@@ -42,6 +42,6 @@ class UserRepository
         $user_record = new UserRecord();
         $user_record->username = $user->username;
         $user_record->password_hash = $user->password->getHash();
-        return $user_record->create();
+        return $user_record->save();
     }
 }
