@@ -38,6 +38,10 @@ class User implements IEntity
         }
     }
 
+    public function changeUsername(string $username) {
+        $this->username = $username;
+    }
+
     public function changePassword(string $old_password, Password $new_password)
     {
         if (!$this->password->testAgainst($old_password)) throw new \Exception("Invalid password");

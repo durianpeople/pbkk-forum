@@ -9,5 +9,5 @@ interface IUserRepository
 {
     public function find(ID $id): User;
     public function findByUserPass(string $username, string $password): User;
-    public function persist(User $user);
+    public function persist(User $user): bool;
 }
