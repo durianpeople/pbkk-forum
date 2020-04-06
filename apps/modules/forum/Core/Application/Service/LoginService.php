@@ -4,16 +4,14 @@ namespace Module\Forum\Core\Application\Service;
 
 use Module\Forum\Core\Application\Request\LoginRequest;
 use Module\Forum\Core\Application\Response\UserInfo;
-use Module\Forum\Core\Domain\Model\Value\ID;
-use Module\Forum\Core\Domain\Model\Value\Password;
 use Phalcon\Di\Injectable;
-use Module\Forum\Core\Domain\Repository\UserRepository;
+use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 
 class LoginService extends Injectable
 {
     public function execute(LoginRequest $request): bool
     {
-        /** @var UserRepository */
+        /** @var IUserRepository */
         $user_repository = $this->getDI()->get('userRepository');
         $user = $user_repository->findByUserPass($request->username, $request->password);
         $this->session->set('userid', $user->id);
@@ -29,7 +27,7 @@ class LoginService extends Injectable
     public function getLoggedInUserInfo(): ?UserInfo
     {
         if ($this->isLoggedIn()) {
-            /** @var UserRepository */
+            /** @var IUserRepository */
             $user_repository = $this->getDI()->get('userRepository');
             $user = $user_repository->find($this->session->get('userid'));
 

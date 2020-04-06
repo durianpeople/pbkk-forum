@@ -6,7 +6,7 @@ use Module\Forum\Core\Domain\Interfaces\IIdentity;
 
 class ID implements IIdentity
 {
-    protected $id;
+    protected int $id;
 
     public function __construct(int $id)
     {

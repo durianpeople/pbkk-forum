@@ -2,13 +2,14 @@
 
 namespace Module\Forum\Core\Domain\Repository;
 
+use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Model\Value\Password;
 use Module\Forum\Core\Domain\Model\Value\ID;
 use Module\Forum\Core\Domain\Record\UserRecord;
 use Module\Forum\Core\Exception\NotFoundException;
 
-class UserRepository
+class UserRepository implements IUserRepository
 {
     public function find(ID $user_id): User
     {
