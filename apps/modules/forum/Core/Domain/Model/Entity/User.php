@@ -38,9 +38,9 @@ class User implements IEntity
         }
     }
 
-    public function changePassword(Password $old_password, Password $new_password)
+    public function changePassword(string $old_password, Password $new_password)
     {
-        if ($this->password != $old_password) throw new \Exception("Invalid password");
+        if (!$this->password->testAgainst($old_password)) throw new \Exception("Invalid password");
         $this->password = $new_password;
     }
 }

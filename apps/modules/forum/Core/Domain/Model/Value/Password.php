@@ -19,4 +19,9 @@ class Password
     {
         return $this->password_hash;
     }
+
+    public function testAgainst(string $input_password): bool
+    {
+        return password_verify($input_password, $this->password_hash);
+    }
 }

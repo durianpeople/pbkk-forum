@@ -23,6 +23,7 @@ class Module implements ModuleDefinitionInterface
             'Module\Forum\Core\Domain\Service' => __DIR__ . '/Core/Domain/Service',
 
             'Module\Forum\Core\Application\Request' => __DIR__ . '/Core/Application/Request',
+            'Module\Forum\Core\Application\Response' => __DIR__ . '/Core/Application/Response',
             'Module\Forum\Core\Application\Interfaces' => __DIR__ . '/Core/Application/Interfaces',
             'Module\Forum\Core\Application\Service' => __DIR__ . '/Core/Application/Service',
             'Module\Forum\Core\Application\EventSubscriber' => __DIR__ . '/Core/Application/EventSubscriber',

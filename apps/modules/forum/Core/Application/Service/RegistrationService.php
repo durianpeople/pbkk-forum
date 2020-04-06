@@ -8,9 +8,9 @@ use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Model\Value\Password;
 use Phalcon\Di\Injectable;
 
-class UserService extends Injectable
+class RegistrationService extends Injectable
 {
-    public function register(RegistrationRequest $request): bool
+    public function execute(RegistrationRequest $request): bool
     {
         $user = new User(null, $request->username, Password::createFromString($request->password));
 

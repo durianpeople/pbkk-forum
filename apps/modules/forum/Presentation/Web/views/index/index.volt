@@ -1,6 +1,8 @@
-Register:
-<form action="/forum/index/register" method="post">
-    Username: <input type="text" name="username" /><br>
-    Password: <input type="password" name="password" /><br>
-    <input type="submit" value="Register" />
-</form>
+{% if loggedin %}
+Anda logged in sebagai {{ user_info.username }}<br>
+<a href="/forum/logout">Logout</a>
+{% else %}
+Anda belum log in<br>
+<a href="/forum/login">Login</a><br>
+<a href="/forum/register">Register</a>
+{% endif %}

@@ -23,18 +23,19 @@ class UserRepository
         return new User(new ID($user_record->id), $user_record->username, new Password($user_record->password_hash));
     }
 
-    public function findByUserPass(string $username, Password $password): User
+    public function findByUserPass(string $username, string $password): User
     {
         /** @var UserRecord */
         $user_record = UserRecord::findFirst([
-            'conditions' => 'username = :username: AND password_hash = :password_hash:',
+            'conditions' => 'username = :username:',
             'bind' => [
-                'username' => $username,
-                'password_hash' => $password->getHash()
+                'username' => $username
             ]
         ]);
         if (!$user_record) throw new NotFoundException;
-        return new User(new ID($user_record->id), $user_record->username, new Password($user_record->password_hash));
+        $user = new User(new ID($user_record->id), $user_record->username, new Password($user_record->password_hash));
+        if (!$user->password->testAgainst($password)) throw new \Exception("Wrong username/password");
+        return $user;
     }
 
     public function persist(User $user)
