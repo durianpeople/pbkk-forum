@@ -21,7 +21,6 @@ mandatory:
 pembagian 1:
 - Edit profile
 - Kasi cendol
-
 - Create forum (yang nge-create jadi admin forum)
 - Join forum
 - Leave forum
