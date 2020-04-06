@@ -2,9 +2,7 @@
 
 namespace Module\Forum\Core\Domain\Model\Value;
 
-use Module\Forum\Core\Domain\Interfaces\IIdentity;
-
-class ID implements IIdentity
+class UserID
 {
     protected int $id;
 

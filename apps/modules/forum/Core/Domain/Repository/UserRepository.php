@@ -5,14 +5,14 @@ namespace Module\Forum\Core\Domain\Repository;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Model\Value\Password;
-use Module\Forum\Core\Domain\Model\Value\ID;
+use Module\Forum\Core\Domain\Model\Value\UserID;
 use Module\Forum\Core\Domain\Record\UserRecord;
 
 use Module\Forum\Core\Exception\NotFoundException;
 
 class UserRepository implements IUserRepository
 {
-    public function find(ID $user_id): User
+    public function find(UserID $user_id): User
     {
         /** @var UserRecord */
         $user_record = UserRecord::findFirst([
@@ -22,7 +22,7 @@ class UserRepository implements IUserRepository
             ]
         ]);
         if (!$user_record) throw new NotFoundException;
-        return new User(new ID($user_record->id), $user_record->username, new Password($user_record->password_hash));
+        return new User(new UserID($user_record->id), $user_record->username, new Password($user_record->password_hash));
     }
 
     public function findByUserPass(string $username, string $password): User
@@ -35,7 +35,7 @@ class UserRepository implements IUserRepository
             ]
         ]);
         if (!$user_record) throw new NotFoundException;
-        $user = new User(new ID($user_record->id), $user_record->username, new Password($user_record->password_hash));
+        $user = new User(new UserID($user_record->id), $user_record->username, new Password($user_record->password_hash));
         if (!$user->password->testAgainst($password)) throw new \Exception("Wrong username/password");
         return $user;
     }

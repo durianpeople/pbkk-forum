@@ -2,18 +2,17 @@
 
 namespace Module\Forum\Core\Domain\Model\Entity;
 
-use Module\Forum\Core\Domain\Interfaces\IEntity;
 use Module\Forum\Core\Domain\Model\Value\Password;
-use Module\Forum\Core\Domain\Model\Value\ID;
+use Module\Forum\Core\Domain\Model\Value\UserID;
 
 /**
- * @property-read ID $id
+ * @property-read UserID $id
  * @property-read string $username
  * @property-read Password $password
  */
-class User implements IEntity
+class User
 {
-    protected ?ID $id;
+    protected ?UserID $id;
     protected string $username;
     protected Password $password;
 
@@ -22,7 +21,7 @@ class User implements IEntity
         return new User(null, $username, Password::createFromString($password));
     }
 
-    public function __construct(ID $id = null, string $username, Password $password)
+    public function __construct(UserID $id = null, string $username, Password $password)
     {
         $this->id = $id;
         $this->username = $username;
