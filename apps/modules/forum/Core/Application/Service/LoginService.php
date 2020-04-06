@@ -2,9 +2,11 @@
 
 namespace Module\Forum\Core\Application\Service;
 
+use Phalcon\Di\Injectable;
+
 use Module\Forum\Core\Application\Request\LoginRequest;
 use Module\Forum\Core\Application\Response\UserInfo;
-use Phalcon\Di\Injectable;
+
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Entity\User;
 

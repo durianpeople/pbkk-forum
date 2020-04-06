@@ -2,8 +2,9 @@
 
 namespace Module\Forum\Presentation\Web\Controller;
 
-use Module\Forum\Core\Application\Service\LoginService;
 use Phalcon\Mvc\Controller;
+
+use Module\Forum\Core\Application\Service\LoginService;
 
 class LogoutController extends Controller
 {

@@ -2,10 +2,12 @@
 
 namespace Module\Forum\Core\Application\Service;
 
+use Phalcon\Di\Injectable;
+
 use Module\Forum\Core\Application\Request\RegistrationRequest;
+
 use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Model\Value\Password;
-use Phalcon\Di\Injectable;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 
 class RegistrationService extends Injectable

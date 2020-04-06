@@ -2,9 +2,10 @@
 
 namespace Module\Forum\Presentation\Web\Controller;
 
+use Phalcon\Mvc\Controller;
+
 use Module\Forum\Core\Application\Request\RegistrationRequest;
 use Module\Forum\Core\Application\Service\RegistrationService;
-use Phalcon\Mvc\Controller;
 
 class RegisterController extends Controller
 {

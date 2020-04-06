@@ -2,9 +2,10 @@
 
 namespace Module\Forum\Presentation\Web\Controller;
 
+use Phalcon\Mvc\Controller;
+
 use Module\Forum\Core\Application\Request\LoginRequest;
 use Module\Forum\Core\Application\Service\LoginService;
-use Phalcon\Mvc\Controller;
 
 class LoginController extends Controller
 {
