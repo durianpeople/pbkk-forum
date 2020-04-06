@@ -17,14 +17,14 @@ class LoginService extends Injectable
         /** @var IUserRepository */
         $user_repository = $this->getDI()->get('userRepository');
         $user = $user_repository->findByUserPass($request->username, $request->password);
-        $this->session->set('userid', $user->id);
+        $this->session->set('user_id', $user->id);
 
         return true;
     }
 
     public function isLoggedIn(): bool
     {
-        return $this->session->has('userid');
+        return $this->session->has('user_id');
     }
 
     /**
@@ -37,7 +37,7 @@ class LoginService extends Injectable
         if ($this->isLoggedIn()) {
             /** @var IUserRepository */
             $user_repository = $this->getDI()->get('userRepository');
-            $user = $user_repository->find($this->session->get('userid'));
+            $user = $user_repository->find($this->session->get('user_id'));
 
             return $user;
         }
