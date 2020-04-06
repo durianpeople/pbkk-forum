@@ -17,7 +17,10 @@ class User implements IEntity
     protected string $username;
     protected Password $password;
 
-    protected $__is_authenticated = false;
+    public static function create(string $username, string $password): User
+    {
+        return new User(null, $username, Password::createFromString($password));
+    }
 
     public function __construct(ID $id = null, string $username, Password $password)
     {
