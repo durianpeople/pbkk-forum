@@ -43,6 +43,7 @@ class UserRepository implements IUserRepository
     public function persist(User $user): bool
     {
         $user_record = new UserRecord();
+        $user_record->id = $user->id;
         $user_record->username = $user->username;
         $user_record->password_hash = $user->password->getHash();
         return $user_record->save();
