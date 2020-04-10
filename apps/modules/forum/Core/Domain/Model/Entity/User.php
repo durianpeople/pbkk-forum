@@ -12,16 +12,16 @@ use Module\Forum\Core\Domain\Model\Value\UserID;
  */
 class User
 {
-    protected ?UserID $id;
+    protected UserID $id;
     protected string $username;
     protected Password $password;
 
     public static function create(string $username, string $password): User
     {
-        return new User(null, $username, Password::createFromString($password));
+        return new User(UserID::generate(), $username, Password::createFromString($password));
     }
 
-    public function __construct(UserID $id = null, string $username, Password $password)
+    public function __construct(UserID $id, string $username, Password $password)
     {
         $this->id = $id;
         $this->username = $username;

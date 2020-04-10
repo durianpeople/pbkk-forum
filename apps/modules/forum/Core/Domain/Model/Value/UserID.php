@@ -4,16 +4,22 @@ namespace Module\Forum\Core\Domain\Model\Value;
 
 class UserID
 {
-    protected int $id;
+    protected string $guid;
 
-    public function __construct(int $id)
+    public static function generate(): UserId
     {
-        // Check username validity
-        $this->id = $id;
+        $len = 16;
+        $secure = true;
+        return new UserID(bin2hex(openssl_random_pseudo_bytes($len, $secure)));
     }
 
-    public function getIdentifier()
+    public function __construct(string $guid)
     {
-        return $this->id;
+        $this->guid = $guid;
+    }
+
+    public function getIdentifier(): string
+    {
+        return $this->guid;
     }
 }
