@@ -42,7 +42,17 @@ class UserRepository implements IUserRepository
 
     public function persist(User $user): bool
     {
-        $user_record = new UserRecord();
+        /** @var UserRecord */
+        $user_record = UserRecord::findFirst([
+            'conditions' => 'id = :id:',
+            'bind' => [
+                'id' => $user->id->getIdentifier()
+            ]
+        ]);
+        if ($user_record === null) {
+            $user_record = new UserRecord();
+            $user_record->id = $user->id->getIdentifier();
+        }
         $user_record->username = $user->username;
         $user_record->password_hash = $user->password->getHash();
         return $user_record->save();
