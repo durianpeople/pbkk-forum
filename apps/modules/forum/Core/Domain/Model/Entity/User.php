@@ -21,7 +21,7 @@ class User
         return new User(UserID::generate(), $username, Password::createFromString($password));
     }
 
-    public function __construct(UserID $id = null, string $username, Password $password)
+    public function __construct(UserID $id, string $username, Password $password)
     {
         $this->id = $id;
         $this->username = $username;
