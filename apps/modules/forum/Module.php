@@ -41,10 +41,15 @@ class Module implements ModuleDefinitionInterface
 
     public function registerServices(DiInterface $di = null)
     {
+        // Load configs
         $moduleConfig = require __DIR__ . '/config/config.php';
 
         $di->get('config')->merge($moduleConfig);
 
+        // Register services/dependencies
         include_once __DIR__ . '/config/services.php';
+
+        // Run necessary scripts
+        include_once __DIR__ . '/config/bootstrap.php';
     }
 }

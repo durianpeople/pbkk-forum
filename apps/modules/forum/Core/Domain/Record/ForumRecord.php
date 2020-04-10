@@ -4,35 +4,35 @@ namespace Module\Forum\Core\Domain\Record;
 
 use Phalcon\Mvc\Model;
 
-class UserRecord extends Model
+class ForumRecord extends Model
 {
     public string $id;
-    public string $username;
-    public string $password_hash;
+    public string $name;
+    public int $admin_id;
 
     public function initialize()
     {
         $this->setConnectionService('db');
-        $this->setSource('users');
+        $this->setSource('forums');
 
-        $this->hasOne(
-            'id',
-            ForumRecord::class,
-            'admin_id'
+        $this->belongsTo(
+            'admin_id',
+            UserRecord::class,
+            'id'
         );
 
         $this->hasMany(
             'id',
             UserForumRecord::class,
-            'user_id'
+            'forum_id'
         );
-
+        
         $this->hasManyToMany(
             'id',
             UserForumRecord::class,
-            'user_id',
             'forum_id',
-            ForumRecord::class,
+            'user_id',
+            UserRecord::class,
             'id'
         );
     }
