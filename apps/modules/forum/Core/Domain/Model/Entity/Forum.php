@@ -25,7 +25,7 @@ class Forum
         return new Forum(ForumID::generate(), $name, $admin->id);
     }
 
-    public function __construct(ForumId $id, string $name, UserID $admin_id)
+    public function __construct(ForumID $id, string $name, UserID $admin_id)
     {
         $this->id = $id;
         $this->name = $name;

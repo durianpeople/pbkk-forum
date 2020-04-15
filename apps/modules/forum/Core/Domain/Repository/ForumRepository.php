@@ -5,11 +5,13 @@ namespace Module\Forum\Core\Domain\Repository;
 use Module\Forum\Core\Domain\Interfaces\IForumRepository;
 
 use Module\Forum\Core\Domain\Model\Entity\Forum;
+use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Model\Value\ForumID;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Module\Forum\Core\Domain\Record\ForumRecord;
-
+use Module\Forum\Core\Domain\Record\UserForumRecord;
 use Module\Forum\Core\Exception\NotFoundException;
+use ReflectionClass;
 
 class ForumRepository implements IForumRepository
 {
@@ -23,14 +25,44 @@ class ForumRepository implements IForumRepository
             ]
         ]);
         if (!$forum_record) throw new NotFoundException;
-        return new Forum(new ForumID($forum_record->id), $forum_record->name, new UserID($forum_record->admin_id));
+        return new Forum(
+            new ForumID($forum_record->id),
+            $forum_record->name,
+            new UserID($forum_record->admin_id)
+        );
+    }
+
+    /**
+     * Find forums which admin is user
+     *
+     * @param User $user
+     * @return Forum[]
+     */
+    public function findAdminnedForums(User $user): array
+    {
+        /** @var ForumRecord[] */
+        $forum_records = ForumRecord::find([
+            'conditions' => 'admin_id = :admin_id:',
+            'bind' => [
+                'admin_id' => $user->id
+            ]
+        ]);
+        $forums = [];
+        foreach ($forum_records as $r) {
+            $forums[] = new Forum(
+                new ForumID($r->id),
+                $r->name,
+                new UserID($r->id)
+            );
+        }
+        return $forums;
     }
 
     public function persist(Forum $forum): bool
     {
         /** @var ForumRecord */
         $forum_record = ForumRecord::findFirst([
-            'conditions'=> 'id = :id:',
+            'conditions' => 'id = :id:',
             'bind' => [
                 'id' => $forum->id->getIdentifier()
             ]
@@ -41,9 +73,31 @@ class ForumRepository implements IForumRepository
         }
         $forum_record->name = $forum->name;
         $forum_record->admin_id = $forum->admin_id;
-        if ($forum_record->save())
-        {
-            // persistency events
+        if ($forum_record->save()) {
+            $reflection = new ReflectionClass($forum);
+            /** @var UserID[] */
+            $removed_members = $reflection->getProperty('__removed_members')->getValue();
+            foreach ($removed_members as $m) {
+                $r = UserForumRecord::findFirst([
+                    'conditions' => 'user_id = :user_id: AND forum_id = :forum_id:',
+                    'bind' => [
+                        'user_id' => $m,
+                        'forum_id' => $forum->id
+                    ]
+                ]);
+                if ($r !== null) {
+                    $r->delete();
+                }
+            }
+
+            /** @var UserID[] */
+            $added_members = $reflection->getProperty('__added_members')->getValue();
+            foreach ($added_members as $m) {
+                $r = new UserForumRecord;
+                $r->user_id = $m;
+                $r->forum_id = $forum->id;
+                $r->save();
+            }
         }
         return false;
     }

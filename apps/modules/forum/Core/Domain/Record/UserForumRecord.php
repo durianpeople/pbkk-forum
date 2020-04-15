@@ -3,7 +3,11 @@
 namespace Module\Forum\Core\Domain\Record;
 
 use Phalcon\Mvc\Model;
+use Module\Forum\Core\Domain\Record\UserRecord;
 
+/**
+ * @property-read UserRecord $user
+ */
 class UserForumRecord extends Model
 {
     public string $user_id;
@@ -17,7 +21,10 @@ class UserForumRecord extends Model
         $this->belongsTo(
             'user_id',
             UserRecord::class,
-            'id'
+            'id',
+            [
+                'alias' => 'user'
+            ]
         );
         
         $this->belongsTo(

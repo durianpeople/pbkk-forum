@@ -3,10 +3,12 @@
 namespace Module\Forum\Core\Domain\Repository;
 
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
+use Module\Forum\Core\Domain\Model\Entity\Forum;
 use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Model\Value\Password;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Module\Forum\Core\Domain\Record\UserRecord;
+use Module\Forum\Core\Domain\Record\UserForumRecord;
 
 use Module\Forum\Core\Exception\NotFoundException;
 
@@ -35,9 +37,40 @@ class UserRepository implements IUserRepository
             ]
         ]);
         if (!$user_record) throw new NotFoundException;
-        $user = new User(new UserID($user_record->id), $user_record->username, new Password($user_record->password_hash));
+        $user = new User(
+            new UserID($user_record->id),
+            $user_record->username,
+            new Password($user_record->password_hash)
+        );
         if (!$user->password->testAgainst($password)) throw new \Exception("Wrong username/password");
         return $user;
+    }
+
+    /**
+     * Get forum members
+     *
+     * @param Forum $forum
+     * @return User[]
+     */
+    public function getForumMembers(Forum $forum): array
+    {
+        /** @var UserForumRecord[] */
+        $user_forum_records = UserForumRecord::find([
+            'conditions' => 'forum_id = :forum_id:',
+            'bind' => [
+                'forum_id' => $forum->id
+            ]
+        ]);
+        $members = [];
+        foreach ($user_forum_records as $record) {
+            $user_record = $record->user;
+            $members[] = new User(
+                new UserID($user_record->id),
+                $user_record->username,
+                new Password($user_record->password_hash)
+            );
+        }
+        return $members;
     }
 
     public function persist(User $user): bool
