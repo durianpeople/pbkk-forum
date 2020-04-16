@@ -4,8 +4,8 @@ namespace Module\Forum\Presentation\Web\Controller;
 
 use Phalcon\Mvc\Controller;
 
-use Module\Forum\Core\Application\Request\RegistrationRequest;
-use Module\Forum\Core\Application\Service\RegistrationService;
+use Module\Forum\Core\Application\Request\User\RegistrationRequest;
+use Module\Forum\Core\Application\Service\User\RegistrationService;
 
 class RegisterController extends Controller
 {

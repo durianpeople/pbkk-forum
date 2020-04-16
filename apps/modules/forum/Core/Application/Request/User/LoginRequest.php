@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Forum\Core\Application\Request;
+namespace Module\Forum\Core\Application\Request\User;
 
 class LoginRequest
 {

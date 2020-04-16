@@ -15,6 +15,7 @@ class ForumID
 
     public function __construct(string $guid)
     {
+        if (strlen($guid) < 32) throw new \AssertionError("ID should be GUID with 32 character length");
         $this->guid = $guid;
     }
 

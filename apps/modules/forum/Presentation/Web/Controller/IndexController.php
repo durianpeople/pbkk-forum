@@ -4,18 +4,18 @@ namespace Module\Forum\Presentation\Web\Controller;
 
 use Phalcon\Mvc\Controller;
 
-use Module\Forum\Core\Application\Service\LoginService;
+use Module\Forum\Core\Application\Service\User\AuthService;
 
 class IndexController extends Controller
 {
     public function indexAction()
     {
-        $login_service = new LoginService;
+        $auth_service = new AuthService;
 
-        if (!$login_service->isLoggedIn()) {
+        if (!$auth_service->isLoggedIn()) {
             $this->view->setVar('loggedin', false);
         } else {
-            $user_info = $login_service->getUserInfo();
+            $user_info = $auth_service->getUserInfo();
             $this->view->setVar('loggedin', true);
             $this->view->setVar('user_info', $user_info);
         }

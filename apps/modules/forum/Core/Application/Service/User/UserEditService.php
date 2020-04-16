@@ -1,10 +1,10 @@
 <?php
 
-namespace Module\Forum\Core\Application\Service;
+namespace Module\Forum\Core\Application\Service\User;
 
 use Phalcon\Di\Injectable;
 
-use Module\Forum\Core\Application\Request\UserEditRequest;
+use Module\Forum\Core\Application\Request\User\UserEditRequest;
 
 use Module\Forum\Core\Domain\Model\Value\Password;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
@@ -13,8 +13,7 @@ class UserEditService extends Injectable
 {
     public function execute(UserEditRequest $request): bool
     {
-        $login_service = new LoginService;
-        $user = $login_service->getUser();
+        $user = $request->user;
         if (isset($request->username)) {
             $user->changeUsername($request->username);
         }

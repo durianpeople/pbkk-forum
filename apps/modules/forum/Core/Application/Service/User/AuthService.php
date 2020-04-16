@@ -1,16 +1,16 @@
 <?php
 
-namespace Module\Forum\Core\Application\Service;
+namespace Module\Forum\Core\Application\Service\User;
 
 use Phalcon\Di\Injectable;
 
-use Module\Forum\Core\Application\Request\LoginRequest;
+use Module\Forum\Core\Application\Request\User\LoginRequest;
 use Module\Forum\Core\Application\Response\UserInfo;
 
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Entity\User;
 
-class LoginService extends Injectable
+class AuthService extends Injectable
 {
     public function execute(LoginRequest $request): bool
     {

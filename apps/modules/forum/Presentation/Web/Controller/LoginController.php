@@ -4,8 +4,8 @@ namespace Module\Forum\Presentation\Web\Controller;
 
 use Phalcon\Mvc\Controller;
 
-use Module\Forum\Core\Application\Request\LoginRequest;
-use Module\Forum\Core\Application\Service\LoginService;
+use Module\Forum\Core\Application\Request\User\LoginRequest;
+use Module\Forum\Core\Application\Service\User\AuthService;
 
 class LoginController extends Controller
 {
@@ -17,8 +17,8 @@ class LoginController extends Controller
             $request->username = $this->request->getPost('username', 'string');
             $request->password = $this->request->getPost('password', 'string');
 
-            $login_service = new LoginService;
-            if ($login_service->execute($request)) {
+            $auth_service = new AuthService;
+            if ($auth_service->execute($request)) {
                 $this->response->redirect('/');
             }
         }
