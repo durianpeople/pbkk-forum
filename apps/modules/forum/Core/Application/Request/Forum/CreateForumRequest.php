@@ -6,6 +6,6 @@ use Module\Forum\Core\Domain\Model\Value\UserID;
 
 class CreateForumRequest
 {
-    public UserID $admin_id;
+    public int $admin_id;
     public string $forum_name;
 }

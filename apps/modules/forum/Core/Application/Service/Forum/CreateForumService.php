@@ -10,9 +10,9 @@ use Phalcon\Di\Injectable;
 
 class CreateForumService extends Injectable
 {
-    public function execute(CreateForumRequest $request)
+    public function execute(CreateForumRequest $request): bool
     {
-        $forum = Forum::create($request->forum_name, $request->admin_id);
+        $forum = Forum::create($request->forum_name, new UserID($request->admin_id));
 
         /** @var IForumRepository */
         $repository = $this->di->get('forumRepository');

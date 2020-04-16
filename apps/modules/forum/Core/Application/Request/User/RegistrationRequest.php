@@ -4,6 +4,6 @@ namespace Module\Forum\Core\Application\Request\User;
 
 class RegistrationRequest
 {
-    public $username;
-    public $password;
+    public string $username;
+    public string $password;
 }
