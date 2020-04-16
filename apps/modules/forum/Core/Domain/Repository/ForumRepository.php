@@ -103,7 +103,7 @@ class ForumRepository implements IForumRepository
             }
 
             /** @var UserID[] */
-            $new_banned_members = $reflection->getProperty('__new_banned_members')->getValue($forum);
+            $new_banned_members = $reflection->getProperty('banned_members')->getValue($forum);
             foreach ($new_banned_members as $m) {
                 $r = new BansRecord();
                 $r->user_id = $m->getIdentifier();

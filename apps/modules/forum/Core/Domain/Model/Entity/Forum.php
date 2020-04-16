@@ -22,8 +22,6 @@ class Forum
     protected array $__added_members; // temporary, persisted to repository
     /** @var UserID[] */
     protected array $__removed_members; // temporary, persisted to repository
-    /** @var UserID[] */
-    protected array $__new_banned_members; // temporary, persisted to repository
 
     public static function create(string $name, UserID $admin_id): Forum
     {
@@ -78,7 +76,6 @@ class Forum
         if (array_search($member->id, $this->banned_members) === true) return false;
 
         $this->banned_members[] = $member->id;
-        $this->__new_banned_members[] = $member->id;
         return true;
     }
 }
