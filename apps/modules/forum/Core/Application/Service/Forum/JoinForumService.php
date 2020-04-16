@@ -18,12 +18,13 @@ class JoinForumService extends Injectable
 
         /** @var IUserRepositoru */
         $user_repository = $this->di->get('userRepository');
-        
+
         $forum = $forum_repository->find(new ForumID($request->forum_id));
         $user = $user_repository->find(new UserID($request->user_id));
-        
-        $forum->addMember($user);
 
-        return $forum_repository->persist($forum);
+        if ($forum->addMember($user)) {
+            return $forum_repository->persist($forum);
+        }
+        return false;
     }
 }

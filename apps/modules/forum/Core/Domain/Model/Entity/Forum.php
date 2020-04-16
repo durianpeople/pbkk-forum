@@ -16,9 +16,14 @@ class Forum
     protected string $name;
     protected UserID $admin_id;
     /** @var UserID[] */
-    protected array $__added_members;
+    protected array $banned_members; // retrieved by repository
+    
     /** @var UserID[] */
-    protected array $__removed_members;
+    protected array $__added_members; // temporary, persisted to repository
+    /** @var UserID[] */
+    protected array $__removed_members; // temporary, persisted to repository
+    /** @var UserID[] */
+    protected array $__new_banned_members; // temporary, persisted to repository
 
     public static function create(string $name, UserID $admin_id): Forum
     {
@@ -44,18 +49,36 @@ class Forum
         }
     }
 
-    public function addMember(User $member)
+    public function addMember(User $member): bool
     {
-        if ($member->id !== null)
-            $this->__added_members[] = $member->id;
+        if ($member->id === null) return false;
+        if (array_search($member->id, $this->__added_members) === true) return false;
+        if (array_search($member->id, $this->banned_members) === true) return false;
+
+        $this->__added_members[] = $member->id;
+        return true;
     }
 
-    public function removeMember(User $member)
+    public function removeMember(User $member): bool
     {
-        $idx = array_search($member->id, $this->__added_members);
-        if (false !== $idx) {
+        if ($member->id === null) return false;
+        if (array_search($member->id, $this->__removed_members) === true) return false;
+
+        if (false !== $idx = array_search($member->id, $this->__added_members)) {
             unset($this->__added_members[$idx]);
         }
+
         $this->__removed_members[] = $member->id;
+        return true;
+    }
+
+    public function banMember(User $member): bool
+    {
+        if ($member->id === null) return false;
+        if (array_search($member->id, $this->banned_members) === true) return false;
+
+        $this->banned_members[] = $member->id;
+        $this->__new_banned_members[] = $member->id;
+        return true;
     }
 }

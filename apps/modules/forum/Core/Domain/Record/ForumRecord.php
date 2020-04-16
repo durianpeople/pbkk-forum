@@ -4,6 +4,9 @@ namespace Module\Forum\Core\Domain\Record;
 
 use Phalcon\Mvc\Model;
 
+/**
+ * @property-read BansRecord[] $banned_members
+ */
 class ForumRecord extends Model
 {
     public string $id;
@@ -23,17 +26,35 @@ class ForumRecord extends Model
 
         $this->hasMany(
             'id',
-            UserForumRecord::class,
+            MembersRecord::class,
             'forum_id'
         );
         
         $this->hasManyToMany(
             'id',
-            UserForumRecord::class,
+            MembersRecord::class,
             'forum_id',
             'user_id',
             UserRecord::class,
             'id'
+        );
+
+        $this->hasMany(
+            'id',
+            BansRecord::class,
+            'forum_id'
+        );
+        
+        $this->hasManyToMany(
+            'id',
+            BansRecord::class,
+            'forum_id',
+            'user_id',
+            UserRecord::class,
+            'id',
+            [
+                'alias' => 'banned_members'
+            ]
         );
     }
 }

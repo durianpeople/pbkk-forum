@@ -8,7 +8,7 @@ use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Model\Value\Password;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Module\Forum\Core\Domain\Record\UserRecord;
-use Module\Forum\Core\Domain\Record\UserForumRecord;
+use Module\Forum\Core\Domain\Record\MembersRecord;
 
 use Module\Forum\Core\Exception\NotFoundException;
 
@@ -54,8 +54,8 @@ class UserRepository implements IUserRepository
      */
     public function getForumMembers(Forum $forum): array
     {
-        /** @var UserForumRecord[] */
-        $user_forum_records = UserForumRecord::find([
+        /** @var MembersRecord[] */
+        $user_forum_records = MembersRecord::find([
             'conditions' => 'forum_id = :forum_id:',
             'bind' => [
                 'forum_id' => $forum->id
@@ -76,16 +76,8 @@ class UserRepository implements IUserRepository
     public function persist(User $user): bool
     {
         /** @var UserRecord */
-        $user_record = UserRecord::findFirst([
-            'conditions' => 'id = :id:',
-            'bind' => [
-                'id' => $user->id->getIdentifier()
-            ]
-        ]);
-        if ($user_record === null) {
-            $user_record = new UserRecord();
-            $user_record->id = $user->id->getIdentifier();
-        }
+        $user_record = new UserRecord();
+        $user_record->id = $user->id->getIdentifier();
         $user_record->username = $user->username;
         $user_record->password_hash = $user->password->getHash();
         return $user_record->save();

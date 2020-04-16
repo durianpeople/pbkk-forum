@@ -8,7 +8,7 @@ use Module\Forum\Core\Domain\Record\UserRecord;
 /**
  * @property-read UserRecord $user
  */
-class UserForumRecord extends Model
+class MembersRecord extends Model
 {
     public string $user_id;
     public string $forum_id;
@@ -16,7 +16,7 @@ class UserForumRecord extends Model
     public function initialize()
     {
         $this->setConnectionService('db');
-        $this->setSource('user_forum');
+        $this->setSource('members');
 
         $this->belongsTo(
             'user_id',

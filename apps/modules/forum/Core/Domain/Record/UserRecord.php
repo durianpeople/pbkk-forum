@@ -23,13 +23,13 @@ class UserRecord extends Model
 
         $this->hasMany(
             'id',
-            UserForumRecord::class,
+            MembersRecord::class,
             'user_id'
         );
 
         $this->hasManyToMany(
             'id',
-            UserForumRecord::class,
+            MembersRecord::class,
             'user_id',
             'forum_id',
             ForumRecord::class,

@@ -8,8 +8,9 @@ use Module\Forum\Core\Domain\Model\Entity\Forum;
 use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Model\Value\ForumID;
 use Module\Forum\Core\Domain\Model\Value\UserID;
+use Module\Forum\Core\Domain\Record\BansRecord;
 use Module\Forum\Core\Domain\Record\ForumRecord;
-use Module\Forum\Core\Domain\Record\UserForumRecord;
+use Module\Forum\Core\Domain\Record\MembersRecord;
 use Module\Forum\Core\Exception\NotFoundException;
 use ReflectionClass;
 
@@ -25,11 +26,21 @@ class ForumRepository implements IForumRepository
             ]
         ]);
         if (!$forum_record) throw new NotFoundException;
-        return new Forum(
+
+        $forum = new Forum(
             new ForumID($forum_record->id),
             $forum_record->name,
             new UserID($forum_record->admin_id)
         );
+
+        $reflection = new ReflectionClass(Forum::class);
+        $banned_members_setter = $reflection->getProperty('banned_members');
+
+        foreach ($forum_record->banned_members as $b) {
+            $banned_members_setter->setValue($forum, new UserID($b->user_id));
+        }
+
+        return $forum;
     }
 
     /**
@@ -61,28 +72,20 @@ class ForumRepository implements IForumRepository
     public function persist(Forum $forum): bool
     {
         /** @var ForumRecord */
-        $forum_record = ForumRecord::findFirst([
-            'conditions' => 'id = :id:',
-            'bind' => [
-                'id' => $forum->id->getIdentifier()
-            ]
-        ]);
-        if ($forum_record === null) {
-            $forum_record = new ForumRecord();
-            $forum_record->id = $forum->id->getIdentifier();
-        }
+        $forum_record = new ForumRecord();
+        $forum_record->id = $forum->id->getIdentifier();
         $forum_record->name = $forum->name;
         $forum_record->admin_id = $forum->admin_id;
         if ($forum_record->save()) {
-            $reflection = new ReflectionClass($forum);
+            $reflection = new ReflectionClass(Forum::class);
             /** @var UserID[] */
-            $removed_members = $reflection->getProperty('__removed_members')->getValue();
+            $removed_members = $reflection->getProperty('__removed_members')->getValue($forum);
             foreach ($removed_members as $m) {
-                $r = UserForumRecord::findFirst([
+                $r = MembersRecord::findFirst([
                     'conditions' => 'user_id = :user_id: AND forum_id = :forum_id:',
                     'bind' => [
-                        'user_id' => $m,
-                        'forum_id' => $forum->id
+                        'user_id' => $m->getIdentifier(),
+                        'forum_id' => $forum->id->getIdentifier()
                     ]
                 ]);
                 if ($r !== null) {
@@ -91,11 +94,20 @@ class ForumRepository implements IForumRepository
             }
 
             /** @var UserID[] */
-            $added_members = $reflection->getProperty('__added_members')->getValue();
+            $added_members = $reflection->getProperty('__added_members')->getValue($forum);
             foreach ($added_members as $m) {
-                $r = new UserForumRecord;
-                $r->user_id = $m;
-                $r->forum_id = $forum->id;
+                $r = new MembersRecord;
+                $r->user_id = $m->getIdentifier();
+                $r->forum_id = $forum->id->getIdentifier();
+                $r->save();
+            }
+
+            /** @var UserID[] */
+            $new_banned_members = $reflection->getProperty('__new_banned_members')->getValue($forum);
+            foreach ($new_banned_members as $m) {
+                $r = new BansRecord();
+                $r->user_id = $m->getIdentifier();
+                $r->forum_id = $forum->id->getIdentifier();
                 $r->save();
             }
         }
