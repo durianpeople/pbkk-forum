@@ -2,7 +2,7 @@
 
 namespace Module\Forum\Core\Application\Request\Forum;
 
-class JoinForumRequest
+class LeaveForumRequest
 {
     public int $user_id;
     public int $forum_id;
