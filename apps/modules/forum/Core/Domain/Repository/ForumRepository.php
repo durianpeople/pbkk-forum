@@ -46,25 +46,45 @@ class ForumRepository implements IForumRepository
     /**
      * Find forums which admin is user
      *
-     * @param User $user
+     * @param User $user_id
      * @return Forum[]
      */
-    public function findAdminnedForums(User $user): array
+    public function findAdminnedForums(UserID $user_id): array
     {
         /** @var ForumRecord[] */
         $forum_records = ForumRecord::find([
             'conditions' => 'admin_id = :admin_id:',
             'bind' => [
-                'admin_id' => $user->id
+                'admin_id' => $user_id->getIdentifier()
             ]
         ]);
         $forums = [];
         foreach ($forum_records as $r) {
-            $forums[] = new Forum(
-                new ForumID($r->id),
-                $r->name,
-                new UserID($r->id)
-            );
+            $forums[] = $this->find(new ForumID($r->id));
+        }
+        return $forums;
+    }
+
+    /**
+     * Find joined forums
+     *
+     * @param User $user_id
+     * @return Forum[]
+     */
+    public function findJoinedForums(UserID $user_id): array
+    {
+        /** @var MembersRecord[] */
+        $members_records = MembersRecord::find([
+            'conditions' => 'user_id = :user_id:',
+            'bind' => [
+                'user_id' => $user_id->getIdentifier()
+            ]
+        ]);
+
+        /** @var Forum[] */
+        $forums = [];
+        foreach ($members_records as $mr) {
+            $forums[] = $this->find(new ForumID($mr->forum->id));
         }
         return $forums;
     }

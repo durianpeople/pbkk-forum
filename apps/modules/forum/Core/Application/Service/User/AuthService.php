@@ -54,6 +54,7 @@ class AuthService extends Injectable
         if ($this->isLoggedIn()) {
             $user = $this->getUser();
             $user_info = new UserInfo();
+            $user_info->id = $user->id->getIdentifier();
             $user_info->username = $user->username;
 
             return $user_info;

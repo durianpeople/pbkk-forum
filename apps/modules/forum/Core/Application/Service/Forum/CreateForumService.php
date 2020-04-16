@@ -4,6 +4,7 @@ namespace Module\Forum\Core\Application\Service\Forum;
 
 use Module\Forum\Core\Application\Request\Forum\CreateForumRequest;
 use Module\Forum\Core\Domain\Interfaces\IForumRepository;
+use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Entity\Forum;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Phalcon\Di\Injectable;
@@ -12,10 +13,14 @@ class CreateForumService extends Injectable
 {
     public function execute(CreateForumRequest $request): bool
     {
-        $forum = Forum::create($request->forum_name, new UserID($request->admin_id));
+        /** @var IUserRepository */
+        $user_repository = $this->di->get('userRepository');
+        $user = $user_repository->find(new UserID($request->admin_id));
+
+        $forum = Forum::create($request->forum_name, $user);
 
         /** @var IForumRepository */
-        $repository = $this->di->get('forumRepository');
-        return $repository->persist($forum);
+        $forum_repository = $this->di->get('forumRepository');
+        return $forum_repository->persist($forum);
     }
 }

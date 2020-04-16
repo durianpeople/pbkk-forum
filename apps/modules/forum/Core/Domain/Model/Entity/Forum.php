@@ -23,9 +23,11 @@ class Forum
     /** @var UserID[] */
     protected array $__removed_members; // temporary, persisted to repository
 
-    public static function create(string $name, UserID $admin_id): Forum
+    public static function create(string $name, User $admin): Forum
     {
-        return new Forum(ForumID::generate(), $name, $admin_id);
+        $forum = new Forum(ForumID::generate(), $name, $admin->id);
+        $forum->addMember($admin);
+        return $forum;
     }
 
     public function __construct(ForumID $id, string $name, UserID $admin_id)

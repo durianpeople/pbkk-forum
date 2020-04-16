@@ -5,6 +5,7 @@ namespace Module\Forum\Core\Domain\Repository;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Entity\Forum;
 use Module\Forum\Core\Domain\Model\Entity\User;
+use Module\Forum\Core\Domain\Model\Value\ForumID;
 use Module\Forum\Core\Domain\Model\Value\Password;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Module\Forum\Core\Domain\Record\UserRecord;
@@ -52,13 +53,13 @@ class UserRepository implements IUserRepository
      * @param Forum $forum
      * @return User[]
      */
-    public function getForumMembers(Forum $forum): array
+    public function findForumMembers(ForumID $forum_id): array
     {
         /** @var MembersRecord[] */
         $user_forum_records = MembersRecord::find([
             'conditions' => 'forum_id = :forum_id:',
             'bind' => [
-                'forum_id' => $forum->id
+                'forum_id' => $forum_id->getIdentifier()
             ]
         ]);
         $members = [];

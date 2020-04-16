@@ -7,6 +7,7 @@ use Module\Forum\Core\Domain\Record\UserRecord;
 
 /**
  * @property-read UserRecord $user
+ * @property-read ForumRecord $forum
  */
 class MembersRecord extends Model
 {
@@ -30,7 +31,10 @@ class MembersRecord extends Model
         $this->belongsTo(
             'forum_id',
             ForumRecord::class,
-            'id'
+            'id',
+            [
+                'alias' => 'forum'
+            ]
         );
     }
 }
