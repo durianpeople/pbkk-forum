@@ -56,6 +56,7 @@ class AuthService extends Injectable
             $user_info = new UserInfo();
             $user_info->id = $user->id->getIdentifier();
             $user_info->username = $user->username;
+            $user_info->awards_count = $user->awards_count;
 
             return $user_info;
         }

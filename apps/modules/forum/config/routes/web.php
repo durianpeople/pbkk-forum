@@ -29,6 +29,11 @@ $router->add('/edit', array_merge($mod_config, [
     'action' => 'edit'
 ]));
 
+$router->add('/award', array_merge($mod_config, [
+    'controller' => 'index',
+    'action' => 'award'
+]));
+
 $router->add('/forum', array_merge($mod_config, [
     'controller' => 'forum',
     'action' => 'index'

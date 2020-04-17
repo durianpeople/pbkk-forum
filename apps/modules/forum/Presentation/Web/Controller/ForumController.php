@@ -70,6 +70,7 @@ class ForumController extends Controller
         $service = new ViewForumService;
         try {
             $this->view->setVar('forum', $service->execute($request));
+            $this->view->setVar('user', $auth_service->getUserInfo());
         } catch (NotFoundException $e) {
             $this->response->redirect("/forum");
         }

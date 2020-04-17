@@ -12,6 +12,10 @@ Member:
     {%for member in forum.members%}
     <li>
         <b>{{member.username}}</b> ({{member.id}}) 
+        {%if member.id is not user.id%}
+        <a href="/award?id={{member.id}}">Give award</a>
+        {%endif%}
+
         {%if forum.is_admin and member.id is not forum.admin.id%}
         <a href="/forum/ban?id={{forum.forum_id}}&userid={{member.id}}">Ban</a>
         {%endif%}

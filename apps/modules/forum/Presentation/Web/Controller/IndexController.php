@@ -2,12 +2,14 @@
 
 namespace Module\Forum\Presentation\Web\Controller;
 
+use Module\Forum\Core\Application\Request\User\AwardRequest;
 use Module\Forum\Core\Application\Request\User\LoginRequest;
 use Module\Forum\Core\Application\Request\User\RegistrationRequest;
 use Module\Forum\Core\Application\Request\User\UserEditRequest;
 use Phalcon\Mvc\Controller;
 
 use Module\Forum\Core\Application\Service\User\AuthService;
+use Module\Forum\Core\Application\Service\User\AwardService;
 use Module\Forum\Core\Application\Service\User\RegistrationService;
 use Module\Forum\Core\Application\Service\User\UserEditService;
 
@@ -95,5 +97,21 @@ class IndexController extends Controller
             $service->execute($request);
             $this->response->redirect("/");
         }
+    }
+
+    public function awardAction()
+    {
+        $auth_service = new AuthService;
+        if (!$auth_service->isLoggedIn())
+            $this->response->redirect("/");
+
+        $request = new AwardRequest;
+        $request->awarder_id = $auth_service->getUser()->id->getIdentifier();
+        $request->awardee_id = $this->request->get('id', 'string');
+
+        $service = new AwardService;
+        $service->execute($request);
+
+        $this->response->redirect($_SERVER['HTTP_REFERER']);
     }
 }

@@ -6,4 +6,5 @@ class UserInfo
 {
     public string $id;
     public string $username;
+    public int $awards_count = 0;
 }
