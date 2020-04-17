@@ -4,5 +4,5 @@ namespace Module\Forum\Core\Application\Request\Forum;
 
 class ViewForumRequest
 {
-    public int $forum_id;
+    public string $forum_id;
 }

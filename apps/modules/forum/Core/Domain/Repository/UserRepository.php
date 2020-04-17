@@ -12,6 +12,7 @@ use Module\Forum\Core\Domain\Record\UserRecord;
 use Module\Forum\Core\Domain\Record\MembersRecord;
 
 use Module\Forum\Core\Exception\NotFoundException;
+use Module\Forum\Core\Exception\WrongPasswordException;
 
 class UserRepository implements IUserRepository
 {
@@ -43,7 +44,7 @@ class UserRepository implements IUserRepository
             $user_record->username,
             new Password($user_record->password_hash)
         );
-        if (!$user->password->testAgainst($password)) throw new \Exception("Wrong username/password");
+        if (!$user->password->testAgainst($password)) throw new WrongPasswordException;
         return $user;
     }
 

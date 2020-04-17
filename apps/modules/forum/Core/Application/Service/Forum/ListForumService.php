@@ -19,9 +19,12 @@ class ListForumService extends Injectable
         /** @var IForumRepository */
         $repo = $this->di->get('forumRepository');
 
-        $forums = $repo->findJoinedForums(new UserID($request->user_id));
+        if ($request->user_id !== null)
+            $forums = $repo->findJoinedForums(new UserID($request->user_id));
+        else
+            $forums = $repo->all();
 
-        /** @var FormListItem[] */
+        /** @var ForumListItem[] */
         $forum_list = [];
 
         foreach ($forums as $f) {

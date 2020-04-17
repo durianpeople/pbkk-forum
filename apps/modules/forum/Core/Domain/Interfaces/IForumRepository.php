@@ -9,6 +9,11 @@ use Module\Forum\Core\Domain\Model\Value\UserID;
 
 interface IForumRepository
 {
+    /**
+     * @return Forum[]
+     */
+    public function all(): array;
+
     public function find(ForumID $id): Forum;
     /**
      * @param User $user

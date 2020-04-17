@@ -4,6 +4,7 @@ namespace Module\Forum\Core\Domain\Model\Entity;
 
 use Module\Forum\Core\Domain\Model\Value\Password;
 use Module\Forum\Core\Domain\Model\Value\UserID;
+use Module\Forum\Core\Exception\WrongPasswordException;
 
 /**
  * @property-read UserID $id
@@ -46,7 +47,7 @@ class User
 
     public function changePassword(string $old_password, Password $new_password)
     {
-        if (!$this->password->testAgainst($old_password)) throw new \Exception("Invalid password");
+        if (!$this->password->testAgainst($old_password)) throw new WrongPasswordException;
         $this->password = $new_password;
     }
 }

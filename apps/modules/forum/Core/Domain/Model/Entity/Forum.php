@@ -4,6 +4,8 @@ namespace Module\Forum\Core\Domain\Model\Entity;
 
 use Module\Forum\Core\Domain\Model\Value\ForumID;
 use Module\Forum\Core\Domain\Model\Value\UserID;
+use Module\Forum\Core\Exception\AdminRemovalException;
+use Module\Forum\Core\Exception\BannedMemberException;
 
 /**
  * @property-read ForumID $id
@@ -16,12 +18,14 @@ class Forum
     protected string $name;
     protected UserID $admin_id;
     /** @var UserID[] */
-    protected array $banned_members; // retrieved by repository
-    
+    protected array $banned_members = []; // retrieved by repository
+
     /** @var UserID[] */
-    protected array $__added_members; // temporary, persisted to repository
+    protected array $__added_members = []; // temporary, persisted to repository
     /** @var UserID[] */
-    protected array $__removed_members; // temporary, persisted to repository
+    protected array $__removed_members = []; // temporary, persisted to repository
+
+    protected bool $__mark_for_deletion = false; // flag
 
     public static function create(string $name, User $admin): Forum
     {
@@ -51,21 +55,35 @@ class Forum
 
     public function addMember(User $member): bool
     {
-        if ($member->id === null) return false;
-        if (array_search($member->id, $this->__added_members) === true) return false;
-        if (array_search($member->id, $this->banned_members) === true) return false;
+        if ($member->id === null)
+            throw new \AssertionError("Argument has an ID of null");
+
+        foreach ($this->__added_members as $i) {
+            if ($member->id == $i) return true;
+        }
+
+        foreach ($this->banned_members as $i) {
+            if ($member->id == $i) throw new BannedMemberException;
+        }
 
         $this->__added_members[] = $member->id;
         return true;
     }
 
-    public function removeMember(User $member): bool
+    public function removeMember(User $member, bool $force = false): bool
     {
-        if ($member->id === null) return false;
-        if (array_search($member->id, $this->__removed_members) === true) return false;
+        if ($member->id === null)
+            throw new \AssertionError("Argument has an ID of null");
 
-        if (false !== $idx = array_search($member->id, $this->__added_members)) {
-            unset($this->__added_members[$idx]);
+        foreach ($this->__removed_members as $i) {
+            if ($member->id == $i) return true;
+        }
+
+        if ($member->id == $this->admin_id) {
+            if (!$force)
+                throw new AdminRemovalException;
+            else 
+                $this->__mark_for_deletion = true;
         }
 
         $this->__removed_members[] = $member->id;
@@ -74,8 +92,12 @@ class Forum
 
     public function banMember(User $member): bool
     {
-        if ($member->id === null) return false;
-        if (array_search($member->id, $this->banned_members) === true) return false;
+        if ($member->id === null)
+            throw new \AssertionError("Argument has an ID of null");
+
+        foreach ($this->banned_members as $i) {
+            if ($member->id == $i) return true;
+        }
 
         $this->banned_members[] = $member->id;
         return true;

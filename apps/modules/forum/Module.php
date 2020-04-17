@@ -28,6 +28,8 @@ class Module implements ModuleDefinitionInterface
             'Module\Forum\Core\Application\Service' => __DIR__ . '/Core/Application/Service',
             'Module\Forum\Core\Application\EventSubscriber' => __DIR__ . '/Core/Application/EventSubscriber',
 
+            'Module\Forum\Core\Exception' => __DIR__ . '/Core/Exception',
+
             'Module\Forum\Infrastructure\Persistence' => __DIR__ . '/Core/Infrastructure/Persistence',
 
             'Module\Forum\Presentation\Web\Controller' => __DIR__ . '/Presentation/Web/Controller',

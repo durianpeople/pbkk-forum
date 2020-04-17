@@ -1,8 +1,8 @@
 {% if loggedin %}
-Anda logged in sebagai {{ user_info.username }}<br>
-<a href="/forum/logout">Logout</a>
+Anda logged in sebagai {{ user_info.username }}. <a href="/edit">Edit profile</a> <a href="/logout">Logout</a><br>
+<a href="/forum">See forums</a>
 {% else %}
 Anda belum log in<br>
-<a href="/forum/login">Login</a><br>
-<a href="/forum/register">Register</a>
+<a href="/login">Login</a><br>
+<a href="/register">Register</a>
 {% endif %}

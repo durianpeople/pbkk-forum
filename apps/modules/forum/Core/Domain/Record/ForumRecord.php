@@ -3,6 +3,7 @@
 namespace Module\Forum\Core\Domain\Record;
 
 use Phalcon\Mvc\Model;
+use Phalcon\Mvc\Model\Relation;
 
 /**
  * @property-read BansRecord[] $banned_members
@@ -11,7 +12,7 @@ class ForumRecord extends Model
 {
     public string $id;
     public string $name;
-    public int $admin_id;
+    public string $admin_id;
 
     public function initialize()
     {

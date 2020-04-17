@@ -22,10 +22,9 @@ class BanMemberService extends Injectable
         $forum = $forum_repository->find(new ForumID($request->forum_id));
         $user = $user_repository->find(new UserID($request->user_id));
 
-        if ($forum->banMember($user)) {
-            return $forum_repository->persist($forum);
-        }
-        
-        return false;
+        $forum->removeMember($user);
+        $forum->banMember($user);
+        $forum_repository->persist($forum);
+        return true;
     }
 }
