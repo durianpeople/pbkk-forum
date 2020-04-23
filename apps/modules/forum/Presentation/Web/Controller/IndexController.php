@@ -12,6 +12,9 @@ use Module\Forum\Core\Application\Service\User\AuthService;
 use Module\Forum\Core\Application\Service\User\AwardService;
 use Module\Forum\Core\Application\Service\User\RegistrationService;
 use Module\Forum\Core\Application\Service\User\UserEditService;
+use Module\Forum\Core\Exception\DuplicateAwardException;
+use Module\Forum\Core\Exception\NotFoundException;
+use Module\Forum\Core\Exception\WrongPasswordException;
 
 class IndexController extends Controller
 {
@@ -22,9 +25,14 @@ class IndexController extends Controller
         if (!$auth_service->isLoggedIn()) {
             $this->view->setVar('loggedin', false);
         } else {
-            $user_info = $auth_service->getUserInfo();
-            $this->view->setVar('loggedin', true);
-            $this->view->setVar('user_info', $user_info);
+            try {
+                $user_info = $auth_service->getUserInfo();
+                $this->view->setVar('loggedin', true);
+                $this->view->setVar('user_info', $user_info);
+            } catch (NotFoundException $e) {
+                $auth_service->logout();
+                $this->response->redirect("/");
+            }
         }
     }
 
@@ -40,8 +48,14 @@ class IndexController extends Controller
             $request->username = $this->request->getPost('username', 'string');
             $request->password = $this->request->getPost('password', 'string');
 
-            if ($auth_service->execute($request)) {
-                $this->response->redirect('/');
+            try {
+                if ($auth_service->execute($request)) {
+                    $this->response->redirect('/');
+                }
+            } catch (NotFoundException $e) {
+                $this->response->redirect('/invalid');
+            } catch (WrongPasswordException $e) {
+                $this->response->redirect('/wrongpassword');
             }
         }
     }
@@ -62,7 +76,6 @@ class IndexController extends Controller
             $request->password = $this->request->getPost('password', 'string');
 
             $registration_service = new RegistrationService();
-            // $user_service->setDI($this->getDI());
             if ($registration_service->execute($request)) {
                 $this->view->setVar('success', true);
                 $this->response->setStatusCode(200, 'OK');
@@ -110,8 +123,12 @@ class IndexController extends Controller
         $request->awardee_id = $this->request->get('id', 'string');
 
         $service = new AwardService;
-        $service->execute($request);
+        try {
+            $service->execute($request);
+            $this->response->redirect($_SERVER['HTTP_REFERER']);
+        } catch (DuplicateAwardException $e) {
+            $this->response->redirect('/duplicateaward');
+        }
 
-        $this->response->redirect($_SERVER['HTTP_REFERER']);
     }
 }

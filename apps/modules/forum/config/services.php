@@ -2,7 +2,6 @@
 
 use Module\Forum\Core\Domain\Repository\ForumRepository;
 use Module\Forum\Core\Domain\Repository\UserRepository;
-use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Mvc\View;
 
 $di['view'] = function () {
@@ -19,20 +18,21 @@ $di['view'] = function () {
 };
 
 $di['db'] = function () {
-    return new Mysql([
-        'host'     => '127.0.0.1',
-        'username' => 'root',
-        'password' => '',
-        'dbname'   => 'pbkk_test',
+    $adapter = getenv('DB_ADAPTER');
+    return new $adapter([
+        'host'     => getenv('DB_HOST'),
+        'username' => getenv('DB_USERNAME'),
+        'password' => getenv('DB_PASSWORD'),
+        'dbname'   => getenv('DB_NAME'),
     ]);
 };
 
 #region Repositories
-$di['userRepository'] = function() {
+$di['userRepository'] = function () {
     return new UserRepository();
 };
 
-$di['forumRepository'] = function() {
+$di['forumRepository'] = function () {
     return new ForumRepository();
 };
 #endregion

@@ -20,7 +20,7 @@ class User
     protected string $username;
     protected Password $password;
     /** @var Award[] */
-    protected array $awards;
+    protected array $awards = [];
 
     public static function create(string $username, string $password): User
     {

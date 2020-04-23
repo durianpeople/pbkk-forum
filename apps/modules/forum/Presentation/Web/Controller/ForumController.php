@@ -15,6 +15,7 @@ use Module\Forum\Core\Application\Service\Forum\LeaveForumService;
 use Module\Forum\Core\Application\Service\Forum\ListForumService;
 use Module\Forum\Core\Application\Service\Forum\ViewForumService;
 use Module\Forum\Core\Application\Service\User\AuthService;
+use Module\Forum\Core\Exception\BannedMemberException;
 use Module\Forum\Core\Exception\NotFoundException;
 use Phalcon\Mvc\Controller;
 
@@ -88,8 +89,12 @@ class ForumController extends Controller
         $request->forum_id = $this->request->get('id', 'string');
 
         $service = new JoinForumService;
-        $service->execute($request);
-        $this->response->redirect('/forum/view?id=' . $request->forum_id);
+        try {
+            $service->execute($request);
+            $this->response->redirect('/forum/view?id=' . $request->forum_id);
+        } catch (BannedMemberException $e) {
+            $this->response->redirect('/banned');
+        }
     }
 
     public function leaveAction()

@@ -24,6 +24,8 @@ class BanMemberService extends Injectable
 
         $forum->removeMember($user);
         $forum->banMember($user);
+
+        
         $forum_repository->persist($forum);
         return true;
     }
