@@ -1,27 +1,42 @@
-Forum: <b>{{forum.forum_name}}</b>
-{%if not forum.joined%}
-<a href="/forum/join?id={{forum.forum_id}}">Join</a>
-{%else%}
-<a href="/forum/leave?id={{forum.forum_id}}">Leave</a>
-{%endif%}
-<br>
-<br>
-Admin: <b>{{forum.admin.username}}</b> ({{forum.admin.id}})<br>
+{%extends '../templates/main.volt'%}
+{%block title%} Create Forum {%endblock%}
+
+{%block nav_locations%}
+<li class="nav-item active">
+    <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
+</li>
+{%endblock%}
+
+{%block content%}
+<h1>Forum</h1>
+<div>
+    <span style="font-size: xx-large; font-weight: bold">{{forum.forum_name}}</span>
+    <span style="margin-left: 20px; position: relative; bottom: 5px">
+        {%if not forum.joined%}
+        <a href="/forum/join?id={{forum.forum_id}}"><button type="button" class="btn btn-primary btn-sm">Join</button></a>
+        {%else%}
+        <a href="/forum/leave?id={{forum.forum_id}}"><button type="button" class="btn btn-danger btn-sm">Leave</button></a>
+        {%endif%}
+    </span>
+</div>
+
+<small>Admin: {%if forum.is_admin%}
+    <b>You</b> -
+    {%endif%}<b>{{forum.admin.username}}</b> ({{forum.admin.id}})</small><br><br>
 Member:
 <ul>
     {%for member in forum.members%}
-    <li>
-        <b>{{member.username}}</b> ({{member.id}}) 
+    <li style="vertical-align: middle;padding: 10px 0">
+        <span style="padding-right: 20px;"><b>{{member.username}}</b> ({{member.id}})</span>
         {%if member.id is not user.id%}
-        <a href="/award?id={{member.id}}">Give award</a>
+        <a href="/award?id={{member.id}}"><button type="button" class="btn btn-success btn-sm">Give award</button></a>
         {%endif%}
 
         {%if forum.is_admin and member.id is not forum.admin.id%}
-        <a href="/forum/ban?id={{forum.forum_id}}&userid={{member.id}}">Ban</a>
+        <a href="/forum/ban?id={{forum.forum_id}}&userid={{member.id}}"><button type="button" class="btn btn-danger btn-sm">Ban</button></a>
         {%endif%}
     </li>
     {%endfor%}
 </ul>
-{%if forum.is_admin%}
-You are the admin of this forum
-{%endif%}
+
+{%endblock%}
