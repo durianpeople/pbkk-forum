@@ -18,11 +18,12 @@ $di['view'] = function () {
 };
 
 $di['db'] = function () {
-    return new Mysql([
-        'host'     => '127.0.0.1',
-        'username' => 'root',
-        'password' => '',
-        'dbname'   => 'pbkk_test',
+    $adapter = getenv('DB_ADAPTER');
+    return new $adapter([
+        'host'     => getenv('DB_HOST'),
+        'username' => getenv('DB_USERNAME'),
+        'password' => getenv('DB_PASSWORD'),
+        'dbname'   => getenv('DB_NAME'),
     ]);
 };
 
