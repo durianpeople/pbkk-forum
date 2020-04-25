@@ -30,9 +30,7 @@ class ViewForumService extends Injectable
 
         $forum_info = new ForumInfo;
 
-        $admin_info = new UserInfo;
-        $admin_info->id = $admin->id->getIdentifier();
-        $admin_info->username = $admin->username;
+        $admin_info = new UserInfo($admin);
 
         if ($forum->admin_id == $user->id)
             $forum_info->is_admin = true;
@@ -40,9 +38,7 @@ class ViewForumService extends Injectable
         /** @var UserInfo[] */
         $members_info = [];
         foreach ($members as $m) {
-            $mi = new UserInfo;
-            $mi->id = $m->id->getIdentifier();
-            $mi->username = $m->username;
+            $mi = new UserInfo($m);
             $members_info[] = $mi;
 
             if ($m->id == $user->id)
