@@ -8,6 +8,7 @@
 {%endblock%}
 
 {%block content%}
+{{flashSession.output()}}
 <h1>Forum</h1>
 <div>
     <span style="font-size: xx-large; font-weight: bold">{{forum.forum_name}}</span>

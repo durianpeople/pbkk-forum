@@ -28,7 +28,7 @@ class UserRepository implements IUserRepository
 
         $aws = [];
         foreach ($award_records as $ar) {
-            $aws[] = new Award($this->find(new UserID($ar->awarder_id)));
+            $aws[] = new Award(new UserID($ar->awarder_id));
         }
         $reflection = new ReflectionClass(User::class);
         $awards_setter = $reflection->getProperty('awards');
@@ -109,7 +109,7 @@ class UserRepository implements IUserRepository
                 /** @var Award $aw */
                 $ar = new AwardRecord();
                 $ar->awardee_id = $user->id->getIdentifier();
-                $ar->awarder_id = $aw->awarder->id->getIdentifier();
+                $ar->awarder_id = $aw->awarder_id->id->getIdentifier();
                 $ar->save();
             }
 

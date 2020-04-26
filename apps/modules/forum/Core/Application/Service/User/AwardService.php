@@ -17,7 +17,7 @@ class AwardService extends Injectable
 
         $awardee = $user_repo->find(new UserID($request->awardee_id));
         $awarder = $user_repo->find(new UserID($request->awarder_id));
-        $awardee->addAward(new Award($awarder));
+        $awardee->addAward(new Award($awarder->id));
 
         $user_repo->persist($awardee);
     }

@@ -43,7 +43,6 @@ class IndexController extends Controller
             $this->response->redirect("/");
 
         if ($this->request->isPost()) {
-            $this->view->disable();
             $request = new LoginRequest();
             $request->username = $this->request->getPost('username', 'string');
             $request->password = $this->request->getPost('password', 'string');
@@ -53,9 +52,9 @@ class IndexController extends Controller
                     $this->response->redirect('/');
                 }
             } catch (NotFoundException $e) {
-                $this->response->redirect('/invalid');
+                $this->flashSession->error('Akun tidak ditemukan');
             } catch (WrongPasswordException $e) {
-                $this->response->redirect('/wrongpassword');
+                $this->flashSession->error('Password salah');
             }
         }
     }
@@ -125,10 +124,10 @@ class IndexController extends Controller
         $service = new AwardService;
         try {
             $service->execute($request);
-            $this->response->redirect($_SERVER['HTTP_REFERER']);
         } catch (DuplicateAwardException $e) {
-            $this->response->redirect('/duplicateaward');
+            $this->flashSession->error("Award hanya dapat diberikan sekali");
         }
+        $this->response->redirect($_SERVER['HTTP_REFERER']);
 
     }
 }

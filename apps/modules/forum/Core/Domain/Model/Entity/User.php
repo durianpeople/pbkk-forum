@@ -61,7 +61,7 @@ class User
     public function addAward(Award $award)
     {
         foreach ($this->awards as $a) {
-            if ($a->awarder == $award->awarder) throw new DuplicateAwardException;
+            if ($a->awarder_id == $award->awarder_id) throw new DuplicateAwardException;
         }
         $this->awards[] = $award;
     }

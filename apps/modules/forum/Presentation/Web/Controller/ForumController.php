@@ -91,10 +91,10 @@ class ForumController extends Controller
         $service = new JoinForumService;
         try {
             $service->execute($request);
-            $this->response->redirect('/forum/view?id=' . $request->forum_id);
         } catch (BannedMemberException $e) {
-            $this->response->redirect('/banned');
+            $this->flashSession->error("Anda telah diblokir dari forum");
         }
+        $this->response->redirect('/forum/view?id=' . $request->forum_id);
     }
 
     public function leaveAction()

@@ -23,6 +23,10 @@
             margin: 0 50px;
             margin-top: 50px;
         }
+        div.errorMessage {
+            color: darkred;
+            font-weight: bold;
+        }
     </style>
     {%block custom_style%}
     {%endblock%}
