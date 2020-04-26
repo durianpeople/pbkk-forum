@@ -6,8 +6,6 @@ use Phalcon\Mvc\Model;
 
 /**
  * @property-read AwardRecord[] $awards
- * @property-read Forum[] $adminned_forums
- * @property-read Forum[] $joined_forums
  */
 class UserRecord extends Model
 {

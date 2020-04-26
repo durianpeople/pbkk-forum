@@ -13,17 +13,5 @@ class AwardRecord extends Model
     {
         $this->setConnectionService('db');
         $this->setSource('awards');
-
-        $this->belongsTo(
-            'awarder_id',
-            UserRecord::class,
-            'id'
-        );
-        
-        $this->belongsTo(
-            'awardee_id',
-            UserRecord::class,
-            'id'
-        );
     }
 }

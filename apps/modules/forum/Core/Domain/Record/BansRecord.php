@@ -13,20 +13,5 @@ class BansRecord extends Model
     {
         $this->setConnectionService('db');
         $this->setSource('bans');
-
-        $this->belongsTo(
-            'user_id',
-            UserRecord::class,
-            'id',
-            [
-                'alias' => 'user'
-            ]
-        );
-        
-        $this->belongsTo(
-            'forum_id',
-            ForumRecord::class,
-            'id'
-        );
     }
 }
