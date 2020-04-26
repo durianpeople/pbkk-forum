@@ -33,5 +33,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Change</button>
     </form>
+    <br>
+    {{flashSession.output()}}
 </div>
 {%endblock%}

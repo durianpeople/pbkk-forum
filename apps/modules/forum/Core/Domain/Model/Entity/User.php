@@ -29,6 +29,8 @@ class User
 
     public function __construct(UserID $id, string $username, Password $password)
     {
+        assert(ctype_alnum($username), new \AssertionError('Username should be alphanumeric'));
+
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
@@ -48,7 +50,10 @@ class User
         }
     }
 
-    public function changeUsername(string $username) {
+    public function changeUsername(string $username)
+    {
+        assert(ctype_alnum($username), new \AssertionError('Username should be alphanumeric'));
+
         $this->username = $username;
     }
 

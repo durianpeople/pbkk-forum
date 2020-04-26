@@ -27,6 +27,10 @@
             color: darkred;
             font-weight: bold;
         }
+        div.successMessage {
+            color: darkgreen;
+            font-weight: bold;
+        }
     </style>
     {%block custom_style%}
     {%endblock%}

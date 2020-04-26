@@ -109,7 +109,7 @@ class UserRepository implements IUserRepository
                 /** @var Award $aw */
                 $ar = new AwardRecord();
                 $ar->awardee_id = $user->id->getIdentifier();
-                $ar->awarder_id = $aw->awarder_id->id->getIdentifier();
+                $ar->awarder_id = $aw->awarder_id->getIdentifier();
                 $ar->save();
             }
 

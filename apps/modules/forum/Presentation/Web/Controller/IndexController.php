@@ -15,6 +15,7 @@ use Module\Forum\Core\Application\Service\User\UserEditService;
 use Module\Forum\Core\Exception\DuplicateAwardException;
 use Module\Forum\Core\Exception\NotFoundException;
 use Module\Forum\Core\Exception\WrongPasswordException;
+use Module\Forum\Presentation\Web\Validator\RegistrationValidation;
 
 class IndexController extends Controller
 {
@@ -70,21 +71,25 @@ class IndexController extends Controller
     public function registerAction()
     {
         if ($this->request->isPost()) {
-            $request = new RegistrationRequest();
-            $request->username = $this->request->getPost('username', 'string');
-            $request->password = $this->request->getPost('password', 'string');
-
-            $registration_service = new RegistrationService();
-            if ($registration_service->execute($request)) {
-                $this->view->setVar('success', true);
-                $this->response->setStatusCode(200, 'OK');
+            $validator = new RegistrationValidation();
+            $messages = $validator->validate($_POST);
+            if (count($messages)) {
+                foreach ($messages as $m) {
+                    $this->flashSession->error($m);
+                }
             } else {
-                $this->view->setVar('success', false);
-                $this->response->setStatusCode(400, 'Bad request');
+                $request = new RegistrationRequest();
+                $request->username = $this->request->getPost('username', 'string');
+                $request->password = $this->request->getPost('password', 'string');
+
+                $registration_service = new RegistrationService();
+                if ($registration_service->execute($request)) {
+                    $this->flashSession->success("Registrasi berhasil");
+                    $this->response->redirect("/login");
+                } else {
+                    $this->flashSession->error("Terjadi kesalahan di sistem");
+                }
             }
-        } else {
-            $this->view->setVar('success', false);
-            $this->response->setStatusCode(400, 'Bad request');
         }
     }
 
@@ -106,8 +111,12 @@ class IndexController extends Controller
             }
 
             $service = new UserEditService;
-            $service->execute($request);
-            $this->response->redirect("/");
+            try {
+                $service->execute($request);
+                $this->flashSession->success("Profil berhasil diedit");
+            } catch (\AssertionError $e) {
+                $this->flashSession->error("Username should be alphanumeric");
+            }
         }
     }
 
@@ -124,10 +133,10 @@ class IndexController extends Controller
         $service = new AwardService;
         try {
             $service->execute($request);
+            $this->flashSession->success("Award berhasil diberikan");
         } catch (DuplicateAwardException $e) {
             $this->flashSession->error("Award hanya dapat diberikan sekali");
         }
         $this->response->redirect($_SERVER['HTTP_REFERER']);
-
     }
 }
