@@ -6,6 +6,8 @@ use Phalcon\Mvc\Model;
 
 /**
  * @property-read AwardRecord[] $awards
+ * @property-read Forum[] $adminned_forums
+ * @property-read Forum[] $joined_forums
  */
 class UserRecord extends Model
 {
@@ -18,27 +20,6 @@ class UserRecord extends Model
         $this->setConnectionService('db');
         $this->setSource('users');
 
-        $this->hasOne(
-            'id',
-            ForumRecord::class,
-            'admin_id'
-        );
-
-        $this->hasMany(
-            'id',
-            MembersRecord::class,
-            'user_id'
-        );
-
-        $this->hasManyToMany(
-            'id',
-            MembersRecord::class,
-            'user_id',
-            'forum_id',
-            ForumRecord::class,
-            'id'
-        );
-
         $this->hasMany(
             'id',
             AwardRecord::class,
@@ -46,30 +27,6 @@ class UserRecord extends Model
             [
                 'alias' => 'awards'
             ]
-        );
-
-        $this->hasManyToMany(
-            'id',
-            AwardRecord::class,
-            'awardee_id',
-            'awarder_id',
-            UserRecord::class,
-            'id'
-        );
-
-        $this->hasMany(
-            'id',
-            AwardRecord::class,
-            'awarder_id'
-        );
-
-        $this->hasManyToMany(
-            'id',
-            AwardRecord::class,
-            'awarder_id',
-            'awardee_id',
-            UserRecord::class,
-            'id'
         );
     }
 }

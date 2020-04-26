@@ -19,33 +19,6 @@ class ForumRecord extends Model
         $this->setConnectionService('db');
         $this->setSource('forums');
 
-        $this->belongsTo(
-            'admin_id',
-            UserRecord::class,
-            'id'
-        );
-
-        $this->hasMany(
-            'id',
-            MembersRecord::class,
-            'forum_id'
-        );
-        
-        $this->hasManyToMany(
-            'id',
-            MembersRecord::class,
-            'forum_id',
-            'user_id',
-            UserRecord::class,
-            'id'
-        );
-
-        $this->hasMany(
-            'id',
-            BansRecord::class,
-            'forum_id'
-        );
-        
         $this->hasManyToMany(
             'id',
             BansRecord::class,
