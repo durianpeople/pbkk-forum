@@ -1,1 +1,0 @@
-Award hanya dapat diberikan sekali.

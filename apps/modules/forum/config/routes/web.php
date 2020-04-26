@@ -63,23 +63,3 @@ $router->add('/forum/ban', array_merge($mod_config, [
     'controller' => 'forum',
     'action' => 'ban'
 ]));
-
-$router->add('/invalid', array_merge($mod_config, [
-    'controller' => 'error',
-    'action' => 'invalid'
-]));
-
-$router->add('/banned', array_merge($mod_config, [
-    'controller' => 'error',
-    'action' => 'banned'
-]));
-
-$router->add('/wrongpassword', array_merge($mod_config, [
-    'controller' => 'error',
-    'action' => 'wrongpassword'
-]));
-
-$router->add('/duplicateaward', array_merge($mod_config, [
-    'controller' => 'error',
-    'action' => 'duplicateaward'
-]));
