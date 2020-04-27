@@ -121,11 +121,16 @@ class ForumController extends Controller
             $this->response->redirect("/login");
 
         $request = new BanMemberRequest;
+        $request->admin_id = $auth_service->getUser()->id->getIdentifier();
         $request->user_id = $this->request->get('userid', 'string');
         $request->forum_id = $this->request->get('id', 'string');
 
         $service = new BanMemberService;
-        $service->execute($request);
+        try {
+            $service->execute($request);
+        } catch (\DomainException $e) {
+            $this->flashSession->error("Anda tidak berhak melakukan ban");
+        }
         $this->response->redirect('/forum/view?id=' . $request->forum_id);
     }
 }

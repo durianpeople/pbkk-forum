@@ -21,6 +21,9 @@ class BanMemberService extends Injectable
 
         $forum = $forum_repository->find(new ForumID($request->forum_id));
         $user = $user_repository->find(new UserID($request->user_id));
+        
+        if ($forum->admin_id->getIdentifier() != $request->admin_id)
+            throw new \DomainException("User has no rights to perform ban");
 
         $forum->removeMember($user);
         $forum->banMember($user);
