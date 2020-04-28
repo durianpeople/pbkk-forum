@@ -116,6 +116,8 @@ class IndexController extends Controller
                 $this->flashSession->success("Profil berhasil diedit");
             } catch (\AssertionError $e) {
                 $this->flashSession->error("Username should be alphanumeric");
+            } catch (WrongPasswordException $e) {
+                $this->flashSession->error("Pasword salah");
             }
         }
     }
