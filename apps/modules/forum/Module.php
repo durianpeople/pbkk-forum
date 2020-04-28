@@ -28,6 +28,8 @@ class Module implements ModuleDefinitionInterface
             'Module\Forum\Core\Application\Service' => __DIR__ . '/Core/Application/Service',
             'Module\Forum\Core\Application\EventSubscriber' => __DIR__ . '/Core/Application/EventSubscriber',
 
+            'Module\Forum\Core\Exception' => __DIR__ . '/Core/Exception',
+
             'Module\Forum\Infrastructure\Persistence' => __DIR__ . '/Core/Infrastructure/Persistence',
 
             'Module\Forum\Presentation\Web\Controller' => __DIR__ . '/Presentation/Web/Controller',
@@ -41,10 +43,15 @@ class Module implements ModuleDefinitionInterface
 
     public function registerServices(DiInterface $di = null)
     {
+        // Load configs
         $moduleConfig = require __DIR__ . '/config/config.php';
 
         $di->get('config')->merge($moduleConfig);
 
+        // Register services/dependencies
         include_once __DIR__ . '/config/services.php';
+
+        // Run necessary scripts
+        include_once __DIR__ . '/config/bootstrap.php';
     }
 }

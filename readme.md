@@ -6,7 +6,7 @@ Module config:
         'apiControllerNamespace' => '',
         'className' => 'Module\Forum\Module',
         'path' => APP_PATH . '/modules/Forum/Module.php',
-        'defaultRouting' => true,
+        'defaultRouting' => false,
         'defaultController' => 'index',
         'defaultAction' => 'index'
     ]

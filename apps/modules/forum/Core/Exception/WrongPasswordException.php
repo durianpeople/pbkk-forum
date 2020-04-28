@@ -4,10 +4,10 @@ namespace Module\Forum\Core\Exception;
 
 use Exception;
 
-class NotFoundException extends Exception
+class WrongPasswordException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Object not found");
+        parent::__construct("Wrong password");
     }
 }

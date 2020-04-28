@@ -1,7 +1,7 @@
 <?php
 
+use Module\Forum\Core\Domain\Repository\ForumRepository;
 use Module\Forum\Core\Domain\Repository\UserRepository;
-use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Mvc\View;
 
 $di['view'] = function () {
@@ -28,7 +28,11 @@ $di['db'] = function () {
 };
 
 #region Repositories
-$di['userRepository'] = function() {
+$di['userRepository'] = function () {
     return new UserRepository();
+};
+
+$di['forumRepository'] = function () {
+    return new ForumRepository();
 };
 #endregion
