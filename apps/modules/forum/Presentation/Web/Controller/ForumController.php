@@ -14,19 +14,26 @@ use Module\Forum\Core\Application\Service\Forum\JoinForumService;
 use Module\Forum\Core\Application\Service\Forum\LeaveForumService;
 use Module\Forum\Core\Application\Service\Forum\ListForumService;
 use Module\Forum\Core\Application\Service\Forum\ViewForumService;
+use Module\Forum\Core\Domain\Interfaces\IForumRepository;
+use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Exception\BannedMemberException;
 use Module\Forum\Core\Exception\NotFoundException;
 
 class ForumController extends AuthenticatedBaseController
 {
+    protected IUserRepository $user_repo;
+    protected IForumRepository $forum_repo;
+
     public function initialize()
     {
         parent::initialize();
+        $this->user_repo = $this->getDI()->get("userRepository");
+        $this->forum_repo = $this->getDI()->get("forumRepository");
     }
 
     public function indexAction()
     {
-        $list_forum_service = new ListForumService($this->getDI()->get('forumRepository'));
+        $list_forum_service = new ListForumService($this->forum_repo);
         $request = new ListForumRequest;
         $request->user_id = $this->user_info->id;
         $this->view->setVar('joined_forums', $list_forum_service->execute($request));
@@ -42,7 +49,7 @@ class ForumController extends AuthenticatedBaseController
             $request->admin_id = $this->user_info->id;
             $request->forum_name = $this->request->getPost('forum_name', 'string');
 
-            $service = new CreateForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
+            $service = new CreateForumService($this->forum_repo, $this->user_repo);
             $service->execute($request);
 
             $this->response->redirect("/forum");
@@ -55,7 +62,7 @@ class ForumController extends AuthenticatedBaseController
         $request->forum_id = $this->request->get('id', 'string');
         $request->user_id = $this->user_info->id;
 
-        $service = new ViewForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
+        $service = new ViewForumService($this->forum_repo, $this->user_repo);
         try {
             $this->view->setVar('forum', $service->execute($request));
             $this->view->setVar('user', $this->user_info);
@@ -70,7 +77,7 @@ class ForumController extends AuthenticatedBaseController
         $request->user_id = $this->user_info->id;
         $request->forum_id = $this->request->get('id', 'string');
 
-        $service = new JoinForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
+        $service = new JoinForumService($this->forum_repo, $this->user_repo);
         try {
             $service->execute($request);
         } catch (BannedMemberException $e) {
@@ -85,7 +92,7 @@ class ForumController extends AuthenticatedBaseController
         $request->user_id = $this->user_info->id;
         $request->forum_id = $this->request->get('id', 'string');
 
-        $service = new LeaveForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
+        $service = new LeaveForumService($this->forum_repo, $this->user_repo);
         $service->execute($request);
         $this->response->redirect('/forum/view?id=' . $request->forum_id);
     }
@@ -97,7 +104,7 @@ class ForumController extends AuthenticatedBaseController
         $request->user_id = $this->request->get('userid', 'string');
         $request->forum_id = $this->request->get('id', 'string');
 
-        $service = new BanMemberService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
+        $service = new BanMemberService($this->forum_repo, $this->user_repo);
         try {
             $service->execute($request);
         } catch (\DomainException $e) {
