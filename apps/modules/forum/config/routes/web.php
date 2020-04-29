@@ -10,8 +10,8 @@ $mod_config = [
 /** @var Router $router */
 
 $router->add('/login', array_merge($mod_config, [
-    'controller' => 'index',
-    'action' => 'login'
+    'controller' => 'login',
+    'action' => 'index'
 ]));
 
 $router->add('/logout', array_merge($mod_config, [
@@ -20,8 +20,8 @@ $router->add('/logout', array_merge($mod_config, [
 ]));
 
 $router->add('/register', array_merge($mod_config, [
-    'controller' => 'index',
-    'action' => 'register'
+    'controller' => 'register',
+    'action' => 'index'
 ]));
 
 $router->add('/edit', array_merge($mod_config, [
