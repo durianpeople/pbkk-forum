@@ -11,19 +11,22 @@ use Phalcon\Di\Injectable;
 
 class JoinForumService extends Injectable
 {
+    protected $user_repo;
+    protected $forum_repo;
+
+    public function __construct(IForumRepository $forum_repo, IUserRepository $user_repo)
+    {
+        $this->user_repo = $user_repo;
+        $this->forum_repo = $forum_repo;
+    }
+
     public function execute(JoinForumRequest $request): bool
     {
-        /** @var IForumRepository */
-        $forum_repository = $this->di->get('forumRepository');
-
-        /** @var IUserRepositoru */
-        $user_repository = $this->di->get('userRepository');
-
-        $forum = $forum_repository->find(new ForumID($request->forum_id));
-        $user = $user_repository->find(new UserID($request->user_id));
+        $forum = $this->forum_repo->find(new ForumID($request->forum_id));
+        $user = $this->user_repo->find(new UserID($request->user_id));
 
         if ($forum->addMember($user)) {
-            return $forum_repository->persist($forum);
+            return $this->forum_repo->persist($forum);
         }
         return false;
     }

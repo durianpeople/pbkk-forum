@@ -12,22 +12,25 @@ use Phalcon\Di\Injectable;
 
 class LeaveForumService extends Injectable
 {
+    protected $user_repo;
+    protected $forum_repo;
+
+    public function __construct(IForumRepository $forum_repo, IUserRepository $user_repo)
+    {
+        $this->user_repo = $user_repo;
+        $this->forum_repo = $forum_repo;
+    }
+
     public function execute(LeaveForumRequest $request): bool
     {
-        /** @var IForumRepository */
-        $forum_repository = $this->di->get('forumRepository');
-
-        /** @var IUserRepository */
-        $user_repository = $this->di->get('userRepository');
-
-        $forum = $forum_repository->find(new ForumID($request->forum_id));
-        $user = $user_repository->find(new UserID($request->user_id));
+        $forum = $this->forum_repo->find(new ForumID($request->forum_id));
+        $user = $this->user_repo->find(new UserID($request->user_id));
         try {
             $forum->removeMember($user);
         } catch (AdminRemovalException $e) {
             $forum->removeMember($user, true); // do not require user consent
         }
 
-        return $forum_repository->persist($forum);
+        return $this->forum_repo->persist($forum);
     }
 }

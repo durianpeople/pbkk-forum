@@ -10,14 +10,18 @@ use Phalcon\Di\Injectable;
 
 class AwardService extends Injectable
 {
+    protected $user_repo;
+
+    public function __construct(IUserRepository $user_repo)
+    {
+        $this->user_repo = $user_repo;
+    }
+
     public function execute(AwardRequest $request)
     {
-        /** @var IUserRepository */
-        $user_repo = $this->di->get('userRepository');
-
-        $awardee = $user_repo->find(new UserID($request->awardee_id));
+        $awardee = $this->user_repo->find(new UserID($request->awardee_id));
         $awardee->addAward(new Award(new UserID($request->awarder_id)));
 
-        $user_repo->persist($awardee);
+        $this->user_repo->persist($awardee);
     }
 }

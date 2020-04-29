@@ -11,16 +11,19 @@ use Phalcon\Di\Injectable;
 
 class BanMemberService extends Injectable
 {
+    protected $user_repo;
+    protected $forum_repo;
+
+    public function __construct(IForumRepository $forum_repo, IUserRepository $user_repo)
+    {
+        $this->user_repo = $user_repo;
+        $this->forum_repo = $forum_repo;
+    }
+
     public function execute(BanMemberRequest $request): bool
     {
-        /** @var IForumRepository */
-        $forum_repository = $this->di->get('forumRepository');
-
-        /** @var IUserRepository */
-        $user_repository = $this->di->get('userRepository');
-
-        $forum = $forum_repository->find(new ForumID($request->forum_id));
-        $user = $user_repository->find(new UserID($request->user_id));
+        $forum = $this->forum_repo->find(new ForumID($request->forum_id));
+        $user = $this->user_repo->find(new UserID($request->user_id));
         
         if ($forum->admin_id->getIdentifier() != $request->admin_id)
             throw new \DomainException("User has no rights to perform ban");
@@ -29,7 +32,7 @@ class BanMemberService extends Injectable
         $forum->banMember($user);
 
         
-        $forum_repository->persist($forum);
+        $this->forum_repo->persist($forum);
         return true;
     }
 }

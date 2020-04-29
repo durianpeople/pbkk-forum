@@ -13,20 +13,23 @@ use Phalcon\Di\Injectable;
 
 class ViewForumService extends Injectable
 {
+    protected $user_repo;
+    protected $forum_repo;
+
+    public function __construct(IForumRepository $forum_repo, IUserRepository $user_repo)
+    {
+        $this->user_repo = $user_repo;
+        $this->forum_repo = $forum_repo;
+    }
+
     public function execute(ViewForumRequest $request): ForumInfo
     {
-        $user = (new AuthService)->getUser();
+        $user = (new AuthService($this->user_repo))->getUser();
 
-        /** @var IForumRepository */
-        $forum_repo = $this->di->get('forumRepository');
+        $forum = $this->forum_repo->find(new ForumID($request->forum_id));
 
-        $forum = $forum_repo->find(new ForumID($request->forum_id));
-
-        /** @var IUserRepository */
-        $user_repo = $this->di->get('userRepository');
-
-        $admin = $user_repo->find($forum->admin_id);
-        $members = $user_repo->findForumMembers($forum->id);
+        $admin = $this->user_repo->find($forum->admin_id);
+        $members = $this->user_repo->findForumMembers($forum->id);
 
         $forum_info = new ForumInfo;
 

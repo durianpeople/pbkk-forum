@@ -10,19 +10,23 @@ use Phalcon\Di\Injectable;
 
 class ListForumService extends Injectable
 {
+    protected $forum_repo;
+
+    public function __construct(IForumRepository $forum_repo)
+    {
+        $this->forum_repo = $forum_repo;
+    }
+
     /**
      * @param ListForumRequest $request
      * @return ForumListItem[]
      */
     public function execute(ListForumRequest $request): array
     {
-        /** @var IForumRepository */
-        $repo = $this->di->get('forumRepository');
-
         if ($request->user_id !== null)
-            $forums = $repo->findJoinedForums(new UserID($request->user_id));
+            $forums = $this->forum_repo->findJoinedForums(new UserID($request->user_id));
         else
-            $forums = $repo->all();
+            $forums = $this->forum_repo->all();
 
         /** @var ForumListItem[] */
         $forum_list = [];

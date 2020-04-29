@@ -1,7 +1,7 @@
 <?php
 
-use Module\Forum\Core\Domain\Repository\ForumRepository;
-use Module\Forum\Core\Domain\Repository\UserRepository;
+use Module\Forum\Infrastructure\Persistence\Repository\ForumRepository;
+use Module\Forum\Infrastructure\Persistence\Repository\UserRepository;
 use Phalcon\Mvc\View;
 
 $di['view'] = function () {

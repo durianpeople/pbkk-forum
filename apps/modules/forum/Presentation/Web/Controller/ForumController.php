@@ -23,12 +23,12 @@ class ForumController extends Controller
 {
     public function indexAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
         if ($auth_service->isLoggedIn() === false)
             $this->response->redirect("/login");
 
-        $list_forum_service = new ListForumService;
+        $list_forum_service = new ListForumService($this->getDI()->get('forumRepository'));
         $user = $auth_service->getUser();
         $request = new ListForumRequest;
         $request->user_id = $user->id->getIdentifier();
@@ -39,7 +39,7 @@ class ForumController extends Controller
 
     public function createAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
         if ($auth_service->isLoggedIn() === false)
             $this->response->redirect("/login");
@@ -51,7 +51,7 @@ class ForumController extends Controller
             $request->admin_id = $user->id->getIdentifier();
             $request->forum_name = $this->request->getPost('forum_name', 'string');
 
-            $service = new CreateForumService;
+            $service = new CreateForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
             $service->execute($request);
 
             $this->response->redirect("/forum");
@@ -60,7 +60,7 @@ class ForumController extends Controller
 
     public function viewAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
         if ($auth_service->isLoggedIn() === false)
             $this->response->redirect("/login");
@@ -68,7 +68,7 @@ class ForumController extends Controller
         $request = new ViewForumRequest;
         $request->forum_id = $this->request->get('id', 'string');
 
-        $service = new ViewForumService;
+        $service = new ViewForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
         try {
             $this->view->setVar('forum', $service->execute($request));
             $this->view->setVar('user', $auth_service->getUserInfo());
@@ -79,7 +79,7 @@ class ForumController extends Controller
 
     public function joinAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
         if ($auth_service->isLoggedIn() === false)
             $this->response->redirect("/login");
@@ -88,7 +88,7 @@ class ForumController extends Controller
         $request->user_id = $auth_service->getUser()->id->getIdentifier();
         $request->forum_id = $this->request->get('id', 'string');
 
-        $service = new JoinForumService;
+        $service = new JoinForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
         try {
             $service->execute($request);
         } catch (BannedMemberException $e) {
@@ -99,7 +99,7 @@ class ForumController extends Controller
 
     public function leaveAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
         if ($auth_service->isLoggedIn() === false)
             $this->response->redirect("/login");
@@ -108,14 +108,14 @@ class ForumController extends Controller
         $request->user_id = $auth_service->getUser()->id->getIdentifier();
         $request->forum_id = $this->request->get('id', 'string');
 
-        $service = new LeaveForumService;
+        $service = new LeaveForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
         $service->execute($request);
         $this->response->redirect('/forum/view?id=' . $request->forum_id);
     }
 
     public function banAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
         if ($auth_service->isLoggedIn() === false)
             $this->response->redirect("/login");
@@ -125,7 +125,7 @@ class ForumController extends Controller
         $request->user_id = $this->request->get('userid', 'string');
         $request->forum_id = $this->request->get('id', 'string');
 
-        $service = new BanMemberService;
+        $service = new BanMemberService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
         try {
             $service->execute($request);
         } catch (\DomainException $e) {

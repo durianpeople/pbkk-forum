@@ -21,7 +21,7 @@ class IndexController extends Controller
 {
     public function indexAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
         if (!$auth_service->isLoggedIn()) {
             $this->view->setVar('loggedin', false);
@@ -39,7 +39,7 @@ class IndexController extends Controller
 
     public function loginAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
         if ($auth_service->isLoggedIn())
             $this->response->redirect("/");
 
@@ -62,7 +62,7 @@ class IndexController extends Controller
 
     public function logoutAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
         if ($auth_service->logout()) {
             $this->response->redirect("/");
         }
@@ -82,7 +82,7 @@ class IndexController extends Controller
                 $request->username = $this->request->getPost('username', 'string');
                 $request->password = $this->request->getPost('password', 'string');
 
-                $registration_service = new RegistrationService();
+                $registration_service = new RegistrationService($this->getDI()->get('userRepository'));
                 if ($registration_service->execute($request)) {
                     $this->flashSession->success("Registrasi berhasil");
                     $this->response->redirect("/login");
@@ -95,7 +95,7 @@ class IndexController extends Controller
 
     public function editAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
         if (!$auth_service->isLoggedIn())
             $this->response->redirect("/");
 
@@ -110,7 +110,7 @@ class IndexController extends Controller
                 $request->new_password = $this->request->getPost('new_password', 'string');
             }
 
-            $service = new UserEditService;
+            $service = new UserEditService($this->getDI()->get('userRepository'));
             try {
                 $service->execute($request);
                 $this->flashSession->success("Profil berhasil diedit");
@@ -124,7 +124,7 @@ class IndexController extends Controller
 
     public function awardAction()
     {
-        $auth_service = new AuthService;
+        $auth_service = new AuthService($this->getDI()->get('userRepository'));
         if (!$auth_service->isLoggedIn())
             $this->response->redirect("/");
 
@@ -132,7 +132,7 @@ class IndexController extends Controller
         $request->awarder_id = $auth_service->getUser()->id->getIdentifier();
         $request->awardee_id = $this->request->get('id', 'string');
 
-        $service = new AwardService;
+        $service = new AwardService($this->getDI()->get('userRepository'));
         try {
             $service->execute($request);
             $this->flashSession->success("Award berhasil diberikan");

@@ -11,12 +11,17 @@ use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 
 class RegistrationService extends Injectable
 {
+    protected $user_repo;
+
+    public function __construct(IUserRepository $user_repo)
+    {
+        $this->user_repo = $user_repo;
+    }
+
     public function execute(RegistrationRequest $request): bool
     {
         $user = User::create($request->username, $request->password);
 
-        /** @var IUserRepository */
-        $user_repository = $this->getDI()->get('userRepository');
-        return $user_repository->persist($user);
+        return $this->user_repo->persist($user);
     }
 }

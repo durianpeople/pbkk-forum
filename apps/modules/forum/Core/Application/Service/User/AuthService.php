@@ -12,11 +12,16 @@ use Module\Forum\Core\Domain\Model\Entity\User;
 
 class AuthService extends Injectable
 {
+    protected $user_repo;
+
+    public function __construct(IUserRepository $user_repo)
+    {
+        $this->user_repo = $user_repo;
+    }
+
     public function execute(LoginRequest $request): bool
     {
-        /** @var IUserRepository */
-        $user_repository = $this->getDI()->get('userRepository');
-        $user = $user_repository->findByUserPass($request->username, $request->password);
+        $user = $this->user_repo->findByUserPass($request->username, $request->password);
         $this->session->set('user_id', $user->id);
 
         return true;
@@ -36,8 +41,7 @@ class AuthService extends Injectable
     {
         if ($this->isLoggedIn()) {
             /** @var IUserRepository */
-            $user_repository = $this->getDI()->get('userRepository');
-            $user = $user_repository->find($this->session->get('user_id'));
+            $user = $this->user_repo->find($this->session->get('user_id'));
 
             return $user;
         }

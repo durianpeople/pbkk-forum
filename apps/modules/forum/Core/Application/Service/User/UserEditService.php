@@ -12,12 +12,16 @@ use Module\Forum\Core\Domain\Model\Value\UserID;
 
 class UserEditService extends Injectable
 {
+    protected $user_repo;
+
+    public function __construct(IUserRepository $user_repo)
+    {
+        $this->user_repo = $user_repo;
+    }
+
     public function execute(UserEditRequest $request): bool
     {
-        /** @var IUserRepository */
-        $user_repository = $this->getDI()->get('userRepository');
-
-        $user = $user_repository->find(new UserID($request->user_id));
+        $user = $this->user_repo->find(new UserID($request->user_id));
         
         if (isset($request->username)) {
             $user->changeUsername($request->username);
@@ -27,6 +31,6 @@ class UserEditService extends Injectable
             $user->changePassword($request->old_password, Password::createFromString($request->new_password));
         }
 
-        return $user_repository->persist($user);
+        return $this->user_repo->persist($user);
     }
 }

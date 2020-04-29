@@ -11,16 +11,21 @@ use Phalcon\Di\Injectable;
 
 class CreateForumService extends Injectable
 {
+    protected $user_repo;
+    protected $forum_repo;
+
+    public function __construct(IForumRepository $forum_repo, IUserRepository $user_repo)
+    {
+        $this->user_repo = $user_repo;
+        $this->forum_repo = $forum_repo;
+    }
+
     public function execute(CreateForumRequest $request): bool
     {
-        /** @var IUserRepository */
-        $user_repository = $this->di->get('userRepository');
-        $user = $user_repository->find(new UserID($request->admin_id));
+        $user = $this->user_repo->find(new UserID($request->admin_id));
 
         $forum = Forum::create($request->forum_name, $user);
 
-        /** @var IForumRepository */
-        $forum_repository = $this->di->get('forumRepository');
-        return $forum_repository->persist($forum);
+        return $this->forum_repo->persist($forum);
     }
 }

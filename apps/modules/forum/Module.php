@@ -18,8 +18,6 @@ class Module implements ModuleDefinitionInterface
             'Module\Forum\Core\Domain\Event' => __DIR__ . '/Core/Domain/Event',
             'Module\Forum\Core\Domain\Model\Entity' => __DIR__ . '/Core/Domain/Model/Entity',
             'Module\Forum\Core\Domain\Model\Value' => __DIR__ . '/Core/Domain/Model/Value',
-            'Module\Forum\Core\Domain\Repository' => __DIR__ . '/Core/Domain/Repository',
-            'Module\Forum\Core\Domain\Record' => __DIR__ . '/Core/Domain/Record',
             'Module\Forum\Core\Domain\Service' => __DIR__ . '/Core/Domain/Service',
 
             'Module\Forum\Core\Application\Request' => __DIR__ . '/Core/Application/Request',
@@ -30,7 +28,8 @@ class Module implements ModuleDefinitionInterface
 
             'Module\Forum\Core\Exception' => __DIR__ . '/Core/Exception',
 
-            'Module\Forum\Infrastructure\Persistence' => __DIR__ . '/Core/Infrastructure/Persistence',
+            'Module\Forum\Infrastructure\Persistence\Repository' => __DIR__ . '/Infrastructure/Persistence/Repository',
+            'Module\Forum\Infrastructure\Persistence\Record' => __DIR__ . '/Infrastructure/Persistence/Record',
 
             'Module\Forum\Presentation\Web\Controller' => __DIR__ . '/Presentation/Web/Controller',
             'Module\Forum\Presentation\Web\Validator' => __DIR__ . '/Presentation/Web/Validator',
