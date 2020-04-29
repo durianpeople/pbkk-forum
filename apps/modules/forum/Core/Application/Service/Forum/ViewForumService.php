@@ -33,7 +33,7 @@ class ViewForumService
 
         $admin_info = new UserInfo($admin);
 
-        if ($forum->admin_id->getIdentifier() == $request->user_idd)
+        if ($forum->admin_id->getIdentifier() == $request->user_id)
             $forum_info->is_admin = true;
 
         /** @var UserInfo[] */
@@ -42,7 +42,7 @@ class ViewForumService
             $mi = new UserInfo($m);
             $members_info[] = $mi;
 
-            if ($m->id == $request->user_id)
+            if ($m->id->getIdentifier() == $request->user_id)
                 $forum_info->joined = true;
         }
 
