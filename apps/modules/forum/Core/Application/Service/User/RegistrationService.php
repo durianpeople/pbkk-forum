@@ -9,7 +9,7 @@ use Module\Forum\Core\Application\Request\User\RegistrationRequest;
 use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 
-class RegistrationService extends Injectable
+class RegistrationService
 {
     protected $user_repo;
 

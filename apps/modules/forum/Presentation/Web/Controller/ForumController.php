@@ -25,13 +25,12 @@ class ForumController extends Controller
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             $this->response->redirect("/login");
 
         $list_forum_service = new ListForumService($this->getDI()->get('forumRepository'));
-        $user = $auth_service->getUser();
         $request = new ListForumRequest;
-        $request->user_id = $user->id->getIdentifier();
+        $request->user_id = $this->session->get('user_info')->id;
         $this->view->setVar('joined_forums', $list_forum_service->execute($request));
         $request->user_id = null;
         $this->view->setVar('all_forums', $list_forum_service->execute($request));
@@ -41,14 +40,13 @@ class ForumController extends Controller
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             $this->response->redirect("/login");
 
         if ($this->request->isPost()) {
-            $user = $auth_service->getUser();
 
             $request = new CreateForumRequest;
-            $request->admin_id = $user->id->getIdentifier();
+            $request->admin_id = $this->session->get('user_info')->id;
             $request->forum_name = $this->request->getPost('forum_name', 'string');
 
             $service = new CreateForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
@@ -62,16 +60,17 @@ class ForumController extends Controller
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             $this->response->redirect("/login");
 
         $request = new ViewForumRequest;
         $request->forum_id = $this->request->get('id', 'string');
+        $request->user_id = $this->session->get('user_info')->id;
 
         $service = new ViewForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
         try {
             $this->view->setVar('forum', $service->execute($request));
-            $this->view->setVar('user', $auth_service->getUserInfo());
+            $this->view->setVar('user', $this->session->get('user_info'));
         } catch (NotFoundException $e) {
             $this->response->redirect("/forum");
         }
@@ -81,11 +80,11 @@ class ForumController extends Controller
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             $this->response->redirect("/login");
 
         $request = new JoinForumRequest;
-        $request->user_id = $auth_service->getUser()->id->getIdentifier();
+        $request->user_id = $this->session->get('user_info')->id;
         $request->forum_id = $this->request->get('id', 'string');
 
         $service = new JoinForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
@@ -101,11 +100,11 @@ class ForumController extends Controller
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             $this->response->redirect("/login");
 
         $request = new LeaveForumRequest;
-        $request->user_id = $auth_service->getUser()->id->getIdentifier();
+        $request->user_id = $this->session->get('user_info')->id;
         $request->forum_id = $this->request->get('id', 'string');
 
         $service = new LeaveForumService($this->getDI()->get('forumRepository'), $this->getDI()->get('userRepository'));
@@ -117,11 +116,11 @@ class ForumController extends Controller
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             $this->response->redirect("/login");
 
         $request = new BanMemberRequest;
-        $request->admin_id = $auth_service->getUser()->id->getIdentifier();
+        $request->admin_id = $this->session->get('user_info')->id;
         $request->user_id = $this->request->get('userid', 'string');
         $request->forum_id = $this->request->get('id', 'string');
 

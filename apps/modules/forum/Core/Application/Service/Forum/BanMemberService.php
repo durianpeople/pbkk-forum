@@ -9,7 +9,7 @@ use Module\Forum\Core\Domain\Model\Value\ForumID;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Phalcon\Di\Injectable;
 
-class BanMemberService extends Injectable
+class BanMemberService
 {
     protected $user_repo;
     protected $forum_repo;

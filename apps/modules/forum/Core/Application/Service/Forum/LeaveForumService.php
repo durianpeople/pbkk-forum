@@ -10,7 +10,7 @@ use Module\Forum\Core\Domain\Model\Value\UserID;
 use Module\Forum\Core\Exception\AdminRemovalException;
 use Phalcon\Di\Injectable;
 
-class LeaveForumService extends Injectable
+class LeaveForumService
 {
     protected $user_repo;
     protected $forum_repo;

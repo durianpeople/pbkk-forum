@@ -8,7 +8,7 @@ use Module\Forum\Core\Domain\Model\Value\Award;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Phalcon\Di\Injectable;
 
-class AwardService extends Injectable
+class AwardService
 {
     protected $user_repo;
 

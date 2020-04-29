@@ -3,15 +3,16 @@
 namespace Module\Forum\Infrastructure\Persistence\Repository;
 
 use Module\Forum\Core\Domain\Interfaces\IForumRepository;
-
 use Module\Forum\Core\Domain\Model\Entity\Forum;
 use Module\Forum\Core\Domain\Model\Entity\User;
 use Module\Forum\Core\Domain\Model\Value\ForumID;
 use Module\Forum\Core\Domain\Model\Value\UserID;
+
 use Module\Forum\Infrastructure\Persistence\Record\BansRecord;
 use Module\Forum\Infrastructure\Persistence\Record\ForumRecord;
 use Module\Forum\Infrastructure\Persistence\Record\MembersRecord;
 use Module\Forum\Core\Exception\NotFoundException;
+
 use Phalcon\Mvc\Model\Transaction\Manager;
 use ReflectionClass;
 

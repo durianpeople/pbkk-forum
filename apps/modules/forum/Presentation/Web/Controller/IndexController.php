@@ -23,15 +23,14 @@ class IndexController extends Controller
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
 
-        if (!$auth_service->isLoggedIn()) {
+        if (!$this->session->has('user_info')) {
             $this->view->setVar('loggedin', false);
         } else {
             try {
-                $user_info = $auth_service->getUserInfo();
                 $this->view->setVar('loggedin', true);
-                $this->view->setVar('user_info', $user_info);
+                $this->view->setVar('user_info', $this->session->get('user_info'));
             } catch (NotFoundException $e) {
-                $auth_service->logout();
+                $this->session->destroy('user_info');
                 $this->response->redirect("/");
             }
         }
@@ -40,7 +39,7 @@ class IndexController extends Controller
     public function loginAction()
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
-        if ($auth_service->isLoggedIn())
+        if ($this->session->has('user_info'))
             $this->response->redirect("/");
 
         if ($this->request->isPost()) {
@@ -49,7 +48,8 @@ class IndexController extends Controller
             $request->password = $this->request->getPost('password', 'string');
 
             try {
-                if ($auth_service->execute($request)) {
+                if ($user_info = $auth_service->execute($request)) {
+                    $this->session->set('user_info', $user_info);
                     $this->response->redirect('/');
                 }
             } catch (NotFoundException $e) {
@@ -63,7 +63,7 @@ class IndexController extends Controller
     public function logoutAction()
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
-        if ($auth_service->logout()) {
+        if ($this->session->destroy('user_info')) {
             $this->response->redirect("/");
         }
     }
@@ -96,12 +96,12 @@ class IndexController extends Controller
     public function editAction()
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
-        if (!$auth_service->isLoggedIn())
+        if (!$this->session->has('user_info'))
             $this->response->redirect("/");
 
         if ($this->request->isPost()) {
             $request = new UserEditRequest;
-            $request->user_id = $auth_service->getUser()->id->getIdentifier();
+            $request->user_id = $this->session->get('user_info')->id;
             if (!empty($username = $this->request->getPost('username', 'string'))) {
                 $request->username = $username;
             }
@@ -125,11 +125,11 @@ class IndexController extends Controller
     public function awardAction()
     {
         $auth_service = new AuthService($this->getDI()->get('userRepository'));
-        if (!$auth_service->isLoggedIn())
+        if (!$this->session->has('user_info'))
             $this->response->redirect("/");
 
         $request = new AwardRequest;
-        $request->awarder_id = $auth_service->getUser()->id->getIdentifier();
+        $request->awarder_id = $this->session->get('user_info')->id;
         $request->awardee_id = $this->request->get('id', 'string');
 
         $service = new AwardService($this->getDI()->get('userRepository'));

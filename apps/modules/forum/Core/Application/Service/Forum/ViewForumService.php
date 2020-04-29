@@ -11,7 +11,7 @@ use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Value\ForumID;
 use Phalcon\Di\Injectable;
 
-class ViewForumService extends Injectable
+class ViewForumService
 {
     protected $user_repo;
     protected $forum_repo;
@@ -24,8 +24,6 @@ class ViewForumService extends Injectable
 
     public function execute(ViewForumRequest $request): ForumInfo
     {
-        $user = (new AuthService($this->user_repo))->getUser();
-
         $forum = $this->forum_repo->find(new ForumID($request->forum_id));
 
         $admin = $this->user_repo->find($forum->admin_id);
@@ -35,7 +33,7 @@ class ViewForumService extends Injectable
 
         $admin_info = new UserInfo($admin);
 
-        if ($forum->admin_id == $user->id)
+        if ($forum->admin_id->getIdentifier() == $request->user_idd)
             $forum_info->is_admin = true;
 
         /** @var UserInfo[] */
@@ -44,7 +42,7 @@ class ViewForumService extends Injectable
             $mi = new UserInfo($m);
             $members_info[] = $mi;
 
-            if ($m->id == $user->id)
+            if ($m->id == $request->user_id)
                 $forum_info->joined = true;
         }
 

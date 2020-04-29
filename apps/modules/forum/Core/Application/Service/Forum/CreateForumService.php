@@ -9,7 +9,7 @@ use Module\Forum\Core\Domain\Model\Entity\Forum;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Phalcon\Di\Injectable;
 
-class CreateForumService extends Injectable
+class CreateForumService
 {
     protected $user_repo;
     protected $forum_repo;

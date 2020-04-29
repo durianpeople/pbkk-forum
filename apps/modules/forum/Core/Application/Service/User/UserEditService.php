@@ -10,7 +10,7 @@ use Module\Forum\Core\Domain\Model\Value\Password;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 
-class UserEditService extends Injectable
+class UserEditService
 {
     protected $user_repo;
 

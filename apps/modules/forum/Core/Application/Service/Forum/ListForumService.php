@@ -8,7 +8,7 @@ use Module\Forum\Core\Domain\Interfaces\IForumRepository;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Phalcon\Di\Injectable;
 
-class ListForumService extends Injectable
+class ListForumService
 {
     protected $forum_repo;
 
