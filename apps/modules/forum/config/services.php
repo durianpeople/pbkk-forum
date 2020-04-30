@@ -10,6 +10,7 @@ use Module\Forum\Core\Application\Service\User\AuthService;
 use Module\Forum\Core\Application\Service\User\AwardService;
 use Module\Forum\Core\Application\Service\User\RegistrationService;
 use Module\Forum\Core\Application\Service\User\UserEditService;
+use Module\Forum\Core\Application\Service\User\UserInfoRenewalService;
 use Module\Forum\Infrastructure\Persistence\Repository\ForumRepository;
 use Module\Forum\Infrastructure\Persistence\Repository\UserRepository;
 use Phalcon\Di\DiInterface;
@@ -66,6 +67,10 @@ $di->set('registrationService', function () use ($di) {
 
 $di->set('userEditService', function () use ($di) {
     return new UserEditService($di->get('userRepository'));
+});
+
+$di->set('userInfoRenewalService', function () use ($di) {
+    return new UserInfoRenewalService($di->get('userRepository'));
 });
 
 $di->set('banMemberService', function () use ($di) {

@@ -4,9 +4,10 @@ namespace Module\Forum\Presentation\Web\Controller;
 
 use Module\Forum\Core\Application\Request\User\AwardRequest;
 use Module\Forum\Core\Application\Request\User\UserEditRequest;
+use Module\Forum\Core\Application\Request\User\UserInfoRenewalRequest;
 use Module\Forum\Core\Application\Service\User\AwardService;
 use Module\Forum\Core\Application\Service\User\UserEditService;
-
+use Module\Forum\Core\Application\Service\User\UserInfoRenewalService;
 use Module\Forum\Core\Exception\DuplicateAwardException;
 use Module\Forum\Core\Exception\PasswordAssertionError;
 use Module\Forum\Core\Exception\UsernameAssertionError;
@@ -16,18 +17,22 @@ class IndexController extends AuthenticatedBaseController
 {
     protected UserEditService $user_edit_service;
     protected AwardService $award_service;
+    protected UserInfoRenewalService $user_info_renewal_service;
 
     public function initialize()
     {
         parent::initialize();
         $this->user_edit_service = $this->di->get('userEditService');
         $this->award_service = $this->di->get('awardService');
+        $this->user_info_renewal_service = $this->di->get('userInfoRenewalService');
     }
 
     public function indexAction()
     {
         $this->view->setVar('loggedin', true);
-        $this->view->setVar('user_info', $this->user_info);
+        $this->view->setVar('user_info', $this->user_info_renewal_service->execute(
+            new UserInfoRenewalRequest($this->session->get('user_info'))
+        ));
     }
 
     public function logoutAction()
