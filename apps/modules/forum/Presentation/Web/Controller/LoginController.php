@@ -4,15 +4,23 @@ namespace Module\Forum\Presentation\Web\Controller;
 
 use Module\Forum\Core\Application\Request\User\LoginRequest;
 use Module\Forum\Core\Application\Service\User\AuthService;
+
 use Module\Forum\Core\Exception\NotFoundException;
 use Module\Forum\Core\Exception\WrongPasswordException;
+
 use Phalcon\Mvc\Controller;
 
 class LoginController extends Controller
 {
+    protected AuthService $auth_service;
+
+    public function initialize()
+    {
+        $this->auth_service = $this->di->get('authService');
+    }
+
     public function indexAction()
     {
-        $auth_service = new AuthService($this->getDI()->get('userRepository'));
         if ($this->session->has('user_info'))
             $this->response->redirect("/");
 
@@ -22,7 +30,7 @@ class LoginController extends Controller
             $request->password = $this->request->getPost('password', 'string');
 
             try {
-                if ($user_info = $auth_service->execute($request)) {
+                if ($user_info = $this->auth_service->execute($request)) {
                     $this->session->set('user_info', $user_info);
                     $this->response->redirect('/');
                 }

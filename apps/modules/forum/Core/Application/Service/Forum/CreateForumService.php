@@ -3,11 +3,11 @@
 namespace Module\Forum\Core\Application\Service\Forum;
 
 use Module\Forum\Core\Application\Request\Forum\CreateForumRequest;
+
 use Module\Forum\Core\Domain\Interfaces\IForumRepository;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Entity\Forum;
 use Module\Forum\Core\Domain\Model\Value\UserID;
-use Phalcon\Di\Injectable;
 
 class CreateForumService
 {

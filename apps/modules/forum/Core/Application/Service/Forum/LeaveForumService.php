@@ -3,12 +3,12 @@
 namespace Module\Forum\Core\Application\Service\Forum;
 
 use Module\Forum\Core\Application\Request\Forum\LeaveForumRequest;
+
 use Module\Forum\Core\Domain\Interfaces\IForumRepository;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Value\ForumID;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Module\Forum\Core\Exception\AdminRemovalException;
-use Phalcon\Di\Injectable;
 
 class LeaveForumService
 {

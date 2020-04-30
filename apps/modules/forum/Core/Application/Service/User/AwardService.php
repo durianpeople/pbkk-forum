@@ -3,10 +3,10 @@
 namespace Module\Forum\Core\Application\Service\User;
 
 use Module\Forum\Core\Application\Request\User\AwardRequest;
+
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Value\Award;
 use Module\Forum\Core\Domain\Model\Value\UserID;
-use Phalcon\Di\Injectable;
 
 class AwardService
 {

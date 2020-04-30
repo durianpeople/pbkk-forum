@@ -3,11 +3,11 @@
 namespace Module\Forum\Core\Application\Service\Forum;
 
 use Module\Forum\Core\Application\Request\Forum\JoinForumRequest;
+
 use Module\Forum\Core\Domain\Interfaces\IForumRepository;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Value\ForumID;
 use Module\Forum\Core\Domain\Model\Value\UserID;
-use Phalcon\Di\Injectable;
 
 class JoinForumService
 {

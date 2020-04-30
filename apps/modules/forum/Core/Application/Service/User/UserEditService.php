@@ -2,8 +2,6 @@
 
 namespace Module\Forum\Core\Application\Service\User;
 
-use Phalcon\Di\Injectable;
-
 use Module\Forum\Core\Application\Request\User\UserEditRequest;
 
 use Module\Forum\Core\Domain\Model\Value\Password;

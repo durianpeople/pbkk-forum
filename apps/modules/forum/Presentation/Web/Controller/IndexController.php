@@ -4,21 +4,22 @@ namespace Module\Forum\Presentation\Web\Controller;
 
 use Module\Forum\Core\Application\Request\User\AwardRequest;
 use Module\Forum\Core\Application\Request\User\UserEditRequest;
-
 use Module\Forum\Core\Application\Service\User\AwardService;
 use Module\Forum\Core\Application\Service\User\UserEditService;
-use Module\Forum\Core\Domain\Interfaces\IUserRepository;
+
 use Module\Forum\Core\Exception\DuplicateAwardException;
 use Module\Forum\Core\Exception\WrongPasswordException;
 
 class IndexController extends AuthenticatedBaseController
 {
-    protected IUserRepository $user_repo;
+    protected UserEditService $user_edit_service;
+    protected AwardService $award_service;
 
     public function initialize()
     {
         parent::initialize();
-        $this->user_repo = $this->getDI()->get('userRepository');
+        $this->user_edit_service = $this->di->get('userEditService');
+        $this->award_service = $this->di->get('awardService');
     }
 
     public function indexAction()
@@ -46,9 +47,8 @@ class IndexController extends AuthenticatedBaseController
                 $request->new_password = $this->request->getPost('new_password', 'string');
             }
 
-            $service = new UserEditService($this->user_repo);
             try {
-                $service->execute($request);
+                $this->user_edit_service->execute($request);
                 $this->flashSession->success("Profil berhasil diedit");
             } catch (\AssertionError $e) {
                 $this->flashSession->error("Username should be alphanumeric");
@@ -64,9 +64,8 @@ class IndexController extends AuthenticatedBaseController
         $request->awarder_id = $this->user_info->id;
         $request->awardee_id = $this->request->get('id', 'string');
 
-        $service = new AwardService($this->user_repo);
         try {
-            $service->execute($request);
+            $this->award_service->execute($request);
             $this->flashSession->success("Award berhasil diberikan");
         } catch (DuplicateAwardException $e) {
             $this->flashSession->error("Award hanya dapat diberikan sekali");

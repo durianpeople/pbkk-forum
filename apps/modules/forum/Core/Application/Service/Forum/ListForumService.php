@@ -4,9 +4,9 @@ namespace Module\Forum\Core\Application\Service\Forum;
 
 use Module\Forum\Core\Application\Request\Forum\ListForumRequest;
 use Module\Forum\Core\Application\Response\ForumListItem;
+
 use Module\Forum\Core\Domain\Interfaces\IForumRepository;
 use Module\Forum\Core\Domain\Model\Value\UserID;
-use Phalcon\Di\Injectable;
 
 class ListForumService
 {

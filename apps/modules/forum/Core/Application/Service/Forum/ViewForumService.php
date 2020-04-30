@@ -5,11 +5,10 @@ namespace Module\Forum\Core\Application\Service\Forum;
 use Module\Forum\Core\Application\Request\Forum\ViewForumRequest;
 use Module\Forum\Core\Application\Response\ForumInfo;
 use Module\Forum\Core\Application\Response\UserInfo;
-use Module\Forum\Core\Application\Service\User\AuthService;
+
 use Module\Forum\Core\Domain\Interfaces\IForumRepository;
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
 use Module\Forum\Core\Domain\Model\Value\ForumID;
-use Phalcon\Di\Injectable;
 
 class ViewForumService
 {

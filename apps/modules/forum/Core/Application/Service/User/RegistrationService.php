@@ -2,8 +2,6 @@
 
 namespace Module\Forum\Core\Application\Service\User;
 
-use Phalcon\Di\Injectable;
-
 use Module\Forum\Core\Application\Request\User\RegistrationRequest;
 
 use Module\Forum\Core\Domain\Model\Entity\User;

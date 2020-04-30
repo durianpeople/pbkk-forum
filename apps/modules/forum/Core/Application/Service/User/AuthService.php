@@ -8,7 +8,6 @@ use Module\Forum\Core\Application\Request\User\LoginRequest;
 use Module\Forum\Core\Application\Response\UserInfo;
 
 use Module\Forum\Core\Domain\Interfaces\IUserRepository;
-use Module\Forum\Core\Domain\Model\Entity\User;
 
 class AuthService
 {
