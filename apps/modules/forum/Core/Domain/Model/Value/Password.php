@@ -2,11 +2,15 @@
 
 namespace Module\Forum\Core\Domain\Model\Value;
 
+use Module\Forum\Core\Exception\PasswordAssertionError;
+
 class Password
 {
     protected $password_hash;
 
     public static function createFromString(string $password) {
+        assert(strlen($password) >=8, new PasswordAssertionError);
+
         return new self(password_hash($password, PASSWORD_DEFAULT));
     }
 

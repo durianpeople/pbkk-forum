@@ -6,6 +6,7 @@ use Module\Forum\Core\Domain\Model\Value\Award;
 use Module\Forum\Core\Domain\Model\Value\Password;
 use Module\Forum\Core\Domain\Model\Value\UserID;
 use Module\Forum\Core\Exception\DuplicateAwardException;
+use Module\Forum\Core\Exception\UsernameAssertionError;
 use Module\Forum\Core\Exception\WrongPasswordException;
 
 /**
@@ -29,7 +30,7 @@ class User
 
     public function __construct(UserID $id, string $username, Password $password)
     {
-        assert(ctype_alnum($username), new \AssertionError('Username should be alphanumeric'));
+        assert(ctype_alnum($username), new UsernameAssertionError);
 
         $this->id = $id;
         $this->username = $username;
@@ -52,7 +53,7 @@ class User
 
     public function changeUsername(string $username)
     {
-        assert(ctype_alnum($username), new \AssertionError('Username should be alphanumeric'));
+        assert(ctype_alnum($username), new UsernameAssertionError);
 
         $this->username = $username;
     }

@@ -8,6 +8,8 @@ use Module\Forum\Core\Application\Service\User\AwardService;
 use Module\Forum\Core\Application\Service\User\UserEditService;
 
 use Module\Forum\Core\Exception\DuplicateAwardException;
+use Module\Forum\Core\Exception\PasswordAssertionError;
+use Module\Forum\Core\Exception\UsernameAssertionError;
 use Module\Forum\Core\Exception\WrongPasswordException;
 
 class IndexController extends AuthenticatedBaseController
@@ -50,8 +52,10 @@ class IndexController extends AuthenticatedBaseController
             try {
                 $this->user_edit_service->execute($request);
                 $this->flashSession->success("Profil berhasil diedit");
-            } catch (\AssertionError $e) {
-                $this->flashSession->error("Username should be alphanumeric");
+            } catch (UsernameAssertionError $e) {
+                $this->flashSession->error("Username harus alphanumeric");
+            } catch (PasswordAssertionError $e) {
+                $this->flashSession->error("Password minimal 8 karakter");
             } catch (WrongPasswordException $e) {
                 $this->flashSession->error("Pasword salah");
             }
