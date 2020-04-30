@@ -6,7 +6,7 @@ use Module\Forum\Core\Application\Response\UserInfo;
 
 use Phalcon\Mvc\Controller;
 
-class AuthenticatedBaseController extends Controller
+abstract class AuthenticatedBaseController extends Controller
 {
     protected UserInfo $user_info;
 
