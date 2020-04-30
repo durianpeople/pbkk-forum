@@ -72,7 +72,7 @@ $di->set('banMemberService', function () use ($di) {
     return new BanMemberService($di->get('forumRepository'), $di->get('userRepository'));
 });
 
-$di->set('createFormService', function () use ($di) {
+$di->set('createForumService', function () use ($di) {
     return new CreateForumService($di->get('forumRepository'), $di->get('userRepository'));
 });
 
