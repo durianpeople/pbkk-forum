@@ -9,13 +9,16 @@ class AuthenticatedBaseController extends Controller
 {
     protected UserInfo $user_info;
 
+    public function beforeExecuteRoute()
+    {
+        if (!$this->session->has('user_info'))
+            $this->response->redirect("/login")->send();
+        return false;
+    }
+
     public function initialize()
     {
-        if (!$this->session->has('user_info')) {
-            $this->response->redirect("/login")->send();
-        } else {
-            $this->user_info = $this->session->get('user_info');
-        }
+        $this->user_info = $this->session->get('user_info');
     }
 
     protected function logout()
