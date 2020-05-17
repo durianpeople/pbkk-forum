@@ -1,7 +1,7 @@
 *
 !/apps
 !/apps/modules
-!/apps/modules/forum
-!/apps/modules/forum/**
+!/apps/modules/post
+!/apps/modules/post/**
 !.gitignore
 !readme.md
