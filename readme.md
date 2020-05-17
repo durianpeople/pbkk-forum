@@ -1,3 +1,4 @@
+Post Module
 Module config:
 ```
 'forum' => [
