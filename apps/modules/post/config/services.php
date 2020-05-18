@@ -1,8 +1,8 @@
 <?php
 
-use Module\Post\Core\Domain\Repository\PostRepository;
-use Module\Post\Core\Domain\Repository\UserRepository;
-use Module\Post\Core\Domain\Repository\CommentRepository;
+use Module\Post\Infrastructure\Persistence\Repository\PostRepository;
+use Module\Post\Infrastructure\Persistence\Repository\UserRepository;
+use Module\Post\Infrastructure\Persistence\Repository\CommentRepository;
 use Phalcon\Mvc\View;
 
 $di['view'] = function () {

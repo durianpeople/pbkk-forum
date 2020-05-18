@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Post\Core\Domain\Repository;
+namespace Module\Post\Infrastructure\Persistence\Repository;
 
 use Module\Post\Core\Domain\Interfaces\ICommentRepository;
 use Module\Post\Core\Domain\Model\Entity\Post;
@@ -9,10 +9,10 @@ use Module\Post\Core\Domain\Model\Entity\User;
 use Module\Post\Core\Domain\Model\Value\PostID;
 use Module\Post\Core\Domain\Model\Value\CommentID;
 use Module\Post\Core\Domain\Model\Value\UserID;
-use Module\Post\Core\Domain\Record\PostRecord;
-use Module\Post\Core\Domain\Record\UserRecord;
-use Module\Post\Core\Domain\Record\CommentRecord;
-use Module\Post\Core\Domain\Record\CommentVotesRecord;
+use Module\Post\Infrastructure\Persistence\Record\PostRecord;
+use Module\Post\Infrastructure\Persistence\Record\UserRecord;
+use Module\Post\Infrastructure\Persistence\Record\CommentRecord;
+use Module\Post\Infrastructure\Persistence\Record\CommentVotesRecord;
 
 use Module\Post\Core\Exception\NotFoundException;
 

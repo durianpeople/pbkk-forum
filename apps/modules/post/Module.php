@@ -17,18 +17,17 @@ class Module implements ModuleDefinitionInterface
             'Module\Post\Core\Domain\Event' => __DIR__ . '/Core/Domain/Event',
             'Module\Post\Core\Domain\Interfaces' => __DIR__ . '/Core/Domain/Interfaces',
             'Module\Post\Core\Domain\Model' => __DIR__ . '/Core/Domain/Model',
-            'Module\Post\Core\Domain\Record' => __DIR__ . '/Core/Domain/Record',
-            'Module\Post\Core\Domain\Repository' => __DIR__ . '/Core/Domain/Repository',
             'Module\Post\Core\Domain\Service' => __DIR__ . '/Core/Domain/Service',
-
+            
             'Module\Post\Core\Application\Service' => __DIR__ . '/Core/Application/Service',
             'Module\Post\Core\Application\EventSubscriber' => __DIR__ . '/Core/Application/EventSubscriber',
             'Module\Post\Core\Application\Request' => __DIR__ . '/Core/Application/Request',
             'Module\Post\Core\Application\Response' => __DIR__ . '/Core/Application/Response',
-
+            
             'Module\Post\Core\Exception' => __DIR__ . '/Core/Exception',
-
-            'Module\Post\Infrastructure\Persistence' => __DIR__ . '/Core/Infrastructure/Persistence',
+            
+            'Module\Post\Infrastructure\Persistence\Record' => __DIR__ . '/Infrastructure/Persistence/Record',
+            'Module\Post\Infrastructure\Persistence\Repository' => __DIR__ . '/Infrastructure/Persistence/Repository',
 
             'Module\Post\Presentation\Web\Controller' => __DIR__ . '/Presentation/Web/Controller',
             'Module\Post\Presentation\Web\Validator' => __DIR__ . '/Presentation/Web/Validator',

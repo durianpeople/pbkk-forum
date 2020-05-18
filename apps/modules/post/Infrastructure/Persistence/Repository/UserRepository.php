@@ -1,12 +1,12 @@
 <?php
 
-namespace Module\Post\Core\Domain\Repository;
+namespace Module\Post\Infrastructure\Persistence\Repository;
 
 use Module\Post\Core\Domain\Interfaces\IUserRepository;
 use Module\Post\Core\Domain\Model\Entity\User;
 use Module\Post\Core\Domain\Model\Value\Password;
 use Module\Post\Core\Domain\Model\Value\UserID;
-use Module\Post\Core\Domain\Record\UserRecord;
+use Module\Post\Infrastructure\Persistence\Record\UserRecord;
 
 use Module\Post\Core\Exception\UserPersistException;
 use Module\Post\Core\Exception\WrongLoginException;

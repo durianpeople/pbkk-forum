@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Post\Core\Domain\Record;
+namespace Module\Post\Infrastructure\Persistence\Record;
 
 use Phalcon\Mvc\Model;
 
