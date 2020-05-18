@@ -1,5 +1,6 @@
 <?php
 
+use Common\Events\DomainEventPublisher;
 use Module\Forum\Core\Application\Service\Forum\BanMemberService;
 use Module\Forum\Core\Application\Service\Forum\CreateForumService;
 use Module\Forum\Core\Application\Service\Forum\JoinForumService;
@@ -48,4 +49,9 @@ $di->set('db', function () {
 
 #region Services
 
+#endregion
+
+
+#region Event listeners
+DomainEventPublisher::instance()->subscribe();
 #endregion

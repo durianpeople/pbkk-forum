@@ -1,11 +1,16 @@
 <?php
 
+use Common\Events\DomainEventPublisher;
+use Module\Post\Core\Application\EventSubscriber\PostEventSubscriber;
 use Module\Post\Infrastructure\Persistence\Repository\PostRepository;
 use Module\Post\Infrastructure\Persistence\Repository\UserRepository;
 use Module\Post\Infrastructure\Persistence\Repository\CommentRepository;
+use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\View;
 
-$di['view'] = function () {
+/** @var DiInterface $di */
+
+$di->set('view', function () {
     $view = new View();
     $view->setViewsDir(__DIR__ . '/../Presentation/Web/views/');
 
@@ -16,9 +21,9 @@ $di['view'] = function () {
     );
 
     return $view;
-};
+});
 
-$di['db'] = function () {
+$di->set('db', function () {
     $adapter = getenv('DB_ADAPTER');
     return new $adapter([
         'host'     => getenv('DB_HOST'),
@@ -26,18 +31,22 @@ $di['db'] = function () {
         'password' => getenv('DB_PASSWORD'),
         'dbname'   => getenv('DB_NAME'),
     ]);
-};
+});
 
 #region Repositories
-$di['userRepository'] = function () {
+$di->set('userRepository', function () {
     return new UserRepository();
-};
+});
 
-$di['postRepository'] = function () {
+$di->set('postRepository', function () {
     return new PostRepository();
-};
+});
 
-$di['commentRepository'] = function () {
+$di->set('commentRepository', function () {
     return new CommentRepository();
-};
+});
+#endregion
+
+#region Events
+DomainEventPublisher::instance()->subscribe(new PostEventSubscriber($di->get('postRepository')));
 #endregion

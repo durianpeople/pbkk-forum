@@ -2,7 +2,9 @@
 
 namespace Module\Integration\Core\Domain\Model;
 
+use Common\Events\DomainEventPublisher;
 use DateTime;
+use Module\Integration\Core\Domain\Event\PostIntegrationCreated;
 
 /**
  * @property-read ForumID $forum_id
@@ -24,7 +26,19 @@ class Post
     public static function create(ForumID $forum_id, string $title, string $content, UserID $author_id): Post
     {
         // return new self($forum_id, PostID::generate(), $title, $content, $author_id, date('F j, Y, g:i a', time()));
-        return new self($forum_id, PostID::generate(), $title, $content, $author_id, new DateTime());
+        $post_id = PostID::generate();
+        $datetime = new DateTime();
+        DomainEventPublisher::instance()->publish(
+            new PostIntegrationCreated(
+                $forum_id->getIdentifier(),
+                $post_id->getID(),
+                $title,
+                $content,
+                $author_id->getIdentifier(),
+                $datetime->format('F j, Y, g:i a')
+            )
+        );
+        return new self($forum_id, $post_id, $title, $content, $author_id, $datetime);
     }
 
     public function __construct(ForumID $forum_id, PostID $id, string $title, string $content, UserID $author_id, DateTime $created_at)
