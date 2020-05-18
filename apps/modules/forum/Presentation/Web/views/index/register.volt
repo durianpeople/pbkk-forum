@@ -1,6 +1,3 @@
-
-
-
 {%extends '../templates/main.volt'%}
 {%block nav_locations%}
 {%endblock%}

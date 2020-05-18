@@ -16,7 +16,7 @@ class PostCreateService extends Injectable
     {
         $post_repo = $this->di->get('postRepository');
         $post = Post::create($request->post_title, $request->post_content, new UserID($request->post_author_id));
-        
-        return $post_repo->persist($post); 
+
+        return $post_repo->persist($post);
     }
 }

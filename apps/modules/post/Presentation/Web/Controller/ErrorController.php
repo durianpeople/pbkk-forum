@@ -14,6 +14,7 @@ use Module\Post\Core\Exception\NotFoundException;
 
 class ErrorController extends Controller
 {
-  public function route404Action() {
-  }
+    public function route404Action()
+    {
+    }
 }

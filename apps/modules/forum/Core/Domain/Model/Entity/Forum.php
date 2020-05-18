@@ -82,7 +82,7 @@ class Forum
         if ($member->id == $this->admin_id) {
             if (!$force)
                 throw new AdminRemovalException;
-            else 
+            else
                 $this->__mark_for_deletion = true;
         }
 

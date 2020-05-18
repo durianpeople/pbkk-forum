@@ -14,5 +14,4 @@ class PostVotesRecord extends Model
         $this->setConnectionService('db');
         $this->setSource('post_votes');
     }
-
 }

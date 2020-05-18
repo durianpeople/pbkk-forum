@@ -34,7 +34,7 @@ class Module implements ModuleDefinitionInterface
             'Module\Forum\Presentation\Web\Controller' => __DIR__ . '/Presentation/Web/Controller',
             'Module\Forum\Presentation\Web\Validator' => __DIR__ . '/Presentation/Web/Validator',
             'Module\Forum\Presentation\Api\Controller' => __DIR__ . '/Presentation/Api/Controller',
-            
+
         ]);
 
         $loader->register();

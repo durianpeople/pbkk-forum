@@ -27,7 +27,7 @@ class MembersRecord extends Model
                 'alias' => 'user'
             ]
         );
-        
+
         $this->belongsTo(
             'forum_id',
             ForumRecord::class,

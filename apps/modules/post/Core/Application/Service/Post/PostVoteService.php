@@ -17,8 +17,8 @@ class PostVoteService extends Injectable
         $post_repo = $this->di->get('postRepository');
         $post = $post_repo->findByID(new PostID($request->voted_post_id));
         if ($post->addVote(new UserID($request->voter_id))) {
-          return $post_repo->persist($post); 
+            return $post_repo->persist($post);
         }
-        return false; 
+        return false;
     }
 }

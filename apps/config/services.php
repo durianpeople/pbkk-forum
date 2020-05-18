@@ -13,11 +13,11 @@ use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Session\Manager as Session;
 use Phalcon\Session\Adapter\Stream;
 
-$container['config'] = function() use ($config) {
-	return $config;
+$container['config'] = function () use ($config) {
+    return $config;
 };
 
-$container->setShared('stream', function() {
+$container->setShared('stream', function () {
     $adapter = new Stream([
         'savePath' => APP_PATH . '/cache'
     ]);
@@ -25,16 +25,16 @@ $container->setShared('stream', function() {
     return $adapter;
 });
 
-$container->setShared('session', function() use ($container) {
+$container->setShared('session', function () use ($container) {
     $session = new Session();
-    
-    $session->setAdapter($container->getShared('stream'));
-	$session->start();
 
-	return $session;
+    $session->setAdapter($container->getShared('stream'));
+    $session->start();
+
+    return $session;
 });
 
-$container['dispatcher'] = function() {
+$container['dispatcher'] = function () {
 
     $eventsManager = new Manager();
 
@@ -61,16 +61,16 @@ $container['dispatcher'] = function() {
     return $dispatcher;
 };
 
-$container['url'] = function() use ($config) {
-	$url = new \Phalcon\Url();
+$container['url'] = function () use ($config) {
+    $url = new \Phalcon\Url();
 
     $url->setBaseUri($config->url['baseUrl']);
 
-	return $url;
+    return $url;
 };
 
 $container['voltService'] = function (ViewBaseInterface $view) use ($container, $config) {
-    
+
     $volt = new Volt($view, $container);
 
     if (!is_dir($config->application->cacheDir)) {
@@ -89,7 +89,7 @@ $container['voltService'] = function (ViewBaseInterface $view) use ($container, 
             'prefix'    => '-prefix-',
         ]
     );
-    
+
     return $volt;
 };
 

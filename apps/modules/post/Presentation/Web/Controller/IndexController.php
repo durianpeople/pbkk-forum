@@ -49,13 +49,12 @@ class IndexController extends Controller
                     $this->response->redirect('/');
                 }
             } catch (WrongLoginException $e) {
-              $this->flashSession->error($e->getMessage());
-              $this->response->redirect('/login');
+                $this->flashSession->error($e->getMessage());
+                $this->response->redirect('/login');
             } catch (NotFoundException $e) {
-              $this->flashSession->error($e->getMessage());
-              $this->response->redirect('/login');
+                $this->flashSession->error($e->getMessage());
+                $this->response->redirect('/login');
             }
-              
         }
     }
 
@@ -79,15 +78,15 @@ class IndexController extends Controller
             $request->password = $this->request->getPost('password', 'string');
             $registration_service = new RegistrationService();
             try {
-              if ($registration_service->execute($request)) {
-                $this->flashSession->success('User Created Successfully');
-                $this->response->setStatusCode(200, 'OK');
-              } else {
-                $this->flashSession->error('Failed to create User');
-                $this->response->setStatusCode(400, 'Bad request');
-              }
+                if ($registration_service->execute($request)) {
+                    $this->flashSession->success('User Created Successfully');
+                    $this->response->setStatusCode(200, 'OK');
+                } else {
+                    $this->flashSession->error('Failed to create User');
+                    $this->response->setStatusCode(400, 'Bad request');
+                }
             } catch (UserPersistException $e) {
-              $this->flashSession->error($e->getMessage());
+                $this->flashSession->error($e->getMessage());
             }
             $this->response->redirect('/register');
         }

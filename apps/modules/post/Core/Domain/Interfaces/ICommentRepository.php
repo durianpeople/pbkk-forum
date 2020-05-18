@@ -9,7 +9,8 @@ use Module\Post\Core\Domain\Model\Value\UserID;
 use Module\Post\Core\Domain\Model\Value\CommentID;
 use Module\Post\Core\Domain\Model\Value\PostID;
 
-interface ICommentRepository {
+interface ICommentRepository
+{
     public function all(): array;
     public function findByID(CommentID $comment_id): Comment;
     public function findByPostID(PostID $post_id): array;

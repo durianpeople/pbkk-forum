@@ -18,24 +18,23 @@ class PostRecord extends Model
         $this->setSource('posts');
 
         $this->hasManytoMany(
-          'id',
-          PostVotesRecord::class,
-          'voted_post_id',
-          'voter_id',
-          UserRecord::class,
-          'id',
-          [
-            'alias' => 'voted_members'
-          ]
+            'id',
+            PostVotesRecord::class,
+            'voted_post_id',
+            'voter_id',
+            UserRecord::class,
+            'id',
+            [
+                'alias' => 'voted_members'
+            ]
         );
         $this->hasMany(
-          'id',
-          CommentRecord::class,
-          'post_id',
-          [
-            'alias' => 'comments'
-          ]
+            'id',
+            CommentRecord::class,
+            'post_id',
+            [
+                'alias' => 'comments'
+            ]
         );
     }
-
 }

@@ -15,5 +15,4 @@ class UserRecord extends Model
         $this->setConnectionService('db');
         $this->setSource('users');
     }
-
 }

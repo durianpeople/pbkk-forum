@@ -33,7 +33,7 @@ class Module implements ModuleDefinitionInterface
             'Module\Post\Presentation\Web\Controller' => __DIR__ . '/Presentation/Web/Controller',
             'Module\Post\Presentation\Web\Validator' => __DIR__ . '/Presentation/Web/Validator',
             'Module\Post\Presentation\Api\Controller' => __DIR__ . '/Presentation/Api/Controller',
-            
+
         ]);
 
         $loader->register();

@@ -18,9 +18,9 @@ class PostDeleteService extends Injectable
         $post_id = new PostID($request->post_id);
         $user_id = new UserID($request->post_author_id);
         if ($post_repo->isAuthorizedPost($post_id, $user_id)) {
-          $post = $post_repo->findByID($post_id);
-          $post->will_be_deleted = true;        
-          return $post_repo->persist($post); 
+            $post = $post_repo->findByID($post_id);
+            $post->will_be_deleted = true;
+            return $post_repo->persist($post);
         } else return false;
     }
 }

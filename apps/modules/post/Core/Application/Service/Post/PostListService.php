@@ -22,8 +22,8 @@ class PostListService extends Injectable
             $item = new PostListItem();
             $item->post_id = $p->id->getID();
             $item->post_title = $p->title;
-            $item->post_author_name = $user_repo->findByID($p->author_id)->username; 
-            $item->post_author_id = $p->author_id->getID(); 
+            $item->post_author_name = $user_repo->findByID($p->author_id)->username;
+            $item->post_author_id = $p->author_id->getID();
             $item->post_created_date = $p->created_date;
             $item->post_votes = count($p->voted_members);
             $post_list[] = $item;

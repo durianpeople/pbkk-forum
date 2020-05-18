@@ -20,7 +20,7 @@ class UserEditService
     public function execute(UserEditRequest $request): bool
     {
         $user = $this->user_repo->find(new UserID($request->user_id));
-        
+
         if (isset($request->username)) {
             $user->changeUsername($request->username);
         }

@@ -18,16 +18,15 @@ class CommentRecord extends Model
         $this->setSource('comments');
 
         $this->hasManytoMany(
-          'id',
-          CommentVotesRecord::class,
-          'voted_comment_id',
-          'voter_id',
-          UserRecord::class,
-          'id',
-          [
-            'alias' => 'voted_members'
-          ]
+            'id',
+            CommentVotesRecord::class,
+            'voted_comment_id',
+            'voter_id',
+            UserRecord::class,
+            'id',
+            [
+                'alias' => 'voted_members'
+            ]
         );
     }
-
 }

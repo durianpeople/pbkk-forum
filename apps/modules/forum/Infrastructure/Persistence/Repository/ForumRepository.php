@@ -34,7 +34,7 @@ class ForumRepository implements IForumRepository
         foreach ($forum_record->banned_members as $b) {
             $bm[] = new UserID($b->id);
         }
-        
+
         $banned_members_setter->setValue($forum, $bm);
 
         return $forum;
@@ -200,7 +200,7 @@ class ForumRepository implements IForumRepository
         $forum_record->admin_id = $forum->admin_id->getIdentifier();
 
         $trx = (new Manager())->get();
-        
+
         try {
             $mr = MembersRecord::find([
                 'conditions' => 'forum_id = :forum_id:',

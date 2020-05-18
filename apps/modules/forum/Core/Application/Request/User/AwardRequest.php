@@ -2,7 +2,7 @@
 
 namespace Module\Forum\Core\Application\Request\User;
 
-class AwardRequest 
+class AwardRequest
 {
     public string $awarder_id;
     public string $awardee_id;

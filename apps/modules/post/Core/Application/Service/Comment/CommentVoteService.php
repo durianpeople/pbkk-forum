@@ -19,8 +19,8 @@ class CommentVoteService extends Injectable
         $comment_repo = $this->di->get('commentRepository');
         $comment = $comment_repo->findByID(new CommentID($request->voted_comment_id));
         if ($comment->addVote(new UserID($request->voter_id))) {
-          return $comment_repo->persist($comment); 
+            return $comment_repo->persist($comment);
         }
-        return false; 
+        return false;
     }
 }

@@ -9,7 +9,7 @@ return new Config(
         'url' => [
             'baseUrl' => getenv('BASE_URL'),
         ],
-        
+
         'application' => [
             'libraryDir' => APP_PATH . "/lib/",
             'cacheDir' => getenv('APP_MODE') == 'PRODUCTION' ? "/cache/" : APP_PATH . "/cache/",

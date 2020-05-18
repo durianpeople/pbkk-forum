@@ -14,5 +14,4 @@ class CommentVotesRecord extends Model
         $this->setConnectionService('db');
         $this->setSource('comment_votes');
     }
-
 }

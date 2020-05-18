@@ -17,8 +17,7 @@ class CommentCreateService extends Injectable
         $repo = $this->di->get('commentRepository');
 
         $comment = Comment::create($request->comment_content, new UserID($request->comment_author_id), new PostID($request->comment_post_id));
-        
-        return $repo->persist($comment); 
 
+        return $repo->persist($comment);
     }
 }

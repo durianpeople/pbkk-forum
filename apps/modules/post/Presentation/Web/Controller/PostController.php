@@ -30,10 +30,10 @@ class PostController extends Controller
     public function indexAction()
     {
         $auth_service = new AuthService;
-        $post_list_service = new PostListService; 
+        $post_list_service = new PostListService;
         if (!$auth_service->isLoggedIn()) {
-          $this->flashSession->error("You need to login first.");
-          return $this->response->redirect('/login');
+            $this->flashSession->error("You need to login first.");
+            return $this->response->redirect('/login');
         } else {
             try {
                 $user_info = $auth_service->getUserInfo();
@@ -51,7 +51,7 @@ class PostController extends Controller
     public function createAction()
     {
         $auth_service = new AuthService;
-        
+
         if ($auth_service->isLoggedIn() === false)
             return $this->response->redirect("/login");
         if ($this->request->isPost()) {
@@ -60,7 +60,7 @@ class PostController extends Controller
             $request = new PostCreateRequest;
             $request->post_author_id = $user->id->getID();
             $request->post_title = $this->request->getPost('post_title', 'string');
-            $request->post_content = $this->request->getPost('post_content', 'string'); 
+            $request->post_content = $this->request->getPost('post_content', 'string');
 
             $service = new PostCreateService;
             $service->execute($request);
@@ -76,22 +76,22 @@ class PostController extends Controller
     {
         $auth_service = new AuthService;
         if (!$auth_service->isLoggedIn()) {
-          $this->flashSession->error("You need to login first.");
-          return $this->response->redirect('/login');
-        } 
+            $this->flashSession->error("You need to login first.");
+            return $this->response->redirect('/login');
+        }
         $request = new PostShowRequest;
         $request->post_id = $this->request->get('id', 'string');
 
         $post_show_service = new PostShowService;
         try {
-          $user_info = $auth_service->getUserInfo();
-          $post_info = $post_show_service->execute($request);
-          $this->view->setVar('post_info', $post_info);
-          //$this->view->setVar('comment_list', $comment_list);
-          $this->view->setVar('user_info', $user_info);
+            $user_info = $auth_service->getUserInfo();
+            $post_info = $post_show_service->execute($request);
+            $this->view->setVar('post_info', $post_info);
+            //$this->view->setVar('comment_list', $comment_list);
+            $this->view->setVar('user_info', $user_info);
         } catch (NotFoundException $e) {
-          $this->flashSession->error('Post not found.');
-          $this->response->redirect('/post');
+            $this->flashSession->error('Post not found.');
+            $this->response->redirect('/post');
         }
     }
 
@@ -101,8 +101,8 @@ class PostController extends Controller
 
         if ($auth_service->isLoggedIn() === false)
             return $this->response->redirect('/login');
-          
-          try {
+
+        try {
             $user = $auth_service->getUser();
 
             $request = new PostDeleteRequest;
@@ -110,62 +110,62 @@ class PostController extends Controller
             $request->post_author_id = $user->id->getID();
 
             $service = new PostDeleteService;
-            if($service->execute($request)) {
-              $this->flashSession->success('Post Deleted');
+            if ($service->execute($request)) {
+                $this->flashSession->success('Post Deleted');
             } else {
-              $this->flashSession->error('Unauthorized User Access');
+                $this->flashSession->error('Unauthorized User Access');
             }
 
             $this->response->redirect("/post");
-          } catch (\Exception $e) {
-            echo $e-getMessage();
+        } catch (\Exception $e) {
+            echo $e - getMessage();
             die();
             $this->flashSession->error($e->getMessage());
             $this->response->redirect('/post');
-          }
-
+        }
     }
 
-    public function voteAction() {
+    public function voteAction()
+    {
         $auth_service = new AuthService;
 
         if ($auth_service->isLoggedIn() === false)
             return $this->response->redirect('/login');
 
         if ($this->request->get('type', 'string') == 'post') {
-          $request = new PostVoteRequest;
-          $request->voter_id = $auth_service->getUser()->id->getID();
-          $request->voted_post_id = $this->request->get('id', 'string');
+            $request = new PostVoteRequest;
+            $request->voter_id = $auth_service->getUser()->id->getID();
+            $request->voted_post_id = $this->request->get('id', 'string');
 
-          $service = new PostVoteService;
-          try {
-            $service->execute($request);
-            $this->flashSession->success('Voted succesfully');
-          } catch (DuplicateVoteException $e) {
-            $this->flashSession->error('You can\'t voted multiple times');
-          } catch (NotFoundException $e) {
-            $this->flashSession->error($e->getMessage());
-          }
+            $service = new PostVoteService;
+            try {
+                $service->execute($request);
+                $this->flashSession->success('Voted succesfully');
+            } catch (DuplicateVoteException $e) {
+                $this->flashSession->error('You can\'t voted multiple times');
+            } catch (NotFoundException $e) {
+                $this->flashSession->error($e->getMessage());
+            }
         } else if ($this->request->get('type', 'string') == 'comment') {
-          $request = new CommentVoteRequest;
-          $request->voter_id = $auth_service->getUser()->id->getID();
-          $request->voted_comment_id = $this->request->get('id', 'string');
+            $request = new CommentVoteRequest;
+            $request->voter_id = $auth_service->getUser()->id->getID();
+            $request->voted_comment_id = $this->request->get('id', 'string');
 
-          $service = new CommentVoteService;
-          try {
-            $service->execute($request);
-            $this->flashSession->success('Voted succesfully');
-          } catch (DuplicateVoteException $e) {
-            $this->flashSession->error('You can\'t voted multiple times');
-          } catch (NotFoundException $e) {
-            $this->flashSession->error($e->getMessage());
-          }
+            $service = new CommentVoteService;
+            try {
+                $service->execute($request);
+                $this->flashSession->success('Voted succesfully');
+            } catch (DuplicateVoteException $e) {
+                $this->flashSession->error('You can\'t voted multiple times');
+            } catch (NotFoundException $e) {
+                $this->flashSession->error($e->getMessage());
+            }
         }
-       return $this->response->redirect($_SERVER['HTTP_REFERER']);
-
+        return $this->response->redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function commentAction() {
+    public function commentAction()
+    {
         $auth_service = new AuthService;
 
         if ($auth_service->isLoggedIn() === false)
@@ -175,24 +175,25 @@ class PostController extends Controller
         $request->comment_author_id = $auth_service->getUser()->id->getID();
         $request->comment_post_id = $this->request->getPost('post_id', 'string');
         $request->comment_content = $this->request->getPost('comment_content', 'string');
-        
+
         $service = new CommentCreateService;
         try {
-          $service->execute($request);
-          $this->flashSession->success('Comment Created Successfully');
+            $service->execute($request);
+            $this->flashSession->success('Comment Created Successfully');
         } catch (\Exception $e) {
-          $this->flashSession->error($e->getMessage());
+            $this->flashSession->error($e->getMessage());
         }
         return $this->response->redirect('/post/show?id=' . $request->comment_post_id);
     }
-    
-    public function uncommentAction() {
+
+    public function uncommentAction()
+    {
         $auth_service = new AuthService;
 
         if ($auth_service->isLoggedIn() === false)
             return $this->response->redirect('/login');
-          
-          try {
+
+        try {
             $user = $auth_service->getUser();
 
             $request = new CommentDeleteRequest;
@@ -202,12 +203,10 @@ class PostController extends Controller
             $service = new CommentDeleteService;
             $service->execute($request);
             $this->flashSession->success('Comment Deleted');
-
-          } catch (\Exception $e) {
+        } catch (\Exception $e) {
 
             $this->flashSession->error($e->getMessage());
-          }
-         return $this->response->redirect($_SERVER['HTTP_REFERER']);
+        }
+        return $this->response->redirect($_SERVER['HTTP_REFERER']);
     }
-
 }

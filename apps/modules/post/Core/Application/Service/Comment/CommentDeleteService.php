@@ -17,9 +17,9 @@ class CommentDeleteService extends Injectable
         $comment_id = new CommentID($request->comment_id);
         $user_id = new UserID($request->comment_author_id);
         if ($comment_repo->isAuthorizedComment($comment_id, $user_id)) {
-          $comment = $comment_repo->findByID($comment_id);
-          $comment->will_be_deleted = true;        
-          return $comment_repo->persist($comment); 
+            $comment = $comment_repo->findByID($comment_id);
+            $comment->will_be_deleted = true;
+            return $comment_repo->persist($comment);
         } else return false;
     }
 }

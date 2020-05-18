@@ -26,19 +26,20 @@ class CommentRepository implements ICommentRepository
         $comment = new Comment(new CommentID($comment_record->id), $comment_record->content, new UserID($comment_record->author_id), new PostID($comment_record->post_id), $comment_record->created_date);
         $votes = [];
         foreach ($comment_record->voted_members as $cr) {
-          $votes[] = new UserID($cr->id);          
+            $votes[] = new UserID($cr->id);
         }
         $comment->voted_members = $votes;
         return $comment;
     }
 
-    public function all(): array {
-      $comments = [];
-      $comment_records = CommentRecord::find();
-      foreach ($comment_records as $comment_record) {
-        $comments[] = $this->reconstituteFromRecord($comment_record);
-      }
-      return $comments;
+    public function all(): array
+    {
+        $comments = [];
+        $comment_records = CommentRecord::find();
+        foreach ($comment_records as $comment_record) {
+            $comments[] = $this->reconstituteFromRecord($comment_record);
+        }
+        return $comments;
     }
 
     public function findByID(CommentID $comment_id): Comment
@@ -64,12 +65,13 @@ class CommentRepository implements ICommentRepository
         ]);
         if (!$comment_records) throw new NotFoundException("Comment not Found");
         foreach ($comment_records as $comment_record) {
-          $comments[] = $this->reconstituteFromRecord($comment_record);
+            $comments[] = $this->reconstituteFromRecord($comment_record);
         }
         return $comments;
     }
 
-    public function isAuthorizedComment(CommentID $comment_id, UserID $user_id): bool {
+    public function isAuthorizedComment(CommentID $comment_id, UserID $user_id): bool
+    {
         $comment_record = CommentRecord::findFirst([
             'conditions' => 'id = :id:',
             'bind' => [
@@ -78,10 +80,10 @@ class CommentRepository implements ICommentRepository
         ]);
         if (!$comment_record) throw new NotFoundException("Comment not Found");
         $user_record = UserRecord::findFirst([
-          'conditions' => 'id = :id:',
-          'bind' => [
-            'id' => $user_id->getID()
-          ]
+            'conditions' => 'id = :id:',
+            'bind' => [
+                'id' => $user_id->getID()
+            ]
         ]);
         if (!$user_record) throw new NotFoundException("User not Found");
         $post_id = $comment_record->post_id;
@@ -96,23 +98,23 @@ class CommentRepository implements ICommentRepository
     }
     //public function findAuthoredPost(UserID $author_id): Post
     //{
-        //$user_record = UserRecord::findFirst([
-            //'conditions' => 'username = :username:',
-            //'bind' => [
-                //'username' => $username
-            //]
-        //]);
-        //if (!$user_record) throw new NotFoundException;
+    //$user_record = UserRecord::findFirst([
+    //'conditions' => 'username = :username:',
+    //'bind' => [
+    //'username' => $username
+    //]
+    //]);
+    //if (!$user_record) throw new NotFoundException;
 
-        //$user = $this->reconstituteFromRecord($user_record);
-        //if (!$user->password->verify($password)) throw new WrongLoginException;
-        //return $user;
+    //$user = $this->reconstituteFromRecord($user_record);
+    //if (!$user->password->verify($password)) throw new WrongLoginException;
+    //return $user;
     //}
 
     public function persist(Comment $comment): bool
     {
         if ($comment->will_be_deleted) {
-          return $this->delete($comment);
+            return $this->delete($comment);
         }
         $comment_record = new CommentRecord();
         $comment_record->id = $comment->id->getID();
@@ -124,11 +126,11 @@ class CommentRepository implements ICommentRepository
         $trx = (new Manager())->get();
 
         try {
-            foreach($comment->voted_members as $vm) {
-              $vr = new CommentVotesRecord();
-              $vr->voter_id = $vm->getID();
-              $vr->voted_comment_id = $comment->id->getID();
-              $vr->save();
+            foreach ($comment->voted_members as $vm) {
+                $vr = new CommentVotesRecord();
+                $vr->voter_id = $vm->getID();
+                $vr->voted_comment_id = $comment->id->getID();
+                $vr->save();
             }
             $comment_record->save();
             $trx->commit();
@@ -147,18 +149,18 @@ class CommentRepository implements ICommentRepository
         $comment_record->title = $comment->title;
         $comment_record->author_id = $comment->author_id->getID();
         $comment_record->content = $comment->content;
-        $comment_record->created_date = $comment->created_date; 
+        $comment_record->created_date = $comment->created_date;
 
         $trx = (new Manager())->get();
-        
+
         try {
-          $voted_members = CommentVotesRecord::find([
-            'conditions' => 'voted_comment_id = :voted_comment_id:',
-            'bind' => [
-              'voted_comment_id' => $comment->id->getID()
-            ]
-          ]);
-          $voted_members->delete();
+            $voted_members = CommentVotesRecord::find([
+                'conditions' => 'voted_comment_id = :voted_comment_id:',
+                'bind' => [
+                    'voted_comment_id' => $comment->id->getID()
+                ]
+            ]);
+            $voted_members->delete();
             $comment_record->delete();
             $trx->commit();
             return true;

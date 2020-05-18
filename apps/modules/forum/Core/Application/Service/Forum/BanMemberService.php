@@ -24,14 +24,14 @@ class BanMemberService
     {
         $forum = $this->forum_repo->find(new ForumID($request->forum_id));
         $user = $this->user_repo->find(new UserID($request->user_id));
-        
+
         if ($forum->admin_id->getIdentifier() != $request->admin_id)
             throw new \DomainException("User has no rights to perform ban");
 
         $forum->removeMember($user);
         $forum->banMember($user);
 
-        
+
         $this->forum_repo->persist($forum);
         return true;
     }
