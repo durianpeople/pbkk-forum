@@ -1,12 +1,11 @@
 <?php
 
-namespace Module\Forum\Core\Application\Service\User;
+namespace Module\Integration\Core\Application\Service;
 
-use Module\Forum\Core\Application\Request\User\UserEditRequest;
-
-use Module\Forum\Core\Domain\Model\Value\Password;
-use Module\Forum\Core\Domain\Interfaces\IUserRepository;
-use Module\Forum\Core\Domain\Model\Value\UserID;
+use Module\Integration\Core\Application\Request\UserEditRequest;
+use Module\Integration\Core\Domain\Interfaces\IUserRepository;
+use Module\Integration\Core\Domain\Model\Password;
+use Module\Integration\Core\Domain\Model\UserID;
 
 class UserEditService
 {

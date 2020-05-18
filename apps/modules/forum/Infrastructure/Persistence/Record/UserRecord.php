@@ -11,7 +11,6 @@ class UserRecord extends Model
 {
     public string $id;
     public string $username;
-    public string $password_hash;
 
     public function initialize()
     {

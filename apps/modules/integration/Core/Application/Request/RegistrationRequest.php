@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Forum\Core\Application\Request\User;
+namespace Module\Integration\Core\Application\Request;
 
 class RegistrationRequest
 {

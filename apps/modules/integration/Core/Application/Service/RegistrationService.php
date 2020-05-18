@@ -1,11 +1,10 @@
 <?php
 
-namespace Module\Forum\Core\Application\Service\User;
+namespace Module\Integration\Core\Application\Service;
 
-use Module\Forum\Core\Application\Request\User\RegistrationRequest;
-
-use Module\Forum\Core\Domain\Model\Entity\User;
-use Module\Forum\Core\Domain\Interfaces\IUserRepository;
+use Module\Integration\Core\Application\Request\RegistrationRequest;
+use Module\Integration\Core\Domain\Interfaces\IUserRepository;
+use Module\Integration\Core\Domain\Model\User;
 
 class RegistrationService
 {

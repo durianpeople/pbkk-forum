@@ -22,7 +22,7 @@ class UserRepository implements IUserRepository
 {
     private function reconstituteFromRecord(UserRecord $user_record): User
     {
-        $user = new User(new UserID($user_record->id), $user_record->username, new Password($user_record->password_hash));
+        $user = new User(new UserID($user_record->id), $user_record->username);
 
         $award_records = $user_record->awards;
 
@@ -51,22 +51,6 @@ class UserRepository implements IUserRepository
         return $this->reconstituteFromRecord($user_record);
     }
 
-    public function findByUserPass(string $username, string $password): User
-    {
-        /** @var UserRecord */
-        $user_record = UserRecord::findFirst([
-            'conditions' => 'username = :username:',
-            'bind' => [
-                'username' => $username
-            ]
-        ]);
-        if (!$user_record) throw new NotFoundException;
-
-        $user = $this->reconstituteFromRecord($user_record);
-        if (!$user->password->testAgainst($password)) throw new WrongPasswordException;
-        return $user;
-    }
-
     /**
      * Get forum members
      *
@@ -92,12 +76,6 @@ class UserRepository implements IUserRepository
 
     public function persist(User $user): bool
     {
-        /** @var UserRecord */
-        $user_record = new UserRecord();
-        $user_record->id = $user->id->getIdentifier();
-        $user_record->username = $user->username;
-        $user_record->password_hash = $user->password->getHash();
-
         $reflection = new ReflectionClass(User::class);
         $awards_getter = $reflection->getProperty('awards');
         $awards_getter->setAccessible(true);
@@ -112,8 +90,6 @@ class UserRepository implements IUserRepository
                 $ar->awarder_id = $aw->awarder_id->getIdentifier();
                 $ar->save();
             }
-
-            $user_record->save();
             $trx->commit();
             return true;
         } catch (\Exception $e) {

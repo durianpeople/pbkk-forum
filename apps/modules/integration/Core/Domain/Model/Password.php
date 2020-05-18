@@ -1,8 +1,8 @@
 <?php
 
-namespace Module\Forum\Core\Domain\Model\Value;
+namespace Module\Integration\Core\Domain\Model;
 
-use Module\Forum\Core\Exception\PasswordAssertionError;
+use Module\Integration\Core\Exception\PasswordAssertionError;
 
 class Password
 {

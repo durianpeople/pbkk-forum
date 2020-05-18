@@ -1,11 +1,11 @@
 <?php
 
-namespace Module\Forum\Core\Application\Service\User;
+namespace Module\Integration\Core\Application\Service;
 
-use Module\Forum\Core\Application\Request\User\UserInfoRenewalRequest;
-use Module\Forum\Core\Application\Response\UserInfo;
-use Module\Forum\Core\Domain\Interfaces\IUserRepository;
-use Module\Forum\Core\Domain\Model\Value\UserID;
+use Module\Integration\Core\Application\Request\UserInfoRenewalRequest;
+use Module\Integration\Core\Application\Response\UserInfo;
+use Module\Integration\Core\Domain\Interfaces\IUserRepository;
+use Module\Integration\Core\Domain\Model\UserID;
 
 class UserInfoRenewalService
 {

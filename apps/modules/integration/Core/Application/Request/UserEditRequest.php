@@ -1,8 +1,6 @@
 <?php
 
-namespace Module\Forum\Core\Application\Request\User;
-
-use Module\Forum\Core\Domain\Model\Entity\User;
+namespace Module\Integration\Core\Application\Request;
 
 class UserEditRequest
 {

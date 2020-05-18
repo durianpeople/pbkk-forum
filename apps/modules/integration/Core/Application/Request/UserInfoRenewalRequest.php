@@ -1,8 +1,8 @@
 <?php
 
-namespace Module\Forum\Core\Application\Request\User;
+namespace Module\Integration\Core\Application\Request;
 
-use Module\Forum\Core\Application\Response\UserInfo;
+use Module\Integration\Core\Application\Response\UserInfo;
 
 class UserInfoRenewalRequest
 {

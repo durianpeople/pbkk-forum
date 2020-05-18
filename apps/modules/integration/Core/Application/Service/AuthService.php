@@ -1,13 +1,10 @@
 <?php
 
-namespace Module\Forum\Core\Application\Service\User;
+namespace Module\Integration\Core\Application\Service;
 
-use Phalcon\Di\Injectable;
-
-use Module\Forum\Core\Application\Request\User\LoginRequest;
-use Module\Forum\Core\Application\Response\UserInfo;
-
-use Module\Forum\Core\Domain\Interfaces\IUserRepository;
+use Module\Integration\Core\Application\Request\LoginRequest;
+use Module\Integration\Core\Application\Response\UserInfo;
+use Module\Integration\Core\Domain\Interfaces\IUserRepository;
 
 class AuthService
 {
