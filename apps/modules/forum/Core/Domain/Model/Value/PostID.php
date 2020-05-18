@@ -2,15 +2,15 @@
 
 namespace Module\Forum\Core\Domain\Model\Value;
 
-class UserID
+class PostID
 {
     protected string $guid;
 
-    public static function generate(): UserID
+    public static function generate(): PostID
     {
         $len = 16;
         $secure = true;
-        return new UserID(bin2hex(openssl_random_pseudo_bytes($len, $secure)));
+        return new PostID(bin2hex(openssl_random_pseudo_bytes($len, $secure)));
     }
 
     public function __construct(string $guid)
