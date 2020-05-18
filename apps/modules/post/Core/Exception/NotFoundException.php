@@ -6,8 +6,8 @@ use Exception;
 
 class NotFoundException extends Exception
 {
-    public function __construct(string $e)
+    public function __construct()
     {
-        parent::__construct($e);
+        parent::__construct('Object not found');
     }
 }

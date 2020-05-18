@@ -3,19 +3,15 @@
 namespace Module\Post\Core\Domain\Repository;
 
 use Module\Post\Core\Domain\Interfaces\IPostRepository;
-use Module\Post\Core\Domain\Interfaces\ICommentRepository;
 use Module\Post\Core\Domain\Model\Entity\Post;
-use Module\Post\Core\Domain\Model\Entity\User;
 use Module\Post\Core\Domain\Model\Value\PostID;
 use Module\Post\Core\Domain\Model\Value\UserID;
 use Module\Post\Core\Domain\Model\Value\CommentID;
 use Module\Post\Core\Domain\Record\PostRecord;
 use Module\Post\Core\Domain\Record\UserRecord;
 use Module\Post\Core\Domain\Record\PostVotesRecord;
-use Module\Post\Core\Domain\Record\CommentRecord;
-
+use Module\Post\Core\Exception\NotFoundException;
 use Phalcon\Mvc\Model\Transaction\Manager;
-use ReflectionClass;
 
 class PostRepository implements IPostRepository
 {
@@ -66,7 +62,7 @@ class PostRepository implements IPostRepository
                 'id' => $post_id->getID()
             ]
         ]);
-        if (!$post_record) throw new NotFoundException;
+        if (!$post_record) throw new NotFoundException();
         $user_record = UserRecord::findFirst([
             'conditions' => 'id = :id:',
             'bind' => [

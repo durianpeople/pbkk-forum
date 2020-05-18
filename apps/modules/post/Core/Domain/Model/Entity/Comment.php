@@ -14,6 +14,7 @@ class Comment
     protected UserID $author_id;
     protected PostID $post_id;
     protected string $created_date;
+    /** @var UserID[] */
     protected array $voted_members = [];
     protected bool $will_be_deleted;
 
