@@ -1,7 +1,8 @@
-*
-!/apps
-!/apps/modules
-!/apps/modules/forum
-!/apps/modules/forum/**
-!.gitignore
-!readme.md
+/apps/cache
+/apps/cache/**
+/apps/lib
+/apps/lib/**
+/apps/.env
+
+/vendor
+/vendor/**
