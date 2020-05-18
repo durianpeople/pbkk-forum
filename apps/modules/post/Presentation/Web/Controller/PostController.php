@@ -118,7 +118,7 @@ class PostController extends Controller
 
             $this->response->redirect("/post");
         } catch (\Exception $e) {
-            echo $e - getMessage();
+            echo $e->getMessage();
             die();
             $this->flashSession->error($e->getMessage());
             $this->response->redirect('/post');
