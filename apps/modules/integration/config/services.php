@@ -53,5 +53,5 @@ $di->set('db', function () {
 
 
 #region Event listeners
-DomainEventPublisher::instance()->subscribe();
+
 #endregion
