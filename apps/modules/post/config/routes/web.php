@@ -7,21 +7,6 @@ $mod_config = [
     'module' => $moduleName,
 ];
 
-$router->add('/login', array_merge($mod_config, [
-    'controller' => 'index',
-    'action' => 'login'
-]));
-
-$router->add('/logout', array_merge($mod_config, [
-    'controller' => 'index',
-    'action' => 'logout'
-]));
-
-$router->add('/register', array_merge($mod_config, [
-    'controller' => 'index',
-    'action' => 'register'
-]));
-
 $router->add('/post', array_merge($mod_config, [
     'controller' => 'post',
     'action' => 'index'

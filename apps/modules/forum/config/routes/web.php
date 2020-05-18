@@ -9,21 +9,6 @@ $mod_config = [
 
 /** @var Router $router */
 
-$router->add('/login', array_merge($mod_config, [
-    'controller' => 'login',
-    'action' => 'index'
-]));
-
-$router->add('/logout', array_merge($mod_config, [
-    'controller' => 'index',
-    'action' => 'logout'
-]));
-
-$router->add('/register', array_merge($mod_config, [
-    'controller' => 'register',
-    'action' => 'index'
-]));
-
 $router->add('/edit', array_merge($mod_config, [
     'controller' => 'index',
     'action' => 'edit'
