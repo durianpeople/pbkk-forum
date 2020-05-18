@@ -20,5 +20,15 @@ return array(
         'defaultRouting' => false,
         'defaultController' => 'index',
         'defaultAction' => 'index'
-    ]
+    ],
+    'integration' => [
+        'namespace' => 'Module\Integration',
+        'webControllerNamespace' => 'Module\Integration\Presentation\Web\Controller',
+        'apiControllerNamespace' => '',
+        'className' => 'Module\Integration\Module',
+        'path' => APP_PATH . '/modules/integration/Module.php',
+        'defaultRouting' => false,
+        'defaultController' => 'index',
+        'defaultAction' => 'index'
+    ],
 );
