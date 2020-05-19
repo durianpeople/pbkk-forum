@@ -1,19 +1,10 @@
 <?php
 
-use Common\Events\DomainEventPublisher;
-use Module\Forum\Core\Application\Service\Forum\BanMemberService;
-use Module\Forum\Core\Application\Service\Forum\CreateForumService;
-use Module\Forum\Core\Application\Service\Forum\JoinForumService;
-use Module\Forum\Core\Application\Service\Forum\LeaveForumService;
-use Module\Forum\Core\Application\Service\Forum\ListForumService;
-use Module\Forum\Core\Application\Service\Forum\ViewForumService;
-use Module\Forum\Core\Application\Service\User\AuthService;
-use Module\Forum\Core\Application\Service\User\AwardService;
-use Module\Forum\Core\Application\Service\User\RegistrationService;
-use Module\Forum\Core\Application\Service\User\UserEditService;
-use Module\Forum\Core\Application\Service\User\UserInfoRenewalService;
-use Module\Forum\Infrastructure\Persistence\Repository\ForumRepository;
-use Module\Forum\Infrastructure\Persistence\Repository\UserRepository;
+use Module\Integration\Core\Application\Request\UserInfoRenewalRequest;
+use Module\Integration\Core\Application\Service\AuthService;
+use Module\Integration\Core\Application\Service\RegistrationService;
+use Module\Integration\Core\Application\Service\UserEditService;
+use Module\Integration\Infrastructure\Persistence\Repository\UserRepository;
 use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\View;
 
@@ -43,15 +34,26 @@ $di->set('db', function () {
 });
 
 #region Repositories
-
+$di->set('userRepository', function(){
+    return new UserRepository;
+});
 #endregion
 
 
 #region Services
+$di->set('authService', function () use ($di) {
+    return new AuthService($di->get('userRepository'));
+});
 
-#endregion
+$di->set('registrationService', function () use ($di) {
+    return new RegistrationService($di->get('userRepository'));
+});
 
+$di->set('userEditService', function () use ($di) {
+    return new UserEditService($di->get('userRepository'));
+});
 
-#region Event listeners
-
+$di->set('userInfoRenewalService', function () use ($di) {
+    return new UserInfoRenewalRequest($di->get('userRepository'));
+});
 #endregion

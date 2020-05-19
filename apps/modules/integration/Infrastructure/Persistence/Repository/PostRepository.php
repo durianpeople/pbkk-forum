@@ -23,7 +23,8 @@ class PostRepository implements IPostRepository
             $post_record->title,
             $post_record->content,
             new UserID($post_record->author_id),
-            new DateTime($post_record->created_date)
+            new DateTime($post_record->created_date),
+            $post_record->countVotes()
         );
         return $post;
     }

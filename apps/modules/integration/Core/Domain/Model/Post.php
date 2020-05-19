@@ -13,6 +13,7 @@ use Module\Integration\Core\Domain\Event\PostIntegrationCreated;
  * @property-read string $content
  * @property-read UserID $author_id
  * @property-read DateTime $created_date
+ * @property-read int $votes_count
  */
 class Post
 {
@@ -22,6 +23,7 @@ class Post
     protected string $content;
     protected UserID $author_id;
     protected DateTime $created_date;
+    protected int $votes_count;
 
     public static function create(ForumID $forum_id, string $title, string $content, UserID $author_id): Post
     {
@@ -38,10 +40,10 @@ class Post
                 $datetime->format('F j, Y, g:i a')
             )
         );
-        return new self($forum_id, $post_id, $title, $content, $author_id, $datetime);
+        return new self($forum_id, $post_id, $title, $content, $author_id, $datetime, 0);
     }
 
-    public function __construct(ForumID $forum_id, PostID $id, string $title, string $content, UserID $author_id, DateTime $created_at)
+    public function __construct(ForumID $forum_id, PostID $id, string $title, string $content, UserID $author_id, DateTime $created_at, int $votes_count)
     {
         $this->forum_id = $forum_id;
         $this->id = $id;
@@ -49,6 +51,7 @@ class Post
         $this->content = $content;
         $this->author_id = $author_id;
         $this->created_date = $created_at;
+        $this->votes_count = $votes_count;
     }
 
     public function __get($val)
@@ -64,8 +67,10 @@ class Post
                 return $this->content;
             case 'author_id':
                 return $this->author_id;
-            case 'created_date            ':
+            case 'created_date':
                 return $this->created_date;
+            case 'votes_count':
+                return $this->votes_count;
         }
     }
 }
