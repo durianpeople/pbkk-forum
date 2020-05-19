@@ -7,6 +7,7 @@ use Module\Post\Core\Application\EventSubscriber\PostEventSubscriber;
 use Module\Post\Infrastructure\Persistence\Repository\PostRepository;
 use Phalcon\Di\DiInterface;
 use Phalcon\Security;
+use Phalcon\Escaper;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Event;
 use Phalcon\Events\Manager;
@@ -121,6 +122,42 @@ $container->set(
     },
     true
 );
+
+$container->set(
+    'flash',
+    function () {
+        $flash = new FlashDirect(
+            [
+                'error'   => 'alert alert-danger',
+                'success' => 'alert alert-success',
+                'notice'  => 'alert alert-info',
+                'warning' => 'alert alert-warning',
+            ]
+        );
+
+        return $flash;
+    }
+);
+
+$container->set('flashSession', function() {
+  $session = new Session();
+  $adapter = new Stream([
+    'savePath' => APP_PATH . '/cache'
+  ]);
+  $session->setAdapter($adapter);
+  $escaper = new Escaper();
+  
+	$flash = new FlashSession($escaper, $session);
+  $flash->setCssClasses(
+      [
+          'error'   => 'alert alert-danger',
+          'success' => 'alert alert-success',
+          'notice'  => 'alert alert-info',
+          'warning' => 'alert alert-warning',
+      ]
+  );
+  return $flash;
+});
 
 /** @var DiInterface $container */
 

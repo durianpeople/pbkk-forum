@@ -73,7 +73,7 @@
       </div>
       <div class="form-group has-error">
         <label>Old Password</label>
-        <input name="profile_old_password" class="form-control" rows="6" placeholder="Type Your New Password Here"></input>
+        <input name="profile_old_password" class="form-control" rows="6" placeholder="Type Your Old Password Here" required></input>
       </div>
       <div class="form-group has-error">
         <label>New Password</label>

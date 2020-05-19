@@ -30,6 +30,9 @@ class ProfileController extends AuthenticatedBaseController
                 $this->flashSession->error('Konfirmasi Password Tidak Cocok.');
                 return $this->response->redirect('/profile');
             }
+            if ($request->new_password == '') {
+                unset($request->new_password);
+            }
             try {
                 if ($this->user_edit_service->execute($request)) {
                     $ui = new stdClass;
