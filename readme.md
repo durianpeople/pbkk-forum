@@ -37,5 +37,4 @@ pembagian 2:
 
 pembagian 3:
 - Sambungin post ke forum
-- Feed semua forum
 - View post di forum
