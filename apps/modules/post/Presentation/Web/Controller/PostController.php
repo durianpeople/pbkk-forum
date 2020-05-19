@@ -4,7 +4,6 @@ namespace Module\Post\Presentation\Web\Controller;
 
 use Phalcon\Mvc\Controller;
 
-use Module\Post\Core\Application\Service\User\AuthService;
 use Module\Post\Core\Application\Service\Post\PostListService;
 use Module\Post\Core\Application\Service\Post\PostShowService;
 use Module\Post\Core\Application\Service\Post\PostCreateService;
@@ -29,20 +28,19 @@ class PostController extends Controller
 {
     public function indexAction()
     {
-        $auth_service = new AuthService;
         $post_list_service = new PostListService;
-        if (!$auth_service->isLoggedIn()) {
+        if (!$this->session->has('user_info')) {
             $this->flashSession->error("You need to login first.");
             return $this->response->redirect('/login');
         } else {
             try {
-                $user_info = $auth_service->getUserInfo();
+                $user_info = $this->session->get('user_info');
                 $posts = $post_list_service->execute();
                 $this->view->setVar('user_info', $user_info);
                 $this->view->setVar('posts', $posts);
             } catch (NotFoundException $e) {
                 $this->flashSession->error($e->getMessage());
-                $auth_service->logout();
+                $this->session->remove('user_info');
                 $this->response->redirect("/");
             }
         }
@@ -50,9 +48,8 @@ class PostController extends Controller
 
     public function createAction()
     {
-        $auth_service = new AuthService;
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             return $this->response->redirect("/login");
         if ($this->request->isPost()) {
             $user = $auth_service->getUser();
@@ -67,15 +64,14 @@ class PostController extends Controller
             $this->flashSession->success('Post Created');
             $this->response->redirect('/post');
         } else {
-            $user_info = $auth_service->getUserInfo();
+            $user_info = $this->session->get('user_info');
             $this->view->setVar('user_info', $user_info);
         }
     }
 
     public function showAction()
     {
-        $auth_service = new AuthService;
-        if (!$auth_service->isLoggedIn()) {
+        if (!$this->session->has('user_info')) {
             $this->flashSession->error("You need to login first.");
             return $this->response->redirect('/login');
         }
@@ -84,7 +80,7 @@ class PostController extends Controller
 
         $post_show_service = new PostShowService;
         try {
-            $user_info = $auth_service->getUserInfo();
+            $user_info = $this->session->get('user_info');
             $post_info = $post_show_service->execute($request);
             $this->view->setVar('post_info', $post_info);
             //$this->view->setVar('comment_list', $comment_list);
@@ -97,9 +93,8 @@ class PostController extends Controller
 
     public function deleteAction()
     {
-        $auth_service = new AuthService;
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             return $this->response->redirect('/login');
 
         try {
@@ -127,9 +122,8 @@ class PostController extends Controller
 
     public function voteAction()
     {
-        $auth_service = new AuthService;
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             return $this->response->redirect('/login');
 
         if ($this->request->get('type', 'string') == 'post') {
@@ -166,9 +160,8 @@ class PostController extends Controller
 
     public function commentAction()
     {
-        $auth_service = new AuthService;
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             return $this->response->redirect('/login');
 
         $request = new CommentCreateRequest;
@@ -188,9 +181,8 @@ class PostController extends Controller
 
     public function uncommentAction()
     {
-        $auth_service = new AuthService;
 
-        if ($auth_service->isLoggedIn() === false)
+        if ($this->session->has('user_info') === false)
             return $this->response->redirect('/login');
 
         try {

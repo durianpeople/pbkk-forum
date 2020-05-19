@@ -1,8 +1,8 @@
 <?php
 
-namespace Module\Forum\Presentation\Web\Controller;
+namespace Module\Integration\Presentation\Web\Controller;
 
-use Module\Forum\Core\Application\Response\UserInfo;
+use Module\Integration\Core\Application\Response\UserInfo;
 
 use Phalcon\Mvc\Controller;
 use stdClass;

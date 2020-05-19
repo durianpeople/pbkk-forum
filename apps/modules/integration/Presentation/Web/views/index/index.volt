@@ -22,10 +22,9 @@
 {% endblock %}
 {% block navbar_content %}
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    {% if loggedin %}
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/post">Posts</a>
+        <a class="nav-link" href="/forum">Forum</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -35,33 +34,16 @@
       </ul>
       </li>
     </ul>
-    {% endif %}
   </div>
 {% endblock %}
 {% block content %}
 <div class="inner cover">
-{% if loggedin %}
   <h1> Hello, {{ user_info.username }} </h1>
   <h2>Browse posts using navbar</h2>
   <br>
   <p>Or you can Click Here</p>
   <p class="lead">
-    <a href="/post" class="btn btn-outline-light">Browse Posts</a>
+    <a href="/forum" class="btn btn-outline-light">Browse Forums</a>
   </p>
-{% else %}
-  <h1 class="cover-heading">DISPLAY</h1>
-  <p class="lead">
-    Discuss & play
-  </p>
-  <p class="lead">
-    <a href="/register" class="btn btn-outline-light">Sign Up here!</a>
-  </p>
-  <p class="lead small">
-    Already Have an account?
-  </p>
-  <p class="lead">
-    <a href="/login" class="btn btn-outline-light">Sign In here!</a>
-  </p>
-{% endif %} 
 </div>
 {% endblock %}

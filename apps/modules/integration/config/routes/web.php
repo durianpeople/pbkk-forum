@@ -28,3 +28,8 @@ $router->add('/register', array_merge($mod_config, [
     'controller' => 'register',
     'action' => 'index'
 ]));
+
+$router->add('/forum_posts', array_merge($mod_config, [
+    'controller' => 'post',
+    'action' => 'index'
+]));

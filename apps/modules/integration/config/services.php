@@ -2,8 +2,10 @@
 
 use Module\Integration\Core\Application\Request\UserInfoRenewalRequest;
 use Module\Integration\Core\Application\Service\AuthService;
+use Module\Integration\Core\Application\Service\ListPostService;
 use Module\Integration\Core\Application\Service\RegistrationService;
 use Module\Integration\Core\Application\Service\UserEditService;
+use Module\Integration\Infrastructure\Persistence\Repository\PostRepository;
 use Module\Integration\Infrastructure\Persistence\Repository\UserRepository;
 use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\View;
@@ -37,6 +39,10 @@ $di->set('db', function () {
 $di->set('userRepository', function(){
     return new UserRepository;
 });
+
+$di->set('postRepository', function(){
+    return new PostRepository;
+});
 #endregion
 
 
@@ -55,5 +61,9 @@ $di->set('userEditService', function () use ($di) {
 
 $di->set('userInfoRenewalService', function () use ($di) {
     return new UserInfoRenewalRequest($di->get('userRepository'));
+});
+
+$di->set('listPostService', function () use ($di) {
+    return new ListPostService($di->get('postRepository'), $di->get('userRepository'));
 });
 #endregion

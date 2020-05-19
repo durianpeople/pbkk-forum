@@ -17,6 +17,8 @@
         <a href="/forum/join?id={{forum.forum_id}}"><button type="button"
                 class="btn btn-primary btn-sm">Join</button></a>
         {%else%}
+        <a href="/forum_posts?id={{forum.forum_id}}"><button type="button"
+                class="btn btn-primary btn-sm">View posts</button></a>
         <a href="/forum/leave?id={{forum.forum_id}}"><button type="button"
                 class="btn btn-danger btn-sm">Leave</button></a>
         {%endif%}

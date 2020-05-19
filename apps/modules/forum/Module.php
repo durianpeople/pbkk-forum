@@ -16,7 +16,8 @@ class Module implements ModuleDefinitionInterface
 
             'Module\Forum\Core\Domain\Interfaces' => __DIR__ . '/Core/Domain/Interfaces',
             'Module\Forum\Core\Domain\Event' => __DIR__ . '/Core/Domain/Event',
-            'Module\Forum\Core\Domain\Model' => __DIR__ . '/Core/Domain/Model',
+            'Module\Forum\Core\Domain\Model\Entity' => __DIR__ . '/Core/Domain/Model/Entity',
+            'Module\Forum\Core\Domain\Model\Value' => __DIR__ . '/Core/Domain/Model/Value',
             'Module\Forum\Core\Domain\Service' => __DIR__ . '/Core/Domain/Service',
 
             'Module\Forum\Core\Application\Request' => __DIR__ . '/Core/Application/Request',
