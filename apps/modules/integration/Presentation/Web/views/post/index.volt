@@ -33,7 +33,7 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/post">Posts</a>
+        <a class="nav-link" href="/forum">Forums</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -51,7 +51,7 @@
       </nav>
         <div class="row">
           <div class="col-12">
-            <h2>Forum</h2>
+            <h2>{{forum_name}}</h2>
             <table id="post-table" class="table table-striped table-bordered table-responsive-lg">
               <thead class="thead-light">
                 <tr>

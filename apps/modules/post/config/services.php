@@ -46,7 +46,3 @@ $di->set('commentRepository', function () {
     return new CommentRepository();
 });
 #endregion
-
-#region Events
-DomainEventPublisher::instance()->subscribe(new PostEventSubscriber($di->get('postRepository')));
-#endregion

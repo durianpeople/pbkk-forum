@@ -38,3 +38,8 @@ $router->add('/forum_posts', array_merge($mod_config, [
     'controller' => 'post',
     'action' => 'index'
 ]));
+
+$router->add('/post/create', array_merge($mod_config, [
+    'controller' => 'post',
+    'action' => 'create'
+]));

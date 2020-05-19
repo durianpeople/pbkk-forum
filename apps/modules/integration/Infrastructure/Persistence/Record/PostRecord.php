@@ -8,6 +8,7 @@ use Phalcon\Mvc\Model;
 
 /**
  * @method integer countVotes()
+ * @property-read PostForumRecord $post_forum
  */
 class PostRecord extends Model
 {
@@ -32,6 +33,15 @@ class PostRecord extends Model
             'id',
             [
                 'alias' => 'votes'
+            ]
+        );
+
+        $this->hasOne(
+            'id',
+            PostForumRecord::class,
+            'post_id',
+            [
+                'alias' => 'post_forum'
             ]
         );
     }

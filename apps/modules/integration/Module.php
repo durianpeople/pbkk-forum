@@ -29,6 +29,7 @@ class Module implements ModuleDefinitionInterface
 
             'Module\Integration\Infrastructure\Persistence\Repository' => __DIR__ . '/Infrastructure/Persistence/Repository',
             'Module\Integration\Infrastructure\Persistence\Record' => __DIR__ . '/Infrastructure/Persistence/Record',
+            'Module\Post\Infrastructure\Persistence\Record' => APP_PATH . '/modules/post/Infrastructure/Persistence/Record',
 
             'Module\Integration\Presentation\Web\Controller' => __DIR__ . '/Presentation/Web/Controller',
             'Module\Integration\Presentation\Web\Validator' => __DIR__ . '/Presentation/Web/Validator',

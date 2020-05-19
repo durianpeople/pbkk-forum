@@ -40,7 +40,7 @@ class PostController extends Controller
                 $this->view->setVar('posts', $posts);
             } catch (NotFoundException $e) {
                 $this->flashSession->error($e->getMessage());
-                $this->session->remove('user_info');
+                $this->session->destroy();
                 $this->response->redirect("/");
             }
         }
@@ -52,17 +52,15 @@ class PostController extends Controller
         if ($this->session->has('user_info') === false)
             return $this->response->redirect("/login");
         if ($this->request->isPost()) {
-            $user = $auth_service->getUser();
-
             $request = new PostCreateRequest;
-            $request->post_author_id = $user->id->getID();
+            $request->post_author_id = $this->session->get('user_info')->id;
             $request->post_title = $this->request->getPost('post_title', 'string');
             $request->post_content = $this->request->getPost('post_content', 'string');
 
             $service = new PostCreateService;
             $service->execute($request);
             $this->flashSession->success('Post Created');
-            $this->response->redirect('/post');
+            $this->response->redirect('/forum_posts');
         } else {
             $user_info = $this->session->get('user_info');
             $this->view->setVar('user_info', $user_info);
@@ -87,7 +85,7 @@ class PostController extends Controller
             $this->view->setVar('user_info', $user_info);
         } catch (NotFoundException $e) {
             $this->flashSession->error('Post not found.');
-            $this->response->redirect('/post');
+            $this->response->redirect('/forum_posts');
         }
     }
 
@@ -98,11 +96,9 @@ class PostController extends Controller
             return $this->response->redirect('/login');
 
         try {
-            $user = $auth_service->getUser();
-
             $request = new PostDeleteRequest;
             $request->post_id = $this->request->get('id', 'string');
-            $request->post_author_id = $user->id->getID();
+            $request->post_author_id = $this->session->get('user_info')->id;
 
             $service = new PostDeleteService;
             if ($service->execute($request)) {
@@ -111,12 +107,12 @@ class PostController extends Controller
                 $this->flashSession->error('Unauthorized User Access');
             }
 
-            $this->response->redirect("/post");
+            $this->response->redirect("/forum_posts");
         } catch (\Exception $e) {
             echo $e->getMessage();
             die();
             $this->flashSession->error($e->getMessage());
-            $this->response->redirect('/post');
+            $this->response->redirect('/forum_posts');
         }
     }
 
@@ -128,7 +124,7 @@ class PostController extends Controller
 
         if ($this->request->get('type', 'string') == 'post') {
             $request = new PostVoteRequest;
-            $request->voter_id = $auth_service->getUser()->id->getID();
+            $request->voter_id = $this->session->get('user_info')->id;
             $request->voted_post_id = $this->request->get('id', 'string');
 
             $service = new PostVoteService;
@@ -142,7 +138,7 @@ class PostController extends Controller
             }
         } else if ($this->request->get('type', 'string') == 'comment') {
             $request = new CommentVoteRequest;
-            $request->voter_id = $auth_service->getUser()->id->getID();
+            $request->voter_id = $this->session->get('user_info')->id;
             $request->voted_comment_id = $this->request->get('id', 'string');
 
             $service = new CommentVoteService;
@@ -165,7 +161,7 @@ class PostController extends Controller
             return $this->response->redirect('/login');
 
         $request = new CommentCreateRequest;
-        $request->comment_author_id = $auth_service->getUser()->id->getID();
+        $request->comment_author_id = $this->session->get('user_info')->id;
         $request->comment_post_id = $this->request->getPost('post_id', 'string');
         $request->comment_content = $this->request->getPost('comment_content', 'string');
 
@@ -186,11 +182,9 @@ class PostController extends Controller
             return $this->response->redirect('/login');
 
         try {
-            $user = $auth_service->getUser();
-
             $request = new CommentDeleteRequest;
             $request->comment_id = $this->request->get('id', 'string');
-            $request->comment_author_id = $user->id->getID();
+            $request->comment_author_id = $this->session->get('user_info')->id;
 
             $service = new CommentDeleteService;
             $service->execute($request);

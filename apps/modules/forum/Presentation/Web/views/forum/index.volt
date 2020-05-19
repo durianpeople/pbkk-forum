@@ -8,6 +8,9 @@
 {%endblock%}
 
 {%block content%}
+Selamat datang, {{user_info.username}}.<br>
+Jumlah award Anda: {{user_info.awards_count}}
+<br><br>
 <a href="/forum/create"><button type="button" class="btn btn-dark">Buat Forum</button></a><br><br>
 Joined forums:<br>
 {% if joined_forums is empty %}

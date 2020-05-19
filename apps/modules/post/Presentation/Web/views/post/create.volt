@@ -22,7 +22,7 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/post">Posts</a>
+        <a class="nav-link" href="/forum">Forums</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -36,7 +36,7 @@
 {% endblock %}
 {% block content %}
 <div class="page-wrapper">
-  <form action="/post/create" method="POST">
+  <form method="POST">
     <div class="form-group has-error">
       <label>Title</label>
       <input type="text" class="form-control" name="post_title" placeholder="Insert Title Here!" required>

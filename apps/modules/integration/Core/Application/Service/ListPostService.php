@@ -37,4 +37,9 @@ class ListPostService
 
         return $post_list_items;
     }
+
+    public function getForumName(string $forum_id): string
+    {
+        return $this->post_repo->getForumNameByForumID(new ForumID($forum_id));
+    }
 }

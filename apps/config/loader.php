@@ -19,6 +19,12 @@ $loader->registerNamespaces(array(
     'Common\Utility' => APP_PATH . '/common/Utility',
     'Common\Events' => APP_PATH . '/common/Events',
 
+    'Module\Post\Core\Application\EventSubscriber' => APP_PATH . '/modules/post/Core/Application/EventSubscriber',
+    'Module\Post\Core\Domain\Interfaces' => APP_PATH . '/modules/post/Core/Domain/Interfaces',
+    'Module\Post\Infrastructure\Persistence\Repository' => APP_PATH . '/modules/post/Infrastructure/Persistence/Repository',
+    'Module\Post\Core\Domain\Model\Entity' => APP_PATH . '/modules/post/Core/Domain/Model/Entity',
+    'Module\Post\Core\Domain\Model\Value' => APP_PATH . '/modules/post/Core/Domain/Model/Value',
+
 ));
 
 $loader->register();

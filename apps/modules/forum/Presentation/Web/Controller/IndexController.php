@@ -20,9 +20,7 @@ class IndexController extends AuthenticatedBaseController
     public function initialize()
     {
         parent::initialize();
-        $this->user_edit_service = $this->di->get('userEditService');
         $this->award_service = $this->di->get('awardService');
-        $this->user_info_renewal_service = $this->di->get('userInfoRenewalService');
     }
 
     public function logoutAction()

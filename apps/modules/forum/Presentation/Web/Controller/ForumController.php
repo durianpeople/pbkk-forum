@@ -8,13 +8,14 @@ use Module\Forum\Core\Application\Request\Forum\JoinForumRequest;
 use Module\Forum\Core\Application\Request\Forum\LeaveForumRequest;
 use Module\Forum\Core\Application\Request\Forum\ListForumRequest;
 use Module\Forum\Core\Application\Request\Forum\ViewForumRequest;
+use Module\Forum\Core\Application\Request\User\UserInfoRequest;
 use Module\Forum\Core\Application\Service\Forum\BanMemberService;
 use Module\Forum\Core\Application\Service\Forum\CreateForumService;
 use Module\Forum\Core\Application\Service\Forum\JoinForumService;
 use Module\Forum\Core\Application\Service\Forum\LeaveForumService;
 use Module\Forum\Core\Application\Service\Forum\ListForumService;
 use Module\Forum\Core\Application\Service\Forum\ViewForumService;
-
+use Module\Forum\Core\Application\Service\User\UserInfoService;
 use Module\Forum\Core\Exception\BannedMemberException;
 use Module\Forum\Core\Exception\NotFoundException;
 
@@ -26,6 +27,7 @@ class ForumController extends AuthenticatedBaseController
     protected JoinForumService $join_forum_service;
     protected LeaveForumService $leave_forum_service;
     protected BanMemberService $ban_member_service;
+    protected UserInfoService $user_info_service;
 
     public function initialize()
     {
@@ -36,12 +38,17 @@ class ForumController extends AuthenticatedBaseController
         $this->join_forum_service = $this->di->get('joinForumService');
         $this->leave_forum_service = $this->di->get('leaveForumService');
         $this->ban_member_service = $this->di->get('banMemberService');
+        $this->user_info_service = $this->di->get('userInfoService');
     }
 
     public function indexAction()
     {
+        $user_info_request = new UserInfoRequest;
+        $user_info_request->user_id = $this->user_info->id;
+
         $request = new ListForumRequest;
         $request->user_id = $this->user_info->id;
+        $this->view->setVar('user_info', $this->user_info_service->execute($user_info_request));
         $this->view->setVar('joined_forums', $this->list_forum_service->execute($request));
         $request->user_id = null;
         $this->view->setVar('all_forums', $this->list_forum_service->execute($request));

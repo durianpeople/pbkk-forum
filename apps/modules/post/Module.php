@@ -16,7 +16,8 @@ class Module implements ModuleDefinitionInterface
 
             'Module\Post\Core\Domain\Event' => __DIR__ . '/Core/Domain/Event',
             'Module\Post\Core\Domain\Interfaces' => __DIR__ . '/Core/Domain/Interfaces',
-            'Module\Post\Core\Domain\Model' => __DIR__ . '/Core/Domain/Model',
+            'Module\Post\Core\Domain\Model\Entity' => __DIR__ . '/Core/Domain/Model/Entity',
+            'Module\Post\Core\Domain\Model\Value' => __DIR__ . '/Core/Domain/Model/Value',
             'Module\Post\Core\Domain\Service' => __DIR__ . '/Core/Domain/Service',
             
             'Module\Post\Core\Application\Service' => __DIR__ . '/Core/Application/Service',
