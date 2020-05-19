@@ -1,6 +1,11 @@
 <?php
 
 // use Phalcon\Session\Adapter\Files as Session;
+
+use Common\Events\DomainEventPublisher;
+use Module\Post\Core\Application\EventSubscriber\PostEventSubscriber;
+use Module\Post\Infrastructure\Persistence\Repository\PostRepository;
+use Phalcon\Di\DiInterface;
 use Phalcon\Security;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Event;
@@ -117,36 +122,10 @@ $container->set(
     true
 );
 
-// $container->set(
-//     'flash',
-//     function () {
-//         $flash = new FlashDirect(
-//             [
-//                 'error'   => 'alert alert-danger',
-//                 'success' => 'alert alert-success',
-//                 'notice'  => 'alert alert-info',
-//                 'warning' => 'alert alert-warning',
-//             ]
-//         );
+/** @var DiInterface $container */
 
-//         return $flash;
-//     }
-// );
+$container->set('post_postRepository', function() use ($container) {
+    return new PostRepository();
+});
 
-// $container->set(
-//     'flashSession',
-//     function () {
-//         $flash = new FlashSession(
-//             [
-//                 'error'   => 'alert alert-danger',
-//                 'success' => 'alert alert-success',
-//                 'notice'  => 'alert alert-info',
-//                 'warning' => 'alert alert-warning',
-//             ]
-//         );
-
-//         $flash->setAutoescape(false);
-        
-//         return $flash;
-//     }
-// );
+DomainEventPublisher::instance()->subscribe(new PostEventSubscriber($container->get('post_postRepository')));

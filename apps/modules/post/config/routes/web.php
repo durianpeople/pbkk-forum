@@ -12,10 +12,10 @@ $router->add('/post', array_merge($mod_config, [
     'action' => 'index'
 ]));
 
-$router->add('/post/create', array_merge($mod_config, [
-    'controller' => 'post',
-    'action' => 'create'
-]));
+// $router->add('/post/create', array_merge($mod_config, [
+//     'controller' => 'post',
+//     'action' => 'create'
+// ]));
 
 $router->add('/post/show', array_merge($mod_config, [
     'controller' => 'post',

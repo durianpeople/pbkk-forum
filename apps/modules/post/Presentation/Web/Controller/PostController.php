@@ -128,7 +128,7 @@ class PostController extends Controller
 
         if ($this->request->get('type', 'string') == 'post') {
             $request = new PostVoteRequest;
-            $request->voter_id = $auth_service->getUser()->id->getID();
+            $request->voter_id = $this->session->get('user_info')->id;
             $request->voted_post_id = $this->request->get('id', 'string');
 
             $service = new PostVoteService;
@@ -142,7 +142,7 @@ class PostController extends Controller
             }
         } else if ($this->request->get('type', 'string') == 'comment') {
             $request = new CommentVoteRequest;
-            $request->voter_id = $auth_service->getUser()->id->getID();
+            $request->voter_id = $this->session->get('user_info')->id;
             $request->voted_comment_id = $this->request->get('id', 'string');
 
             $service = new CommentVoteService;
@@ -165,7 +165,7 @@ class PostController extends Controller
             return $this->response->redirect('/login');
 
         $request = new CommentCreateRequest;
-        $request->comment_author_id = $auth_service->getUser()->id->getID();
+        $request->comment_author_id = $this->session->get('user_info')->id;
         $request->comment_post_id = $this->request->getPost('post_id', 'string');
         $request->comment_content = $this->request->getPost('comment_content', 'string');
 

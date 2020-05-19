@@ -1,7 +1,9 @@
 <?php
 
+use Common\Events\DomainEventPublisher;
 use Module\Integration\Core\Application\Request\UserInfoRenewalRequest;
 use Module\Integration\Core\Application\Service\AuthService;
+use Module\Integration\Core\Application\Service\CreatePostService;
 use Module\Integration\Core\Application\Service\ListPostService;
 use Module\Integration\Core\Application\Service\RegistrationService;
 use Module\Integration\Core\Application\Service\UserEditService;
@@ -65,5 +67,9 @@ $di->set('userInfoRenewalService', function () use ($di) {
 
 $di->set('listPostService', function () use ($di) {
     return new ListPostService($di->get('postRepository'), $di->get('userRepository'));
+});
+
+$di->set('createPostService', function () use ($di) {
+    return new CreatePostService($di->get('postRepository'));
 });
 #endregion

@@ -36,7 +36,7 @@
 {% endblock %}
 {% block content %}
 <div class="page-wrapper">
-  <form action="/post/create" method="POST">
+  <form method="POST">
     <div class="form-group has-error">
       <label>Title</label>
       <input type="text" class="form-control" name="post_title" placeholder="Insert Title Here!" required>
