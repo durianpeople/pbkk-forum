@@ -73,15 +73,15 @@
       </div>
       <div class="form-group has-error">
         <label>Old Password</label>
-        <input name="profile_old_password" class="form-control" rows="6" placeholder="Type Your Old Password Here" required></input>
+        <input type="password" name="profile_old_password" class="form-control" rows="6" placeholder="Type Your Old Password Here" required></input>
       </div>
       <div class="form-group has-error">
         <label>New Password</label>
-        <input name="profile_new_password" class="form-control" rows="6" placeholder="Type Your New Password Here"></input>
+        <input type="password" name="profile_new_password" class="form-control" rows="6" placeholder="Type Your New Password Here"></input>
       </div>
       <div class="form-group has-error">
         <label>Confirm Password</label>
-        <input name="profile_confirm_password" class="form-control" rows="6" placeholder="Re-Type Your New Password Here"></input>
+        <input type="password" name="profile_confirm_password" class="form-control" rows="6" placeholder="Re-Type Your New Password Here"></input>
       </div>
       <div class="form-group has-error">
         <button type="submit" class="btn btn-info btn-lg btn-block"><span class="fa fa-paper-plane"> Submit</span></button>
