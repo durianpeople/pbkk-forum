@@ -16,7 +16,7 @@
 {%block content%}
 <h2>Edit Profile</h2><br>
 <div style="width: 50vw">
-    <form action="/edit" method="post">
+    <form action="/profile" method="post">
         <div class="form-group">
             <label for="username">Username</label>
             <input name="username" type="text" class="form-control" id="username" placeholder="Username">

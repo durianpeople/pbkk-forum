@@ -4,7 +4,7 @@
 {%block nav_buttons%}
 {% if loggedin %}
 <li class="nav-item active">
-    <a class="nav-link" href="/edit">Edit profile <span class="sr-only"></span></a>
+    <a class="nav-link" href="/profile">Edit profile <span class="sr-only"></span></a>
 </li>
 <li class="nav-item active">
     <a class="nav-link" href="/logout">Logout <span class="sr-only"></span></a>

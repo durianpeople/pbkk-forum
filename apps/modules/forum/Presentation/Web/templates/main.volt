@@ -17,7 +17,7 @@
         crossorigin="anonymous"></script>
 
 
-    <title>{%block title%}{%endblock%} | Forum Module</title>
+    <title>{%block title%}{%endblock%} | DISPLAY</title>
     <style>
         div.content {
             margin: 0 50px;
@@ -42,7 +42,7 @@
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">Forum Module</a>
+        <a class="navbar-brand" href="#">DISPLAY</a>
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -56,7 +56,7 @@
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     {% block nav_buttons %}
                     <li class="nav-item active">
-                        <a class="nav-link" href="/edit">Edit profile <span class="sr-only"></span></a>
+                        <a class="nav-link" href="/profile">Edit profile <span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>

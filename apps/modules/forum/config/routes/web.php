@@ -9,11 +9,6 @@ $mod_config = [
 
 /** @var Router $router */
 
-$router->add('/edit', array_merge($mod_config, [
-    'controller' => 'index',
-    'action' => 'edit'
-]));
-
 $router->add('/award', array_merge($mod_config, [
     'controller' => 'index',
     'action' => 'award'
