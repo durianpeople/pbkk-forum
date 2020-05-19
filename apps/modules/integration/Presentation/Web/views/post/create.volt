@@ -22,7 +22,7 @@ min-width:7rem;
 <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-            <a class="nav-link" href="/post">Posts</a>
+            <a class="nav-link" href="/forum">Forums</a>
         </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -48,7 +48,7 @@ min-width:7rem;
                 required></textarea>
         </div>
         <div class="form-group has-error">
-            <input type="hidden" name="forum_id" value="{{this.request.get('id')}}" />
+            <input type="hidden" name="forum_id" value="{{this.session.get('forum_id')}}" />
             <button type="submit" class="btn btn-success btn-lg btn-block"><span class="fa fa-paper-plane">
                     Submit</span></button>
         </div>

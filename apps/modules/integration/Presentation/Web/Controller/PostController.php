@@ -23,7 +23,16 @@ class PostController extends AuthenticatedBaseController
         parent::initialize();
 
         $request = new ListPostRequest;
-        $request->forum_id = $this->request->get('id', 'string');
+        if ($this->request->has('id')) {
+            $request->forum_id = $this->request->get('id', 'string');
+            $this->session->set('forum_id', $request->forum_id);
+        } else {
+            if ($this->session->has('forum_id')) {
+                $request->forum_id = $this->session->get('forum_id');
+            } else {
+                return $this->response->redirect('/');
+            }
+        }
         $post_list_items = $this->list_service->execute($request);
 
         $this->view->setVar('user_info', $this->user_info);

@@ -12,7 +12,7 @@ class IndexController extends AuthenticatedBaseController
 
     public function logoutAction()
     {
-        $this->session->remove('user_info');
+        $this->session->destroy();
         $this->response->redirect('/');
     }
 }

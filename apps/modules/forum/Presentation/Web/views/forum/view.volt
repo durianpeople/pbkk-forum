@@ -34,7 +34,7 @@ Member:
     <li style="vertical-align: middle;padding: 10px 0">
         <span style="padding-right: 20px;">{%if member.id is user.id%}<b>You</b> - {%endif%}<b>{{member.username}}</b>
             ({{member.id}})</span>
-        {%if member.id is not user.id%}
+        {%if member.id is not user.id and forum.joined%}
         <a href="/award?id={{member.id}}"><button type="button" class="btn btn-success btn-sm">Give award</button></a>
         {%endif%}
 
