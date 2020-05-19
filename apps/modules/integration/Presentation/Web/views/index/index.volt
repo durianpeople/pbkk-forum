@@ -15,7 +15,7 @@
   }
   .dropdown-menu {
     padding: 10px;
-    left: -30px;
+    left: -50px;
     min-width:7rem;
   }
 
@@ -30,6 +30,7 @@
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"><span class="fa fa-user-circle"></span> {{ user_info.username}} </a>
       <ul class="dropdown-menu">
+        <li><a href="/profile">Edit Profile <span class="fa fa-edit"></span></a></li>
         <li><a href="/logout">Sign Out <span class="fa fa-sign-out"></span></a></li>
       </ul>
       </li>

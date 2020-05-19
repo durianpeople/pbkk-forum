@@ -19,6 +19,11 @@ $router->add('/login', array_merge($mod_config, [
     'action' => 'index'
 ]));
 
+$router->add('/profile', array_merge($mod_config, [
+    'controller' => 'profile',
+    'action' => 'index'
+]));
+
 $router->add('/logout', array_merge($mod_config, [
     'controller' => 'index',
     'action' => 'logout'
