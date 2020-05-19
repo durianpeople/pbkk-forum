@@ -9,6 +9,11 @@ $mod_config = [
 
 /** @var Router $router */
 
+$router->add('/', array_merge($mod_config, [
+    'controller' => 'index',
+    'action' => 'index'
+]));
+
 $router->add('/login', array_merge($mod_config, [
     'controller' => 'login',
     'action' => 'index'
